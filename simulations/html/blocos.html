@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blocos conectados</title>
+<link rel="icon" type="image/png" href="img/antares-circle.png">
+<link rel="stylesheet" href="css/core.css">
+<!-- MathJax (saída SVG, não precisa de fontes externas). Fórmulas: \( ... \) no texto e \[ ... \] em destaque.
+     Precisa de internet; sem ela, as fórmulas aparecem como código LaTeX. -->
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'},options:{enableMenu:false}};</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+</head>
+
+<body>
+<div class="wrap">
+<header id="site-header">
+     <p class="back"><a href="index.html">← Todas as simulações</a></p>
+     <h1>Blocos conectados por uma polia</h1>
+     <p>Dois blocos em planos inclinados de mesma altura \(H\), ligados por uma corda sobre uma polia fixa. Varie massas e ângulos e compare com e sem atrito (curvas tracejadas: sem atrito).</p>
+</header>
+<script src="js/header.js"></script>
+
+<!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, pl, c_atr, c_comp, c_res, p1/p2/p3 -->
+<main>
+<section class="card"><div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p></section>
+<aside class="card">
+<div class="btns"><button class="p" id="bl">Soltar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
+<label class="chk" style="font-weight:600"><input type="checkbox" id="c_atr" checked>Com atrito</label>
+<div id="ctl" style="margin-top:10px"></div>
+<label for="pl" style="font-size:.92rem">Corpo celeste</label>
+<select id="pl"><option value="9.8">Terra (9,8 m/s²)</option><option value="1.62">Lua (1,62 m/s²)</option><option value="3.71">Marte (3,71 m/s²)</option><option value="24.8">Júpiter (24,8 m/s²)</option></select>
+<label class="chk"><input type="checkbox" id="c_comp">Componentes da força gravitacional (\(F_g\parallel\) e \(F_g\perp\))</label>
+<label class="chk"><input type="checkbox" id="c_res">Força resultante em cada bloco</label>
+<div class="chk"><span class="sw" style="border-color:var(--a)"></span>Força gravitacional \(\vec F_g\)</div>
+<div class="chk"><span class="sw" style="border-color:var(--acc)"></span>Normal \(\vec N\)</div>
+<div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Atrito \(\vec f\)</div>
+<div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Tração \(\vec T\)</div>
+<div class="chk"><span class="sw" style="border-color:var(--ink)"></span>Resultante \(\vec F\)</div>
+</aside>
+</main>
+<!-- Título e legenda dos gráficos em HTML (para usar MathJax); as cores devem coincidir com as de blocos.js -->
+<section class="plots">
+<div class="card"><div class="pt"><b>Deslocamento</b> \(x\) em função de \(t\)<span style="color:var(--acc)">\(x\)</span></div><div><canvas id="p1"></canvas></div></div>
+<div class="card"><div class="pt"><b>Velocidade</b> em função de \(t\)<span style="color:var(--vy)">\(v\)</span></div><div><canvas id="p2"></canvas></div></div>
+<div class="card"><div class="pt"><b>Energia</b> em função de \(t\)<span style="color:var(--vx)">\(E_c\)</span><span style="color:var(--vy)">\(\Delta E_p\)</span><span style="color:var(--acc)">\(\Delta E\)</span></div><div><canvas id="p3"></canvas></div></div>
+</section>
+
+</div>
+
+<footer></footer>
+<script src="js/footer.js"></script>
+
+<script src="js/core.js"></script>
+<script src="js/blocos.js"></script>
+</body>
+</html>

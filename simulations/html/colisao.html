@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Colisão de partículas pontuais em 2D</title>
+<link rel="icon" type="image/png" href="img/antares-circle.png">
+<link rel="stylesheet" href="css/core.css">
+<!-- MathJax (saída SVG, não precisa de fontes externas). Fórmulas: \( ... \) no texto e \[ ... \] em destaque.
+     Precisa de internet; sem ela, as fórmulas aparecem como código LaTeX. -->
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'},options:{enableMenu:false}};</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+<div class="wrap">
+<header id="site-header">
+     <p class="back"><a href="index.html">← Todas as simulações</a></p>
+     <h1>Colisão de partículas pontuais em 2D</h1>
+     <p>Os eixos \(x\)–\(y\) têm origem no ponto da colisão. Escolha massas, velocidades, o coeficiente de restituição \(e\) e o ângulo de desvio \(\theta_1\) da partícula 1, e veja o momento linear se conservar.</p>
+</header>
+<script src="js/header.js"></script>
+
+<!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, c_v, c_ang, c_cm, c_tr, c_alt, p1/p2/p3 -->
+<main>
+<section class="card"><div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p></section>
+
+<aside class="card">
+<div class="btns"><button class="p" id="bl">Lançar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
+<div id="ctl"></div>
+<label class="chk"><input type="checkbox" id="c_alt">Outra solução do ângulo (quando existir)</label>
+<label class="chk"><input type="checkbox" id="c_v" checked>Vetores de velocidade (tracejados: após o choque)</label>
+<label class="chk"><input type="checkbox" id="c_ang" checked>Ângulos de desvio (\(\theta_1\), \(\theta_2\))</label>
+<label class="chk"><input type="checkbox" id="c_cm" checked>Centro de massa (CM)</label>
+<label class="chk"><input type="checkbox" id="c_tr" checked>Rastro</label>
+<div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Partícula 1</div>
+<div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Partícula 2</div>
+<div class="chk"><span class="sw" style="border-color:var(--ink)"></span>Centro de massa</div>
+</aside>
+
+</main>
+
+</div>
+
+<footer></footer>
+<script src="js/footer.js"></script>
+
+<script src="js/core.js"></script>
+<script src="js/colisao.js"></script>
+</body>
+</html>

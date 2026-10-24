@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simulações de Física e Astronomia - Projeto Antαres</title>
+<link rel="icon" type="image/png" href="img/antares-circle.png">
+<link rel="stylesheet" href="css/core.css">
+<!-- MathJax (saída SVG). Fórmulas: \( ... \). Precisa de internet; sem ela, aparecem como código LaTeX. -->
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'},options:{enableMenu:false}};</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<header id="site-header"></header>
+<script src="js/header.js"></script>
+
+<header><h1 id="tt">Simulações de Física e Astronomia - Projeto Antαres</h1><p id="st"></p></header>
+<!-- Ids usados pelo script: tt, st, tools, lista, nt. O conteúdo vem de catalogo.js (não edite os cartões aqui). -->
+
+<div class="tools" id="tools"></div>
+<div id="lista"></div>
+<p class="note" id="nt"></p>
+</div>
+<script src="js/core.js"></script>
+<script src="js/catalogo.js"></script>
+<script>
+/* Menu: desenha os cartões a partir de window.CATALOGO (catalogo.js). Para mudar o conteúdo,
+   edite catalogo.js; para mudar o visual, edFite a seção "Menu" de core.css. */
+(function(){
+ const C=window.CATALOGO||{},o=Object.assign({titulo:'Simulações de Física e Astronomia',subtitulo:'',agruparPorTopico:true,mostrarBusca:true,mostrarFiltros:true,mostrarEmBreve:true,mostrarTema:true,abrirEmNovaAba:false},C.opcoes);
+ const sims=C.simulacoes||[],tops=C.topicos||[],$=Sim.$,norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+ let filtro=(location.hash||'#todos').slice(1),busca='';
+ if(filtro!=='todos'&&!tops.some(t=>t.id===filtro))filtro='todos';
+ document.title=o.titulo;$('tt').innerHTML=o.titulo;$('st').innerHTML=o.subtitulo;
+ // visível = respeita "em breve", o filtro de tópico e a busca (título, descrição e tags, sem acentos)
+ const vis=s=>(s.disponivel!==false||o.mostrarEmBreve)&&(filtro==='todos'||s.topico===filtro)&&(!busca||norm([s.titulo,s.descricao,(s.tags||[]).join(' ')].join(' ')).includes(norm(busca)));
+ const generico='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="24" cy="24" r="14"/></svg>';
+ function card(s){
+  const on=s.disponivel!==false,tag=on?'a':'div',nova=on&&o.abrirEmNovaAba?' target="_blank" rel="noopener"':'';
+  return '<'+tag+' class="card sim'+(on?'':' off')+'"'+(on?' href="'+s.arquivo+'"'+nova:'')+'><div class="sim-ic">'+(s.icone||generico)+'</div><h3>'+s.titulo+'</h3><p>'+(s.descricao||'')+'</p><div class="tags">'+
+   (s.tags||[]).map(t=>'<span class="tag">'+t+'</span>').join('')+(on?'':'<span class="tag soon">em breve</span>')+'</div></'+tag+'>';
+ }
+ function render(){
+  const v=sims.filter(vis);let h='';
+  if(o.agruparPorTopico){
+   const grupos=tops.concat(sims.some(s=>!tops.some(t=>t.id===s.topico))?[{id:'__outros',nome:'Outros'}]:[]);
+   grupos.forEach(g=>{const l=v.filter(s=>g.id==='__outros'?!tops.some(t=>t.id===s.topico):s.topico===g.id);
+    if(l.length)h+='<h2 class="tp">'+g.nome+'</h2><p></p><div class="menu">'+l.map(card).join('')+'</div>'});
+  }else h=v.length?'<div class="menu">'+v.map(card).join('')+'</div>':'';
+  $('lista').innerHTML=h||'<p class="note">Nenhuma simulação encontrada.</p>';
+  const disp=sims.filter(s=>s.disponivel!==false).length;
+  // $('nt').textContent=disp+' simulações disponíveis'+(o.mostrarEmBreve?' · '+(sims.length-disp)+' em breve':'')+'.';
+  document.querySelectorAll('.chip[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===filtro));
+  Sim.math($('lista'));
+ }
+ // ferramentas: busca, filtros por tópico e tema
+ const T=$('tools');
+ if(o.mostrarBusca){const i=document.createElement('input');i.type='search';i.placeholder='Buscar simulação...';i.setAttribute('aria-label','Buscar simulação');i.oninput=()=>{busca=i.value;render()};T.appendChild(i)}
+ if(o.mostrarFiltros){
+  const ch=document.createElement('div');ch.className='chips';
+  [{id:'todos',nome:'Todos'}].concat(tops).forEach(t=>{const n=t.id==='todos'?sims.filter(s=>s.disponivel!==false||o.mostrarEmBreve).length:sims.filter(s=>s.topico===t.id&&(s.disponivel!==false||o.mostrarEmBreve)).length;
+   if(!n)return;const b=document.createElement('button');b.className='chip';b.dataset.t=t.id;b.innerHTML=t.nome+'<small>'+n+'</small>';
+   b.onclick=()=>{filtro=t.id;try{history.replaceState(null,'','#'+t.id)}catch(e){}render()};ch.appendChild(b)});
+  T.appendChild(ch);
+ }
+ if(o.mostrarTema){
+  const nomes={auto:'automático',light:'claro',dark:'escuro'},ordem=['auto','light','dark'],b=document.createElement('button');b.className='chip';
+  let k=0;try{k=Math.max(0,ordem.indexOf(localStorage.getItem('tema')))}catch(e){}
+  const aplica=()=>{const m=ordem[k],r=document.documentElement;m==='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',m);b.textContent='Tema: '+nomes[m]};
+  b.onclick=()=>{k=(k+1)%3;try{localStorage.setItem('tema',ordem[k])}catch(e){}aplica()};aplica();T.appendChild(b);
+ }
+ render();
+})();
+</script>
+
+<footer></footer>
+<script src="js/footer.js"></script>
+
+</body>
+</html>

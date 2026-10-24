@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Colisão em duas dimensões</title>
+<link rel="stylesheet" href="core.css">
+<script defer src="mathjax-config.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
+</head>
+<body>
+<div class="wrap">
+<header><h1>Colisão entre duas partículas em 2D</h1><p>Varie massas, velocidades, direções e o parâmetro de impacto, e veja o momento linear se conservar e a energia cinética mudar conforme a restituição.</p></header>
+<!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, c_v, c_cm, c_fr, c_ax, c_tr, p1/p2/p3 -->
+<main>
+<section class="card"><div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p></section>
+<aside class="card">
+<div class="btns"><button class="p" id="bl">Lançar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
+<div id="ctl"></div>
+<label class="chk"><input type="checkbox" id="c_v" checked>Vetores de velocidade (tracejados: após o choque)</label>
+<!-- <label class="chk"><input type="checkbox" id="c_ax" checked>Normal e tangente do choque</label> -->
+<label class="chk"><input type="checkbox" id="c_cm" checked>Centro de massa</label>
+<label class="chk"><input type="checkbox" id="c_fr">Referencial do centro de massa</label>
+<label class="chk"><input type="checkbox" id="c_tr" checked>Rastro</label>
+<div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Partícula 1</div>
+<div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Partícula 2</div>
+<div class="chk"><span class="sw" style="border-color:var(--ink)"></span>Centro de massa</div>
+</aside>
+</main>
+
+<details class="card">
+<summary>Gráficos</summary>
+<section class="plots">
+<div class="card"><div><canvas id="p1"></canvas></div></div>
+<div class="card"><div><canvas id="p2"></canvas></div></div>
+<div class="card"><div><canvas id="p3"></canvas></div></div>
+</section>
+</details>
+
+<details class="card">
+<summary>Equações e método</summary>
+<p>O parâmetro de impacto \(b\) é a distância perpendicular entre a trajetória relativa e a linha dos centros. Há colisão se
+\[
+|b| < r_1 + r_2.
+\]
+Para \(b = 0\), o choque é frontal.</p>
+
+<p>Partículas lisas trocam impulso apenas ao longo da normal \(\hat{n}\) (linha dos centros). Definindo
+\[
+v_{rn} = (\vec{v}_2 - \vec{v}_1)\cdot\hat{n},
+\qquad
+\mu = \frac{m_1m_2}{m_1+m_2},
+\]
+temos
+\[
+J = -(1+e)\mu v_{rn},
+\]
+\[
+\vec{v}_1' = \vec{v}_1 - \frac{J}{m_1}\hat{n},
+\qquad
+\vec{v}_2' = \vec{v}_2 + \frac{J}{m_2}\hat{n}.
+\]
+A componente tangencial de cada velocidade não muda.</p>
+
+<p>O momento total
+\[
+\vec{p} = m_1\vec{v}_1 + m_2\vec{v}_2
+\]
+sempre se conserva, e o centro de massa segue em linha reta com velocidade
+\[
+\vec{v}_{\mathrm{cm}} = \frac{\vec{p}}{m_1+m_2}.
+\]
+A energia cinética perdida é
+\[
+\Delta K = \frac{1}{2}\mu(1-e^2)v_{rn}^2,
+\]
+nula se \(e=1\).</p>
+
+<p>No referencial do centro de massa (CM), o momento total é zero: as partículas se aproximam e se afastam em sentidos opostos. Com massas iguais, uma delas inicialmente parada e \(e=1\), as partículas saem a \(90^\circ\) uma da outra.</p>
+</details>
+</div>
+<script src="core.js"></script>
+<script src="colisao-old.js"></script>
+</body>
+</html>
