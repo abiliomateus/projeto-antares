@@ -23,6 +23,7 @@ const {$,rk4,f2,arrow,css}=Sim, DT=1/240, P={}, cv=$('cv'), ctx=cv.getContext('2
 // Tela: proporção 0,62, altura entre 400 e 620 px (precisa de espaço para as setas).
 const fit=Sim.fit(cv,.62,400,620);
 let q=[0,0],t=0,mode='idle',paused=false,rows=[],acc=0,cnt=0,ph,a0,t0,X,lastSt='';
+Sim.interactive(cv,fit);
 
 // ---- Parâmetros ajustáveis (valor em P.<id>) ----
 Sim.controls($('ctl'),[

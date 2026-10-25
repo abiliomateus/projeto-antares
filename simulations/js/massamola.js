@@ -25,6 +25,8 @@ const {$,rk4,f2,arrow,css}=Sim, DT=1/5000, P={}, cv=$('cv'), ctx=cv.getContext('
 const fit=Sim.fit(cv,.5,340,500), fph=Sim.fit(pcv,.8,260,380);
 let q=[0,0],t=0,mode='idle',paused=false,rows=[],acc=0,cnt=0,Q=0,lastSt='',su;
 
+Sim.interactive(cv,fit);
+
 // ---- Parâmetros ajustáveis (valor em P.<id>) ----
 // Os rótulos aceitam HTML e LaTeX (MathJax): \( ... \), escrito aqui como '\\( ... \\)'.
 // spd e nesp (espiras do desenho da mola) não alteram a física; qualquer outro parâmetro reinicia a simulação.

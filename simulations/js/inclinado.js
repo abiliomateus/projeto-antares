@@ -26,6 +26,8 @@ const {$,rk4,f2,arrow,css}=Sim, DT=1/240, P={}, cv=$('cv'), ctx=cv.getContext('2
 const fit=Sim.fit(cv,.7,330,560);
 let q=[0,0],t=0,mode='idle',paused=false,rows=[],acc=0,cnt=0,ph,a0,t0,lastSt='';
 
+Sim.interactive(cv,fit);
+
 // ---- Parâmetros ajustáveis (valor em P.<id>) ----
 Sim.controls($('ctl'),[
  {id:'m',label:'Massa',unit:'kg',min:.5,max:20,step:.5,val:2},

@@ -166,3 +166,8 @@ p.header {
   border-top-right-radius: 0;
 
 }
+
+/* ---- Zoom do canvas (Sim.interactive): botões na lateral direita ---- */
+.zbar{position:absolute;right:6px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px}
+.zbar button{flex:none;width:28px;height:28px;padding:0;font-size:16px;line-height:1;border-radius:6px;opacity:.8}
+.zbar button:hover,.zbar button:focus-visible{opacity:1}

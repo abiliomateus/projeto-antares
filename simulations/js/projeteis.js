@@ -26,6 +26,8 @@ let s=null,t=0,mode='idle',paused=false,trail=[],past=[],rows=[],ymax=0,range=nu
 
 const fit = Sim.fit(cv, .35, 220, 420),
       ml = 46, mr = 16, mt = 16, mb = 32;
+
+Sim.interactive(cv,fit);
 // ---- Estado da simulação ----
 // s: [x,y,vx,vy] atual | t: tempo simulado (s) | mode: 'idle' | 'fly' | 'land'
 // trail: pontos [x,y] do lançamento atual | past: lançamentos anteriores (máx. 5)

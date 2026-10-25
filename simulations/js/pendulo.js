@@ -25,6 +25,8 @@ const {$,rk4,f2,arrow,css}=Sim, DT=1/600, TMAX=30, P={}, cv=$('cv'), ctx=cv.getC
 const fit=Sim.fit(cv,.7,380,560);
 let q=[0,0],side='L',FL=null,t=0,mode='idle',fim='',paused=false,rows=[],tr=[],acc=0,cnt=0,Qd=0,Qj=0,jerks=0,lastSt='',su;
 
+Sim.interactive(cv,fit);
+
 // ---- Parâmetros ajustáveis (valor em P.<id>) ----
 // Os rótulos aceitam HTML e LaTeX (MathJax): \( ... \), escrito aqui como '\\( ... \\)'.
 Sim.controls($('ctl'),[

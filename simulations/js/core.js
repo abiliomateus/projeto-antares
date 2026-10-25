@@ -181,6 +181,48 @@
         return size;
     };
 
+    /** Zoom e deslocamento (pan) do canvas principal de uma simulação, sem mudar o código de desenho.
+    Chame uma vez, logo depois de Sim.fit: Sim.interactive(cv, fit).
+    Como funciona: o desenho continua usando as coordenadas de sempre; a cada quadro, o ctx.clearRect do canvas (chamado no
+    início do desenho) também aplica a transformação de zoom/pan com ctx.setTransform. O desenho é refeito em vetor a cada
+    quadro, então fica nítido em qualquer ampliação, e a simulação continua rodando normalmente.
+    Controles: botões + / − / ⟲ (na lateral direita do canvas); Ctrl + roda do mouse (ou pinça no touchpad), em torno do
+    cursor; pinça no celular; arrastar para mover (com zoom > 1); duplo clique para restaurar. O zoom vai de 1× a `max`
+    (opção, padrão 8×) e nunca mostra além da área original. Textos e traços ampliam junto; o que deve ficar fixo na tela
+    (barras de energia) é desenhado depois de Sim.hud(ctx). Devolve {z, x, y, reset()}. */
+    Sim.interactive=(cv,fit,o)=>{
+    const ctx=cv.getContext('2d'),S={z:1,x:0,y:0,reset(){S.z=1;S.x=0;S.y=0;cursor()}},zmax=(o&&o.max)||8,wrap=cv.parentElement,ptr=new Map(),orig=ctx.clearRect.bind(ctx);
+    let dist0=0;
+    const clamp=()=>{S.x=Math.min(0,Math.max(fit.w*(1-S.z),S.x));S.y=Math.min(0,Math.max(fit.h*(1-S.z),S.y))};
+    const cursor=()=>{cv.style.cursor=S.z>1?'grab':'';cv.style.touchAction=S.z>1?'none':'pan-y'};   // com zoom, o dedo move o desenho em vez de rolar a página
+    const zoomAt=(f,px,py)=>{const z=Math.min(zmax,Math.max(1,S.z*f)),k=z/S.z;S.x=px-(px-S.x)*k;S.y=py-(py-S.y)*k;S.z=z;clamp();cursor()};
+    const pos=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*(fit.w/(r.width||fit.w)),(e.clientY-r.top)*(fit.h/(r.height||fit.h))]};
+    ctx.clearRect=()=>{const d=devicePixelRatio||1;clamp();ctx.setTransform(1,0,0,1,0,0);orig(0,0,cv.width,cv.height);ctx.setTransform(d*S.z,0,0,d*S.z,d*S.x,d*S.y)};
+    cv.addEventListener('wheel',e=>{if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();const p=pos(e);zoomAt(Math.exp(-e.deltaY*.0025),p[0],p[1])},{passive:false});
+    cv.addEventListener('dblclick',()=>S.reset());
+    cv.addEventListener('pointerdown',e=>{ptr.set(e.pointerId,[e.clientX,e.clientY]);try{cv.setPointerCapture(e.pointerId)}catch(_){}if(S.z>1)cv.style.cursor='grabbing';dist0=0});
+    cv.addEventListener('pointermove',e=>{
+    if(!ptr.has(e.pointerId))return;
+    const old=ptr.get(e.pointerId);ptr.set(e.pointerId,[e.clientX,e.clientY]);
+    if(ptr.size===2){                                                  // pinça: zoom em torno do ponto médio
+    const v=[...ptr.values()],dist=Math.hypot(v[0][0]-v[1][0],v[0][1]-v[1][1]);
+    if(dist0>0){const m=pos({clientX:(v[0][0]+v[1][0])/2,clientY:(v[0][1]+v[1][1])/2});zoomAt(dist/dist0,m[0],m[1])}
+    dist0=dist;
+    }else if(ptr.size===1&&S.z>1){S.x+=e.clientX-old[0];S.y+=e.clientY-old[1];clamp()}
+    });
+    const up=e=>{ptr.delete(e.pointerId);dist0=0;cursor()};
+    cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+    if(wrap&&wrap.style){
+    const bar=document.createElement('div');bar.className='zbar';
+    [['+','Ampliar (Ctrl + roda do mouse)',()=>zoomAt(1.4,fit.w/2,fit.h/2)],['−','Reduzir',()=>zoomAt(1/1.4,fit.w/2,fit.h/2)],['⟲','Restaurar (duplo clique)',()=>S.reset()]].forEach(([t,tt,f])=>{
+    const b=document.createElement('button');b.type='button';b.textContent=t;b.title=tt;b.setAttribute('aria-label',tt);b.onclick=f;bar.appendChild(b)});
+    wrap.style.position='relative';wrap.appendChild(bar);
+    }
+    cursor();return S;
+    };
+    /** Desenho fixo na tela (sem zoom/pan): chame logo depois de ctx.save() e restaure com ctx.restore(). */
+    Sim.hud=ctx=>{const d=devicePixelRatio||1;ctx.setTransform(d,0,0,d,0,0)};
+
     /**
      * Inicia um loop de animação e chama callback(deltaTime) a cada quadro.
      * deltaTime é expresso em segundos e limitado a 50 ms para evitar saltos
@@ -362,9 +404,9 @@
         context.stroke();
 
         const angle = Math.atan2(dy, dx);
-        const headLength = Math.min(8, length * 0.4);
-        const tipX = x + dx;
-        const tipY = y + dy;
+        const headLength = Math.min(10, length * 0.8);
+        const tipX = x + 1.075*dx;
+        const tipY = y + 1.075*dy;
 
         context.beginPath();
         context.moveTo(tipX, tipY);
