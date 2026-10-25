@@ -36,18 +36,18 @@ window.PROJETO={
  opcoes:{
   nome:'',
   subtitulo:'',
-  mostrarNav:true,mostrarTema:false,abrirEmNovaAba:false,mostrarFiltros:true,
+  mostrarNav:true,mostrarTema:true,abrirEmNovaAba:false,mostrarFiltros:true,
  },
  sobre:'<p>Projeto para elaboração e distribuição de material de apoio (livros e notas de aula), nas áreas de Física e Astronomia, seguindo o modelo dos chamados Recursos Educacionais Abertos (do inglês, Open Educational Resources, sigla OER).</p>',
  secoes:[
-  {id:'simulacoes',titulo:'Simulações',descricao:'Animações interativas que rodam direto no navegador, sem instalar nada.',itens:[
-   {titulo:'Simulações de Física e Astronomia',descricao:'Mecânica básica: cinemática, leis de Newton, energia, momento e oscilações, com gráficos em tempo real, forças e as equações de cada modelo. Rotação e gravitação virão a seguir.',arquivo:'simulations/index.html',botao:'Abrir as simulações',tags:['mecânica','interativo','gráficos'],icone:IC.simulacoes,destaque:true}
+  {id:'simulacoes',titulo:'Simulações',descricao:'Simulações interativas que rodam diretamente no navegador. Não é necessário instalar nada.',itens:[
+   {titulo:'Simulações de Física e Astronomia',descricao:'Mecânica básica: cinemática, leis de Newton, momento, energia, rotação, gravitação e oscilações. As grandezas físicas principais são apresentadas em gráficos em tempo real.',arquivo:'simulations/index.html',botao:'Abrir as simulações',tags:['mecânica','interativo','gráficos'],icone:IC.simulacoes,destaque:true}
   ]},
-  {id:'livro',titulo:'Livros',descricao:'Publicações do projeto.',itens:[
+  {id:'livro',titulo:'Publicações',descricao:'Material didático disponibilizado pelo projeto de forma acessível no formato PDF. Ao longo dos capítulos, códigos QR levam às simulações específicas que descrevem exemplos ou problemas discutidos em cada livro. Por ora, apenas o livro de Fundamentos da Mecânica (Volume 1) está disponível para download.',itens:[
    {titulo:'Física - Volume 1',descricao:'Um texto introdutório sobre cinemática, dinâmica e conservação do momento e da energia.',imagem:'img/FISICA1-capa.png',arquivo:'https://doi.org/10.5281/zenodo.16541433',botao:'Ver o livro',tags:['fundamentos', 'vetores', 'forças', 'cinemática', 'dinâmica', 'momento', 'energia', 'inércia'],icone:IC.livro}, {titulo:'Física - Volume 2',descricao:'Um texto introdutório sobre movimentos rotacionais, oscilatórios, ondulatórios, fluidos e termodinâmica.',imagem:'img/FISICA2-capa.png',arquivo:'',botao:'Ver o livro',tags:['rotação', 'gravitação', 'oscilação', 'ondas', 'fluidos', 'temperatura', 'energia térmica', 'entropia'],icone:IC.livro, disponivel: false}, {titulo:'Física - Volume 3',descricao:'Um texto introdutório sobre os princípios fundamentais do eletromagnetismo.',imagem:'img/FISICA3-capa.png',arquivo:'',botao:'Ver o livro',tags:['campo elétrico', 'lei de Gauss', 'potencial elétrico', 'capacitância', 'circuitos', 'campo magnético', 'lei de Faraday'],icone:IC.livro, disponivel: false}, {titulo:'Física - Volume 4',descricao:'Um texto introdutório sobre correntes alternadas, ondas eletromagnéticas e física moderna.',imagem:'img/FISICA4-capa.png',arquivo:'',botao:'Ver o livro',tags:['corrente alternada', 'ondas eletromagnéticas', 'interferência', 'difração', 'relatividade', 'física quântica'],icone:IC.livro, disponivel: false}
   ]},
   {id:'material',titulo:'Outros',descricao:'Textos, listas e outros recursos de apoio.',itens:[
-   {titulo:'Título do material',descricao:'Notas de aula, listas de exercícios, roteiros ou outros materiais.',arquivo:'',botao:'Abrir',tags:['material didático'],icone:IC.material}
+   {titulo:'Título do material',descricao:'Notas de aula, listas de exercícios, roteiros ou outros materiais.',arquivo:'',botao:'Abrir',tags:['material didático'],icone:IC.material, disponivel: false}
   ]}
  ],
  rodape:{

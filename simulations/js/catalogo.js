@@ -41,7 +41,7 @@ window.CATALOGO={
  opcoes:{
   titulo:'Simulações de Física e Astronomia',
   subtitulo:'Mecânica básica: cinemática, leis de Newton, momento, rotação e gravitação. Cada simulação roda direto no navegador.',
-  agruparPorTopico:true,mostrarBusca:true,mostrarFiltros:true,mostrarEmBreve:false,mostrarTema:false,abrirEmNovaAba:false
+  agruparPorTopico:true,mostrarBusca:true,mostrarFiltros:true,mostrarEmBreve:false,mostrarTema:true,abrirEmNovaAba:false
  },
  topicos:[
   {id:'cinematica',nome:'Cinemática',descricao:'Movimento em uma e duas dimensões'},
