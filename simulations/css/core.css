@@ -150,7 +150,7 @@ hr {
 
 .header {
   margin:0;
-  display: box;
+  display: block;
   align-items: center;
   padding: 10px;
   background-color: var(--acc);
