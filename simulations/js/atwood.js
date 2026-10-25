@@ -133,7 +133,7 @@ function draw(){
  ctx.fillStyle=C('--ground');ctx.beginPath();ctx.moveTo(Ax,Ay);ctx.lineTo(BR[0],BR[1]);ctx.lineTo(BR[0],yb);ctx.lineTo(BL[0],yb);ctx.lineTo(BL[0],BL[1]);ctx.closePath();ctx.fill();
  ctx.strokeStyle=C('--ground');ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(12,yb);ctx.lineTo(W-12,yb);ctx.stroke();
 //  ctx.strokeStyle=C('--ink');ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(BL[0],BL[1]);ctx.lineTo(Ax,Ay);ctx.lineTo(BR[0],BR[1]);ctx.stroke();
- ctx.font='12px';ctx.fillStyle=C('--mut');ctx.strokeStyle=C('--mut');ctx.lineWidth=1.5;
+ ctx.font=C('--normalfont');ctx.fillStyle=C('--mut');ctx.strokeStyle=C('--mut');ctx.lineWidth=1.5;
 //  if(P.ang1>1){ctx.beginPath();ctx.arc(BL[0],BL[1],40,-90*R,0);ctx.stroke();ctx.textAlign='left'}
 //  if(P.ang2>1){ctx.beginPath();ctx.arc(BR[0],BR[1],40,Math.PI,Math.PI+90*R);ctx.stroke();ctx.textAlign='right'}
  // polia (centro Pc tal que a corda fica à altura do centro dos blocos)
@@ -155,13 +155,13 @@ function draw(){
  [[C1,-90*R,'m₁'],[C2,90*R,'m₂']].forEach(([c,r,l])=>{
   ctx.save();ctx.translate(c[0],c[1]);
   ctx.fillStyle=C('--ink');ctx.strokeStyle=C('--ink');ctx.lineWidth=2;ctx.fillRect(-1.5*b/(2*np),-1.5*b/(2*np),1.5*b/np,1.5*b/np);
-  ctx.fillStyle=C('--sky');ctx.font='600 12px';ctx.textAlign='center';ctx.fillText(l,0,4);ctx.restore();
+  ctx.fillStyle=C('--sky');ctx.font=C('--normalfont');ctx.textAlign='center';ctx.fillText(l,0,4);ctx.restore();
  });
  // forças: escala fixa (o maior peso mede 70 px); as demais ficam proporcionais
  const k=70/Math.max(ph.W1,ph.W2),F=(lab,v,ox,oy,dx,dy,col,dash,wd)=>{
   ctx.setLineDash(dash?[5,4]:[]);arrow(ctx,ox,oy,dx,dy,col,wd||2.6);ctx.setLineDash([]);
   const len=Math.hypot(dx,dy);if(len<3)return;
-  const ux=dx/len,uy=dy/len;ctx.fillStyle=col;ctx.font='600 12px';
+  const ux=dx/len,uy=dy/len;ctx.fillStyle=col;ctx.font=C('--normalfont');
   ctx.textAlign=ux>.3?'left':ux<-.3?'right':'center';
   ctx.fillText(lab+'='+f2(v)+' N',ox+dx+ux*8,oy+dy+uy*12+(Math.abs(uy)<.3?4:0));
  };

@@ -97,11 +97,11 @@ function status(){
  const last=rows.length?rows[rows.length-1]:null;
  if(mode==='end'&&last)return'Fim da simulação ('+M(fm(su.tEnd)+MS)+'). '+M('E='+fm(last[5])+J)+' e dissipada '+M('Q='+fm(last[6])+J)+
   (su.b>0?' ('+M('E+Q=E_0')+': a energia que sai da mola e do bloco vira calor no amortecedor).':': sem arrasto, a energia mecânica se conserva e o bloco oscila indefinidamente.');
- let s=M('\\omega_0=\\sqrt{k/m}='+fm(su.w0)+'\\,\\mathrm{rad/s}')+', '+M('T_0=2\\pi/\\omega_0='+fm(su.T0)+MS)+', '+M('E_0=\\tfrac{1}{2}kx_0^2='+fm(su.E0)+J)+'. ';
- if(su.reg==='sem')return s+'Sem arrasto, '+M('E')+' é constante e '+M('x(t)=x_0\\cos\\omega_0 t')+'.';
+ let s=M('\\omega_0=\\sqrt{k/m}='+fm(su.w0)+'\\,\\mathrm{rad/s}')+', '+M('T_0=2\\pi/\\omega_0='+fm(su.T0)+MS)+', '+M('E_0=\\tfrac{1}{2}kx_m^2='+fm(su.E0)+J)+'. ';
+ if(su.reg==='sem')return s+'Sem arrasto, '+M('E')+' é constante e '+M('x(t)=x_m\\cos\\omega_0 t')+'.';
  s+='Com arrasto '+M('F_d=-bv')+': '+M('\\gamma=b/2m='+fm(su.gam)+IS)+' e '+M('\\zeta=b/(2\\sqrt{km})='+fm(su.zeta))+'. ';
- if(su.reg==='sub')return s+'Subamortecido ('+M('\\zeta<1')+'): oscila com '+M('\\omega_d=\\sqrt{\\omega_0^2-\\gamma^2}='+fm(su.wd)+'\\,\\mathrm{rad/s}')+' e amplitude '+M('x_0e^{-\\gamma t}')+' (tracejado); tempo de decaimento '+M('\\tau=1/\\gamma='+fm(1/su.gam)+MS)+'.';
- if(su.reg==='crit')return s+'Criticamente amortecido ('+M('\\zeta=1')+'): volta ao equilíbrio no menor tempo possível, sem oscilar: '+M('x=x_0(1+\\gamma t)e^{-\\gamma t}')+'.';
+ if(su.reg==='sub')return s+'Subamortecido ('+M('\\zeta<1')+'): oscila com '+M('\\omega_d=\\sqrt{\\omega_0^2-\\gamma^2}='+fm(su.wd)+'\\,\\mathrm{rad/s}')+' e amplitude '+M('x_me^{-\\gamma t}')+' (tracejado); tempo de decaimento '+M('\\tau=1/\\gamma='+fm(1/su.gam)+MS)+'.';
+ if(su.reg==='crit')return s+'Criticamente amortecido ('+M('\\zeta=1')+'): volta ao equilíbrio no menor tempo possível, sem oscilar: '+M('x=x_m(1+\\gamma t)e^{-\\gamma t}')+'.';
  return s+'Superamortecido ('+M('\\zeta>1')+'): volta ao equilíbrio sem oscilar, mais devagar que no caso crítico; a taxa de decaimento lenta é '+M('\\lambda=\\gamma-\\sqrt{\\gamma^2-\\omega_0^2}='+fm(su.lam)+IS)+'.';
 }
 
@@ -150,12 +150,12 @@ function dashpot(xa,xb,y,Lc,pos){
 // espirala para a origem (subamortecido) ou vai direto a ela (crítico e superamortecido).
 function phase(){
  const C=css,W=fph.w,H=fph.h,m=34,A=P.x0*1.15,B=P.x0*su.w0*1.15,X=x=>m+(x+A)/(2*A)*(W-2*m),Y=v=>H-m-(v+B)/(2*B)*(H-2*m);
- pctx.clearRect(0,0,W,H);pctx.lineWidth=1;pctx.font='11px system-ui,sans-serif';
+ pctx.clearRect(0,0,W,H);pctx.lineWidth=1;pctx.font=C('--normalfont');
  const sx=Sim.nice(A/2),sv=Sim.nice(B/2);
  for(let g=-Math.floor(A/sx)*sx;g<=A+1e-9;g+=sx){pctx.strokeStyle=C('--grid');pctx.beginPath();pctx.moveTo(X(g),m/2);pctx.lineTo(X(g),H-m);pctx.stroke();if(Math.abs(g)>1e-9){pctx.fillStyle=C('--mut');pctx.textAlign='center';pctx.fillText(+g.toFixed(4),X(g),H-m+14)}}
  for(let g=-Math.floor(B/sv)*sv;g<=B+1e-9;g+=sv){pctx.strokeStyle=C('--grid');pctx.beginPath();pctx.moveTo(m,Y(g));pctx.lineTo(W-m/2,Y(g));pctx.stroke();if(Math.abs(g)>1e-9){pctx.fillStyle=C('--mut');pctx.textAlign='right';pctx.fillText(+g.toFixed(4),m-5,Y(g)+4)}}
  pctx.strokeStyle=C('--ink');pctx.lineWidth=1.4;pctx.beginPath();pctx.moveTo(m,Y(0));pctx.lineTo(W-m/2,Y(0));pctx.moveTo(X(0),m/2);pctx.lineTo(X(0),H-m);pctx.stroke();
- pctx.fillStyle=C('--ink');pctx.textAlign='right';pctx.font='600 12px system-ui,sans-serif';pctx.fillText('x (m)',W-6,Y(0)-6);pctx.textAlign='left';pctx.fillText('v (m/s)',X(0)+6,m/2+8);
+ pctx.fillStyle=C('--ink');pctx.textAlign='right';pctx.font=C('--normalfont');pctx.fillText('x (m)',W-6,Y(0)-6);pctx.textAlign='left';pctx.fillText('v (m/s)',X(0)+6,m/2+8);
  pctx.setLineDash([5,4]);pctx.strokeStyle=C('--ghost');pctx.lineWidth=1.3;pctx.beginPath();
  for(let a=0;a<=2*Math.PI+.05;a+=.05)pctx.lineTo(X(P.x0*Math.cos(a)),Y(-P.x0*su.w0*Math.sin(a)));pctx.stroke();pctx.setLineDash([]);
  if(rows.length>1){pctx.strokeStyle=C('--acc');pctx.lineWidth=2;pctx.beginPath();rows.forEach((r,j)=>j?pctx.lineTo(X(r[1]),Y(r[2])):pctx.moveTo(X(r[1]),Y(r[2])));pctx.stroke()}
@@ -170,10 +170,10 @@ function draw(){
  const xmin=-su.L0,xmax=P.x0+.5,sc=(W-ml-mr)/(xmax-xmin),X=x=>ml+(x-xmin)*sc;
  const x=q[0],cx=X(x),cy=fy-bh/2,yS=cy,yD=fy-bh*.28;
  ctx.clearRect(0,0,W,H);
- const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font='600 12px system-ui,sans-serif';ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
+ const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font=C('--normalfont');ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
  // chão com régua (metros em relação ao equilíbrio) e parede
  ctx.strokeStyle=C('--ground');ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(X(xmin),fy);ctx.lineTo(W-mr,fy);ctx.stroke();
- const st=Sim.nice((xmax-xmin)/8);ctx.lineWidth=1;ctx.font='11px system-ui,sans-serif';ctx.fillStyle=C('--mut');ctx.strokeStyle=C('--mut');
+ const st=Sim.nice((xmax-xmin)/8);ctx.lineWidth=1;ctx.font=C('--normalfont');ctx.fillStyle=C('--mut');ctx.strokeStyle=C('--mut');
  for(let g=Math.ceil((xmin+.3)/st)*st;g<=xmax;g+=st){ctx.beginPath();ctx.moveTo(X(g),fy+3);ctx.lineTo(X(g),fy+9);ctx.stroke();ctx.textAlign='center';ctx.fillText(+g.toFixed(6),X(g),fy+22)}
  lab('x (m)',W-mr,fy+36,C('--mut'),'right');
  ctx.strokeStyle=C('--ink');ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(X(xmin),fy-bh-26);ctx.lineTo(X(xmin),fy);ctx.stroke();
@@ -181,7 +181,7 @@ function draw(){
  if($('c_ref').checked){
   ctx.setLineDash([5,4]);ctx.lineWidth=1.3;
   ctx.strokeStyle=C('--ink');ctx.beginPath();ctx.moveTo(X(0),fy-bh-40);ctx.lineTo(X(0),fy);ctx.stroke();lab('x = 0',X(0),fy-bh-46,C('--ink'),'center');
-  ctx.strokeStyle=C('--ghost');ctx.beginPath();ctx.moveTo(X(P.x0),fy-bh-40);ctx.lineTo(X(P.x0),fy);ctx.stroke();lab('x₀',X(P.x0),fy-bh-46,C('--mut'),'center');
+  ctx.strokeStyle=C('--ghost');ctx.beginPath();ctx.moveTo(X(P.x0),fy-bh-40);ctx.lineTo(X(P.x0),fy);ctx.stroke();lab('x_m',X(P.x0),fy-bh-46,C('--mut'),'center');
   ctx.setLineDash([]);
  }
  // mola, amortecedor e bloco
@@ -203,7 +203,7 @@ function draw(){
  // barras de energia: Ep, Ec e Q como fração de E0 (a soma é sempre E0)
  if($('c_bar').checked){
   const ec=.5*P.m*q[1]*q[1],ep=.5*P.k*x*x,bwid=200,bx0=W-mr-bwid,by0=8;let xx=bx0;
-  [[ep,C('--vy'),'Ep'],[ec,C('--vx'),'Ec'],[Q,C('--a'),'Q']].forEach(([v,col,nm],j)=>{const w=Math.max(0,Math.min(bwid-(xx-bx0),v/su.E0*bwid));ctx.fillStyle=col;ctx.fillRect(xx,by0,w,12);xx+=w;lab(nm,bx0+j*46,by0+28,col)});
+  [[ep,C('--vy'),'U'],[ec,C('--vx'),'K'],[Q,C('--a'),'Q']].forEach(([v,col,nm],j)=>{const w=Math.max(0,Math.min(bwid-(xx-bx0),v/su.E0*bwid));ctx.fillStyle=col;ctx.fillRect(xx,by0,w,12);xx+=w;lab(nm,bx0+j*46,by0+28,col)});
   ctx.strokeStyle=C('--line');ctx.lineWidth=1;ctx.strokeRect(bx0,by0,bwid,12);lab('E₀ = '+f2(su.E0)+' J',bx0+bwid,by0+28,C('--mut'),'right');
  }
  // leituras, texto e gráficos

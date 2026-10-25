@@ -146,7 +146,7 @@ function draw(){
  const pad=1.5,bw=Math.max(x1-x0+2*pad,8),bh=Math.max(y1-y0+2*pad,5),cx=(x0+x1)/2,cy=(y0+y1)/2;
  const sc=Math.min((W-30)/bw,(H-30)/bh),X=x=>W/2+(x-cx)*sc,Y=y=>H/2-(y-cy)*sc,ox=X(0),oy=Y(0);
  ctx.clearRect(0,0,W,H);
- const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font='600 12px system-ui,sans-serif';ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
+ const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font=C('--normalfont');ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
  const arr=(x,y,vx,vy,col,w,dash,tx)=>{ctx.setLineDash(dash?[5,4]:[]);arrow(ctx,X(x),Y(y),vx*vs,-vy*vs,col,w);ctx.setLineDash([]);
   if(tx&&Math.hypot(vx,vy)*vs>6)lab(tx,X(x)+vx*vs+(vx>=0?6:-6),Y(y)-vy*vs+4,col,vx>=0?'left':'right')};
  // grade e eixos x–y (origem no ponto da colisão), com marcas em metros
@@ -155,7 +155,7 @@ function draw(){
  for(let g=Math.ceil(gx0/st)*st;g<=gx1;g+=st){ctx.beginPath();ctx.moveTo(X(g),0);ctx.lineTo(X(g),H);ctx.stroke()}
  for(let g=Math.ceil(gy0/st)*st;g<=gy1;g+=st){ctx.beginPath();ctx.moveTo(0,Y(g));ctx.lineTo(W,Y(g));ctx.stroke()}
  ctx.strokeStyle=C('--ink');ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(0,oy);ctx.lineTo(W,oy);ctx.moveTo(ox,0);ctx.lineTo(ox,H);ctx.stroke();
- ctx.font='11px system-ui,sans-serif';ctx.fillStyle=C('--mut');
+ ctx.font=C('--normalfont');ctx.fillStyle=C('--mut');
  for(let g=Math.ceil(gx0/st)*st;g<=gx1;g+=st)if(Math.abs(g)>1e-9){ctx.textAlign='center';ctx.fillText(+g.toFixed(6),X(g),oy+14)}
  for(let g=Math.ceil(gy0/st)*st;g<=gy1;g+=st)if(Math.abs(g)>1e-9){ctx.textAlign='right';ctx.fillText(+g.toFixed(6),ox-5,Y(g)+4)}
  lab('x (m)',W-8,oy-8,C('--ink'),'right');lab('y (m)',ox+8,14,C('--ink'));lab('O',ox+6,oy+14,C('--ink'));

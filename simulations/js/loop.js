@@ -150,9 +150,9 @@ function draw(){
  const C=css,W=fit.w,H=fit.h,mL=52,mR=20,mT=40,mB=34,xs=geom(su.s0).x,xe=su.Lx,yt=Math.max(P.h,2*P.R);
  const sc=Math.min((W-mL-mR)/(xe-xs),(H-mT-mB)/yt),X=x=>mL+(x-xs)*sc,Y=y=>H-mB-y*sc;
  ctx.clearRect(0,0,W,H);
- const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font='600 12px system-ui,sans-serif';ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
+ const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font=C('--normalfont');ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
  // grade horizontal (alturas em metros)
- const st=Sim.nice(yt/5);ctx.lineWidth=1;ctx.font='11px system-ui,sans-serif';
+ const st=Sim.nice(yt/5);ctx.lineWidth=1;ctx.font=C('--normalfont');
  for(let y=0;y<=yt*1.02;y+=st){ctx.strokeStyle=C('--grid');ctx.beginPath();ctx.moveTo(mL,Y(y));ctx.lineTo(W-mR,Y(y));ctx.stroke();ctx.fillStyle=C('--mut');ctx.textAlign='right';ctx.fillText(+y.toFixed(6),mL-6,Y(y)+4)}
  lab('y (m)',8,16,C('--mut'));
  // alturas h (início) e h_c = 2,5R (mínima para completar o loop, sem atrito)

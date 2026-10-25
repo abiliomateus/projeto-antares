@@ -511,7 +511,7 @@
             // Título e legenda.
             context.fillStyle = cssColor('--ink');
             context.textAlign = 'left';
-            context.font = '600 12px';
+            context.font = cssColor('--plotfont');
             context.fillText(options.title, marginLeft, 14);
 
             let legendX = width - marginRight;

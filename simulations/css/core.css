@@ -27,27 +27,33 @@
   font-display: swap;
 }
 
-:root{--bg:#e2e3db;--card:#fff;--ink:#484537;--mut:#484537;--line:#C8C4B7;--grid:#ACA793;--acc:#a12f24;--ghost:#6C6753;--vx:#d97706;--vy:#0f9d58;--a:#d6336c;--ground:#ACA793;--sky:#e2e3db;
+:root{
+  --fonte:"Linux Biolinum",sans-serif;
+  --normalfont:16px var(--fonte);
+  --smallfont:12px var(--fonte);
+  --labelfont:600 14px var(--fonte);
+  --plotfont:600 14px var(--fonte);
+  --bg:#e2e3db;--card:#fff;--ink:#484537;--mut:#484537;--line:#C8C4B7;--grid:#ACA793;--acc:#a12f24;--ghost:#6C6753;--vx:#d97706;--vy:#0f9d58;--a:#d6336c;--ground:#ACA793;--sky:#e2e3db;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:light){:root:not([data-theme="light"]){--bg:#0e131b;--card:#060708;--ink:#e6ebf3;--mut:#9aa6b8;--line:#283244;--grid:#1f2937;--acc:#a12f24;--ghost:#6f7b8f;--vx:#fbab3c;--vy:#3ddc84;--a:#ff6fa3;--ground:#6e5a3b;--sky:#111822}}
 :root[data-theme="dark"]{--bg:#0e131b;--card:#161d28;--ink:#e6ebf3;--mut:#9aa6b8;--line:#283244;--grid:#1f2937;--acc:#a12f24;--ghost:#6f7b8f;--vx:#fbab3c;--vy:#3ddc84;--a:#ff6fa3;--ground:#6e5a3b;--sky:#111822}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg); color:var(--ink); font-size:18px/1.0em; font-family: "Linux Biolinum", sans-serif;}
+body{margin:0;background:var(--bg); color:var(--ink); font:18px/1.4 var(--fonte);}
 .wrap{max-width:1120px;margin:0 auto;padding:0px 14px 0}
 h1{ font-size:1.5em;margin:0 0 2px;letter-spacing:-.01em}
 a, a:link, a:visited {color: var(--acc);text-decoration:none}
 header p{margin:0 0 14px;color:var(--mut)}
 main{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start}
-.plots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.plots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px;}
 @media (max-width:820px){main,.plots{grid-template-columns:minmax(0,1fr)}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
-canvas{display:block;width:100%;border-radius:6px;background:var(--sky)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px; }
+canvas{display:block;width:100%;border-radius:6px;background:var(--sky);}
 .ro{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
 .ro div{border-left:3px solid var(--line);padding:0 0 0 8px}
-.ro small{display:block;color:var(--mut);font-size:.75rem}
+.ro small{display:block;color:var(--mut);font-size:1rem}
 .ro b{font-variant-numeric:tabular-nums;font-size:1rem}
 @media (max-width:480px){.ro{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.note{margin:10px 0 0;color:var(--mut);font-size:.88rem;min-height:1.3em}
+.note{margin:10px 0 0;color:var(--mut);font-size:1rem;min-height:1.3em}
 .btns{display:flex;gap:8px;margin-bottom:12px}
 button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 12px;border-radius:7px;cursor:pointer;flex:1}
 button.p{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
@@ -62,7 +68,7 @@ details{margin-top:14px;font-size:.92rem}
 summary{cursor:pointer;font-weight:600}
 code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em}
 details p{margin:.5em 0;max-width:75ch}
-.pt{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:center;font-size:.85rem;margin-bottom:4px}
+.pt{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:center;font-size:1rem;margin-bottom:4px}
 .pt b{font-weight:600}
 mjx-container{max-width:100%}
 mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;margin:.6em 0 !important}
@@ -82,12 +88,12 @@ h2.tp{font-size:1.05rem;margin:22px 0 10px}
 a.sim:hover{border-color:var(--acc)}
 a.sim:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .sim h3{margin:0;font-size:1.05rem}
-.sim p{margin:0;color:var(--mut);font-size:.9rem}
+.sim p{margin:0;color:var(--mut);font-size:1rem}
 .sim-ic{width:52px;height:52px;color:var(--acc)}
 .sim-ic svg{width:100%;height:100%;display:block}
 .sim.off{opacity:.6}
 .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:4px}
-.tag{font-size:.74rem;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
+.tag{font-size:.8rem;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
 .tag.soon{border-color:var(--vx);color:var(--vx)}
 
 hr {

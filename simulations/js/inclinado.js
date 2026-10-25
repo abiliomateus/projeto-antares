@@ -147,17 +147,17 @@ function draw(){
  ctx.strokeStyle=C('--ground');ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(12,By);ctx.lineTo(W-12,By);ctx.stroke();
  ctx.strokeStyle=C('--ink');ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(Tx,Ty);ctx.lineTo(Bx,By);ctx.stroke();
  if(th>0.02){ctx.strokeStyle=C('--mut');ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(Bx,By,42,Math.PI,Math.PI+th);ctx.stroke();
-  ctx.fillStyle=C('--mut');ctx.font='12px system-ui,sans-serif';ctx.textAlign='right';ctx.fillText('θ = '+P.ang+'°',Bx-48,By-6)}
+  ctx.fillStyle=C('--mut');ctx.font=C('--normalfont');ctx.textAlign='right';ctx.fillText('θ = '+P.ang+'°',Bx-48,By-6)}
  // bloco: centro C = ponto da superfície + metade do lado ao longo de n
  const b=bm()*sc,u=q[0]*sc+b/2,Cx=Tx+d[0]*u+n[0]*b/2,Cy=Ty+d[1]*u+n[1]*b/2;
  ctx.save();ctx.translate(Cx,Cy);ctx.rotate(th);
  ctx.fillStyle=C('--ink');ctx.strokeStyle=C('--ink');ctx.lineWidth=2;ctx.fillRect(-b/2,-b/2,b,b);ctx.strokeRect(-b/2,-b/2,b,b);
- ctx.fillStyle=C('--ink');ctx.font='600 12px system-ui,sans-serif';ctx.textAlign='center';ctx.fillText('m',0,4);ctx.restore();
+ ctx.fillStyle=C('--card');ctx.font=C('--normalfont');ctx.textAlign='center';ctx.fillText('m',0,4);ctx.restore();
  // forças: escala fixa, o peso mede 72 px; as outras ficam proporcionais a ele
  const k=72/ph.W,F=(lab,v,ox,oy,dx,dy,col,dash,w)=>{
   ctx.setLineDash(dash?[5,4]:[]);arrow(ctx,ox,oy,dx,dy,col,w||2.6);ctx.setLineDash([]);
   const len=Math.hypot(dx,dy);if(len<3)return;
-  const ux=dx/len,uy=dy/len;ctx.fillStyle=col;ctx.font='600 12px system-ui,sans-serif';
+  const ux=dx/len,uy=dy/len;ctx.fillStyle=col;ctx.font=C('--normalfont');
   ctx.textAlign=ux>.3?'left':ux<-.3?'right':'center';
   ctx.fillText(lab+'='+f2(v)+' N',ox+dx+ux*8,oy+dy+uy*12+(Math.abs(uy)<.3?4:0));
  };

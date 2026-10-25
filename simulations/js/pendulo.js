@@ -143,7 +143,7 @@ function draw(){
  const Wd=Math.max(su.L*Math.sin(P.th0*D),su.r)+.25,yt=su.h0>su.r?Math.max(.25,su.r-su.d+.15):.25;
  const sc=Math.min((W-30)/(2*Wd),(H-mT-mB)/(yt+su.L+.2)),X=x=>W/2+x*sc,Y=y=>mT+(yt-y)*sc;
  ctx.clearRect(0,0,W,H);
- const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font='600 12px system-ui,sans-serif';ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
+ const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font=C('--normalfont');ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
  // altura inicial h (referência: a partícula deve voltar a esta linha) e trajetórias circulares
  if($('c_h').checked){ctx.setLineDash([6,5]);ctx.lineWidth=1.3;ctx.strokeStyle=C('--ink');const yh=-su.L*Math.cos(P.th0*D);
   ctx.beginPath();ctx.moveTo(X(-Wd),Y(yh));ctx.lineTo(X(Wd),Y(yh));ctx.stroke();ctx.setLineDash([]);lab('h = '+f2(su.h0)+' m',X(Wd)-4,Y(yh)-5,C('--ink'),'right')}

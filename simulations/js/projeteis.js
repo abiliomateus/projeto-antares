@@ -124,7 +124,7 @@ function draw(){
   const Y = y => CH - mb - y * sc;
  ctx.clearRect(0,0,CW,CH);
  const vw=(CW-ml-mr)/sc,vh=(CH-mt-mb)/sc,st=Sim.nice(Math.max(vw,vh)/8);
- ctx.font='11px system-ui,sans-serif';ctx.lineWidth=1;
+ ctx.font=C('--normalfont');ctx.lineWidth=1;
  for(let x=0;x<=vw;x+=st){ctx.strokeStyle=C('--grid');ctx.beginPath();ctx.moveTo(X(x),mt);ctx.lineTo(X(x),Y(0));ctx.stroke();ctx.fillStyle=C('--mut');ctx.textAlign='center';ctx.fillText(+x.toFixed(6),X(x),CH-mb+15)}
  for(let y=0;y<=vh;y+=st){ctx.strokeStyle=C('--grid');ctx.beginPath();ctx.moveTo(ml,Y(y));ctx.lineTo(CW-mr,Y(y));ctx.stroke();ctx.fillStyle=C('--mut');ctx.textAlign='right';ctx.fillText(+y.toFixed(6),ml-6,Y(y)+4)}
  ctx.fillStyle=C('--ground');ctx.fillRect(ml,Y(0),CW-ml-mr,4);
