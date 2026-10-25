@@ -165,6 +165,7 @@ img.header{max-height: 40em}
 p.header {
   padding:5px;
   padding-left: 30px;
+  padding-right: 30px;
   margin:0 0 20px;
   background-color: var(--card);
   border-radius:200px;border:1px solid var(--line);
