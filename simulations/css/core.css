@@ -36,7 +36,7 @@
   --bg:#e2e3db;--card:#fff;--ink:#484537;--mut:#484537;--line:#C8C4B7;--grid:#ACA793;--acc:#a12f24;--ghost:#6C6753;--vx:#d97706;--vy:#0f9d58;--a:#d6336c;--ground:#ACA793;--sky:#e2e3db;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:light){:root:not([data-theme="light"]){--bg:#0e131b;--card:#060708;--ink:#e6ebf3;--mut:#9aa6b8;--line:#283244;--grid:#1f2937;--acc:#a12f24;--ghost:#6f7b8f;--vx:#fbab3c;--vy:#3ddc84;--a:#ff6fa3;--ground:#6e5a3b;--sky:#111822}}
-:root[data-theme="dark"]{--bg:#0e131b;--card:#161d28;--ink:#e6ebf3;--mut:#9aa6b8;--line:#283244;--grid:#1f2937;--acc:#FAB3B7;--ghost:#6f7b8f;--vx:#fbab3c;--vy:#3ddc84;--a:#ff6fa3;--ground:#6e5a3b;--sky:#111822}
+:root[data-theme="dark"]{--bg:#0e131b;--card:#161d28;--ink:#e6ebf3;--mut:#9aa6b8;--line:#283244;--grid:#1f2937;--acc:#77b1d4;--ghost:#6f7b8f;--vx:#fbab3c;--vy:#3ddc84;--a:#ff6fa3;--ground:#6e5a3b;--sky:#111822}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg); color:var(--ink); font:18px/1.4 var(--fonte);}
 .wrap{max-width:1120px;margin:0 auto;padding:0px 14px 0}
@@ -81,8 +81,9 @@ mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;margin:.6em 0 !i
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{flex:none;padding:5px 11px;border-radius:999px;font-size:1.1rem;border:1px solid var(--line);background:var(--card)}
 .chip small{opacity:.7;margin-left:5px}
-.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
-.chip:hover{background:var(--acc);border-color:var(--acc);color:#fff}
+.chip.on{background:var(--acc);border-color:var(--acc);color: var(--card)}
+.chip.on{background:var(--acc);border-color:var(--acc);color: var(--card)}
+.chip:hover{background:var(--acc);border-color:var(--acc);color: var(--card)}
 h2.tp{font-size:1.05rem;margin:22px 0 10px}
 .menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .sim{display:flex;flex-direction:column;gap:6px;color:inherit;text-decoration:none}
@@ -110,7 +111,7 @@ hr {
   justify-content: space-between;
   /* gap: 1rem; */
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 2                                                                                                                           0px;
   padding-left: 5%;
   padding-right: 5%;
   font-size: 0.85rem;
