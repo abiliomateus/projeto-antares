@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (header) {
         header.insertAdjacentHTML("afterbegin", `
-            <a href="index.html"><h1 class="header">
+            <a href="../index.html"><h1 class="header">
                 <img src="img/antares-circle.png"
                      height="48"
                      alt=""
@@ -11,10 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Projeto Antαres
             </h1></a>
             <p class="header">
-                Acessibilidade de Recursos Educacionais em Física e Astronomia (
-                <a href="https://antares.ufsc.br">
-                    antares.ufsc.br
-                </a>)
+                Acessibilidade de Recursos Educacionais em Física e Astronomia
             </p>
         `);
     }

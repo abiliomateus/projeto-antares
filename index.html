@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Projeto Antares</title>
+<link rel="stylesheet" href="simulations/css/core.css">
+<!-- MathJax (saída SVG). Fórmulas nos textos de projeto.js: \( ... \). Precisa de internet; sem ela, aparecem como código LaTeX. -->
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'},options:{enableMenu:false}};</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header id="site-header"></header>
+<script src="simulations/js/header.js"></script>
+
+<header class="hero"><h1 id="tt"></h1><p id="st"></p></header>
+<!-- Ids usados pelo script: tt, st, tools, sobre, secoes, rod. O conteúdo vem de projeto.js (não edite os cartões aqui). -->
+<nav class="tools" id="tools" aria-label="Seções"></nav>
+<section id="sobre" class="card sobre" hidden></section>
+<div id="secoes"></div>
+<footer></footer>
+</div>
+<script src="simulations/js/core.js"></script>
+<script src="projeto.js"></script>
+<script>
+/* Portal: desenha o conteúdo de window.PROJETO (projeto.js). Para mudar o conteúdo, edite projeto.js;
+   para mudar o visual, edite a seção "Portal" de core.css. */
+(function(){
+ const C=window.PROJETO||{},o=Object.assign({nome:'Projeto Antares',subtitulo:'',logo:'',mostrarNav:true,mostrarTema:true,abrirEmNovaAba:false},C.opcoes),$=Sim.$;
+ const secs=(C.secoes||[]).filter(s=>(s.itens||[]).length);
+ document.title=o.nome;$('tt').innerHTML=(o.logo?'<img class="logo" src="'+o.logo+'" alt="">':'')+o.nome;$('st').innerHTML=o.subtitulo;
+ const gen='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="24" cy="24" r="14"/></svg>';
+ // cartão: link só se houver `arquivo` e o item estiver disponível; "em breve" só com disponivel:false
+ function card(it){
+  const on=!!it.arquivo&&it.disponivel!==false,tag=on?'a':'div',nova=on&&(it.novaAba!==undefined?it.novaAba:o.abrirEmNovaAba)?' target="_blank" rel="noopener"':'';
+  return '<'+tag+' class="card sim'+(it.destaque?' wide':'')+(it.disponivel===false?' off':'')+'"'+(on?' href="'+it.arquivo+'"'+nova:'')+'>'+
+   (it.imagem?'<img class="capa" src="'+it.imagem+'" alt="'+String(it.titulo||'').replace(/<[^>]*>/g,'').replace(/"/g,'')+'">':'<div class="sim-ic">'+(it.icone||gen)+'</div>')+
+   '<h3>'+it.titulo+'</h3><p>'+(it.descricao||'')+'</p>'+(on?'<span class="go">'+(it.botao||'Abrir')+' →</span>':'')+
+   '<div class="tags">'+(it.tags||[]).map(t=>'<span class="tag">'+t+'</span>').join('')+(it.disponivel===false?'<span class="tag soon">em breve</span>':'')+'</div></'+tag+'>';
+ }
+ if(C.sobre){$('sobre').innerHTML=C.sobre;$('sobre').hidden=false}
+ $('secoes').innerHTML=secs.map(s=>'<section id="'+s.id+'"><h2 class="tp">'+s.titulo+'</h2>'+(s.descricao?'<p class="note" style="margin:-4px 0 10px">'+s.descricao+'</p>':'')+'<div class="menu">'+s.itens.map(card).join('')+'</div></section>').join('');
+ // rodapé
+ const r=C.rodape;
+ if(r&&(r.texto||(r.links||[]).length)){$('rod').innerHTML=(r.texto||'')+((r.links||[]).length?(r.texto?' · ':'')+r.links.map(l=>'<a href="'+l.url+'">'+l.rotulo+'</a>').join(' · '):'');$('rod').hidden=false}
+ // navegação por seção e tema
+ const T=$('tools');
+ if(o.mostrarNav){const l=(C.sobre?[{id:'sobre',titulo:'Sobre'}]:[]).concat(secs);if(l.length>1){const ch=document.createElement('div');ch.className='chips';ch.innerHTML=l.map(s=>'<a class="chip" href="#'+s.id+'">'+s.titulo+'</a>').join('');T.appendChild(ch)}}
+ if(o.mostrarTema){
+  const nomes={auto:'automático',light:'claro',dark:'escuro'},ordem=['auto','light','dark'],b=document.createElement('button');b.className='chip';
+  let k=0;try{k=Math.max(0,ordem.indexOf(localStorage.getItem('tema')))}catch(e){}
+  const aplica=()=>{const m=ordem[k],rt=document.documentElement;m==='auto'?rt.removeAttribute('data-theme'):rt.setAttribute('data-theme',m);b.textContent='Tema: '+nomes[m]};
+  b.onclick=()=>{k=(k+1)%3;try{localStorage.setItem('tema',ordem[k])}catch(e){}aplica()};aplica();T.appendChild(b);
+ }
+ Sim.math(document.body);
+})();
+</script>
+
+<footer></footer>
+<script src="simulations/js/footer.js"></script>
+
+</body>
+</html>
