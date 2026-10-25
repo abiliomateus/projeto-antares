@@ -11,12 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <em>Creative Commons Atribuição-NãoComercial 4.0 Internacional</em>
     </a>.
   </p>
-  <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br"
-     rel="license">
-    <img src="img/by-nc.svg"
-         alt="Licença Creative Commons BY-NC 4.0"
-         width="100">
-  </a></div>
+  </div>
         `);
     }
 });

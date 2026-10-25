@@ -27,6 +27,7 @@ const fit=Sim.fit(cv,.7,330,560);
 let q=[0,0],t=0,mode='idle',paused=false,rows=[],acc=0,cnt=0,ph,a0,t0,lastSt='';
 
 Sim.interactive(cv,fit);
+Sim.playbar(cv,()=>mode==='fly'?'run':mode==='land'?'end':mode,()=>paused);   // ▶/⏸ e reiniciar sobre o canvas (ver core.js)
 
 // ---- Parâmetros ajustáveis (valor em P.<id>) ----
 Sim.controls($('ctl'),[

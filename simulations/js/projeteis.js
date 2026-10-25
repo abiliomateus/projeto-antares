@@ -28,6 +28,8 @@ const fit = Sim.fit(cv, .35, 220, 420),
       ml = 46, mr = 16, mt = 16, mb = 32;
 
 Sim.interactive(cv,fit);
+Sim.playbar(cv,()=>mode==='fly'?'run':mode==='land'?'end':mode,()=>paused);   // ▶/⏸ e reiniciar sobre o canvas (ver core.js)
+
 // ---- Estado da simulação ----
 // s: [x,y,vx,vy] atual | t: tempo simulado (s) | mode: 'idle' | 'fly' | 'land'
 // trail: pontos [x,y] do lançamento atual | past: lançamentos anteriores (máx. 5)

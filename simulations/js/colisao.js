@@ -31,6 +31,7 @@ const fit=Sim.fit(cv,.6,380,600);
 let lastSt='',A,B,t=0,mode='idle',paused=false,rows=[],tr=[],rec=null,acc=0,cnt=0,su;
 
 Sim.interactive(cv,fit);
+Sim.playbar(cv,()=>mode==='fly'?'run':mode==='land'?'end':mode,()=>paused);   // ▶/⏸ e reiniciar sobre o canvas (ver core.js)
 
 // ---- Parâmetros ajustáveis (valor em P.<id>) ----
 // Os rótulos aceitam HTML e fórmulas em LaTeX (MathJax): \( ... \), escrito aqui como '\\( ... \\)'.

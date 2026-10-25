@@ -109,6 +109,8 @@ hr {
   align-items: center;
   justify-content: space-between;
   /* gap: 1rem; */
+  padding-top: 20px;
+  padding-bottom: 20px;
   padding-left: 5%;
   padding-right: 5%;
   font-size: 0.85rem;
@@ -178,3 +180,7 @@ p.header {
 .zbar{position:absolute;right:6px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px}
 .zbar button{flex:none;width:28px;height:28px;padding:0;font-size:16px;line-height:1;border-radius:6px;opacity:.8}
 .zbar button:hover,.zbar button:focus-visible{opacity:1}
+.zbar button.txt{font-size:12px;font-weight:600}
+.zbar svg{width:16px;height:16px;display:block;margin:auto}
+.zsep{flex:none;height:6px}
+@media (pointer:coarse){.zbar{gap:6px}.zbar button{width:40px;height:40px;font-size:20px}.zbar button.txt{font-size:14px}.zbar svg{width:20px;height:20px}}   /* telas de toque: botões maiores */
