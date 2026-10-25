@@ -405,8 +405,8 @@
 
         const angle = Math.atan2(dy, dx);
         const headLength = Math.min(10, length * 0.8);
-        const tipX = x + 1.075*dx;
-        const tipY = y + 1.075*dy;
+        const tipX = x + 1.09*dx;
+        const tipY = y + 1.09*dy;
 
         context.beginPath();
         context.moveTo(tipX, tipY);

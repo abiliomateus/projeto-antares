@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (header) {
         header.insertAdjacentHTML("afterbegin", `
-            <a href="../index.html"><h1 class="header">
+            <a href="./index.html"><h1 class="header">
                 <img src="img/antares-circle.png"
-                     height="48"
+                     height="40em"
                      alt=""
                      style="vertical-align: middle; margin-right: 10px;">
                 Projeto Antαres

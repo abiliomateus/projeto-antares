@@ -150,12 +150,18 @@ hr {
 
 .header {
   margin:0;
-  display: flex;
+  display: box;
   align-items: center;
   padding: 10px;
   background-color: var(--acc);
+  text-align: center; 
+  align-items: center; 
+  align-content: center;
+  width: 100%;
 }
 h1.header {font-size: 2em; color: var(--card)}
+img.header{max-height: 40em}
+
 p.header {
   padding:5px;
   padding-left: 30px;
@@ -164,7 +170,7 @@ p.header {
   border-radius:200px;border:1px solid var(--line);
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-
+  text-align: center; align-items: center; align-content: center;
 }
 
 /* ---- Zoom do canvas (Sim.interactive): botões na lateral direita ---- */
