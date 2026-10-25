@@ -35,7 +35,7 @@
   --plotfont:600 14px var(--fonte);
   --bg:#e2e3db;--card:#fff;--ink:#484537;--mut:#484537;--line:#C8C4B7;--grid:#ACA793;--acc:#a12f24;--ghost:#6C6753;--vx:#d97706;--vy:#0f9d58;--a:#d6336c;--ground:#ACA793;--sky:#e2e3db;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:light){:root:not([data-theme="light"]){--bg:#0e131b;--card:#060708;--ink:#e6ebf3;--mut:#9aa6b8;--line:#283244;--grid:#1f2937;--acc:#a12f24;--ghost:#6f7b8f;--vx:#fbab3c;--vy:#3ddc84;--a:#ff6fa3;--ground:#6e5a3b;--sky:#111822}}
+@media (prefers-color-scheme:light){:root:not([data-theme="light"]){--bg:#0e131b;--card:#161d28;--ink:#e6ebf3;--mut:#9aa6b8;--line:#283244;--grid:#1f2937;--acc:#77b1d4;--ghost:#6f7b8f;--vx:#fbab3c;--vy:#3ddc84;--a:#ff6fa3;--ground:#6e5a3b;--sky:#111822}}
 :root[data-theme="dark"]{--bg:#0e131b;--card:#161d28;--ink:#e6ebf3;--mut:#9aa6b8;--line:#283244;--grid:#1f2937;--acc:#77b1d4;--ghost:#6f7b8f;--vx:#fbab3c;--vy:#3ddc84;--a:#ff6fa3;--ground:#6e5a3b;--sky:#111822}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg); color:var(--ink); font:18px/1.4 var(--fonte);}
@@ -56,7 +56,7 @@ canvas{display:block;width:100%;border-radius:6px;background:var(--sky);}
 .note{margin:10px 0 0;color:var(--mut);font-size:1rem;min-height:1.3em}
 .btns{display:flex;gap:8px;margin-bottom:12px}
 button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 12px;border-radius:7px;cursor:pointer;flex:1}
-button.p{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.p{background:var(--acc);border-color:var(--acc);color: var(--card);font-weight:600}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .row{display:grid;grid-template-columns:1fr auto;gap:2px 8px;margin-bottom:10px;font-size:.92rem}
 .row output{color:var(--mut);font-variant-numeric:tabular-nums}
@@ -81,7 +81,6 @@ mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;margin:.6em 0 !i
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{flex:none;padding:5px 11px;border-radius:999px;font-size:1.1rem;border:1px solid var(--line);background:var(--card)}
 .chip small{opacity:.7;margin-left:5px}
-.chip.on{background:var(--acc);border-color:var(--acc);color: var(--card)}
 .chip.on{background:var(--acc);border-color:var(--acc);color: var(--card)}
 .chip:hover{background:var(--acc);border-color:var(--acc);color: var(--card)}
 h2.tp{font-size:1.05rem;margin:22px 0 10px}
@@ -111,18 +110,12 @@ hr {
   justify-content: space-between;
   /* gap: 1rem; */
   padding-top: 20px;
-  padding-bottom: 2                                                                                                                           0px;
+  padding-bottom: 20px;
   padding-left: 5%;
   padding-right: 5%;
   font-size: 0.85rem;
   background-color: var(--card);
   margin-top: 50px;
-  border-radius:999px;border:1px solid var(--line);
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
   /* margin: 0 10%; */
 }
 
@@ -178,10 +171,10 @@ p.header {
 }
 
 /* ---- Zoom do canvas (Sim.interactive): botões na lateral direita ---- */
-.zbar{position:absolute;right:6px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px}
-.zbar button{flex:none;width:28px;height:28px;padding:0;font-size:16px;line-height:1;border-radius:6px;opacity:.8}
+.zbar{position:absolute;right:6px;top:40%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px}
+.zbar button{flex:none;width:28px;height:28px;padding:0;font-size:16px;line-height:1;border-radius:6px;opacity:1; background-color: var(--acc); color: var(--card);}
 .zbar button:hover,.zbar button:focus-visible{opacity:1}
-.zbar button.txt{font-size:12px;font-weight:600}
-.zbar svg{width:16px;height:16px;display:block;margin:auto}
+.zbar button.txt{font-size:12px;font-weight:600; color: var(--card)}
+.zbar svg{width:16px;height:16px;display:block;margin:auto; color: var(--card)}
 .zsep{flex:none;height:6px}
 @media (pointer:coarse){.zbar{gap:6px}.zbar button{width:40px;height:40px;font-size:20px}.zbar button.txt{font-size:14px}.zbar svg{width:20px;height:20px}}   /* telas de toque: botões maiores */

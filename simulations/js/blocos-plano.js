@@ -147,7 +147,7 @@ function draw(){
  const C=css,W=fit.w,H=fit.h,{s1,c1,s2,c2}=ph,L=P.L,mL=105,mR=105,mT=120,mB=40;
  const sc=Math.min((W-mL-mR)/(L*(c1+c2)),(H-mT-mB)/Math.max(L*Math.max(s1,s2),.5));
  const EL=L*c1*sc,Ax=mL+(W-mL-mR-EL-L*c2*sc)/2+EL,yb=H-mB,Ay=yb-L*Math.max(s1,s2)*sc;
- const d1=[-c1,s1],n1=[-s1,-c1],d2=[c2,s2],n2=[s2,-c2],b=bm()*sc;
+ const d1=[-c1,s1],n1=[-s1,-c1],d2=[c2,s2],n2=[s2,-c2],b=1.5*bm()*sc;
  const BL=[Ax+d1[0]*L*sc,Ay+d1[1]*L*sc],BR=[Ax+d2[0]*L*sc,Ay+d2[1]*L*sc];
  ctx.clearRect(0,0,W,H);
  // planos e chão
@@ -188,15 +188,17 @@ function draw(){
  [{c:C1,d:d1,n:n1,e:d1,W:ph.W1,N:ph.N1,Pp:ph.Pp1,Ff:ph.F1,m:P.m1,i:'₁'},
   {c:C2,d:d2,n:n2,e:[-d2[0],-d2[1]],W:ph.W2,N:ph.N2,Pp:ph.Pp2,Ff:ph.F2,m:P.m2,i:'₂'}].forEach(B=>{
   const[ox,oy]=B.c;
-  if($('c_comp').checked){
-   F('F_g∥'+B.i,B.Pp,ox,oy,B.d[0]*B.Pp*k,B.d[1]*B.Pp*k,C('--a'),true,2);
-   F('F_g⊥'+B.i,B.N,ox,oy,-B.n[0]*B.N*k,-B.n[1]*B.N*k,C('--a'),true,2);
+  if($('c_f').checked){
+    if($('c_comp').checked){
+    F('F_g∥'+B.i,B.Pp,ox,oy,B.d[0]*B.Pp*k,B.d[1]*B.Pp*k,C('--a'),true,2);
+    F('F_g⊥'+B.i,B.N,ox,oy,-B.n[0]*B.N*k,-B.n[1]*B.N*k,C('--a'),true,2);
+    }
+    F('F_g'+B.i,B.W,ox,oy,0,B.W*k,C('--a'));
+    F('N'+B.i,B.N,ox,oy,B.n[0]*B.N*k,B.n[1]*B.N*k,C('--acc'));
+    F('f'+B.i,Math.abs(B.Ff),ox,oy,B.e[0]*B.Ff*k,B.e[1]*B.Ff*k,C('--vx'));
+    F('T',ph.T,ox,oy,-B.d[0]*ph.T*k,-B.d[1]*ph.T*k,C('--vy'));
+    if($('c_res').checked){const fr=B.m*ph.a;F('F'+B.i,Math.abs(fr),ox+B.n[0]*(b/2+14),oy+B.n[1]*(b/2+14),B.e[0]*fr*k,B.e[1]*fr*k,C('--ink'),false,3.4)}
   }
-  F('F_g'+B.i,B.W,ox,oy,0,B.W*k,C('--a'));
-  F('N'+B.i,B.N,ox,oy,B.n[0]*B.N*k,B.n[1]*B.N*k,C('--acc'));
-  F('f'+B.i,Math.abs(B.Ff),ox,oy,B.e[0]*B.Ff*k,B.e[1]*B.Ff*k,C('--vx'));
-  F('T',ph.T,ox,oy,-B.d[0]*ph.T*k,-B.d[1]*ph.T*k,C('--vy'));
-  if($('c_res').checked){const fr=B.m*ph.a;F('F'+B.i,Math.abs(fr),ox+B.n[0]*(b/2+14),oy+B.n[1]*(b/2+14),B.e[0]*fr*k,B.e[1]*fr*k,C('--ink'),false,3.4)}
  });
  // leituras, texto e gráficos
  out('t',t);out('x',q[0]);out('v',q[1]);out('a',ph.a);out('T',ph.T);out('f1',Math.abs(ph.F1));out('f2',Math.abs(ph.F2));out('Fd',ph.Fd);

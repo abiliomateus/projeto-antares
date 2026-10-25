@@ -23,8 +23,9 @@
 (function(){
 const {$,rk4,f2,arrow,css}=Sim, DT=1/240, P={}, cv=$('cv'), ctx=cv.getContext('2d'), R=Math.PI/180;
 // Tela: proporção 0,7, altura entre 330 e 560 px (precisa de espaço para as setas).
-const fit=Sim.fit(cv,.7,330,560);
 let q=[0,0],t=0,mode='idle',paused=false,rows=[],acc=0,cnt=0,ph,a0,t0,lastSt='';
+
+const fit=Sim.fit(cv,.7,330,560);
 
 Sim.interactive(cv,fit);
 Sim.playbar(cv,()=>mode==='fly'?'run':mode==='land'?'end':mode,()=>paused);   // ▶/⏸ e reiniciar sobre o canvas (ver core.js)
@@ -68,7 +69,7 @@ const row=()=>{const ec=.5*P.m*q[1]*q[1],ep=P.m*P.g*(P.L-q[0])*ph.sn;return[t,q[
 // ---- Controle ----
 // Recalcula grandezas derivadas: ph (forças), a0 e t0 (aceleração e tempo até a base SEM atrito, referência).
 function upd(){ph=phys();a0=P.g*ph.sn;t0=a0>1e-9?Math.sqrt(2*ph.Smax/a0):Infinity}
-function reset(){upd();mode='idle';q=[0,0];t=0;rows=[];acc=0;paused=false;$('bp').textContent='Pausar'}
+function reset(){upd();mode='idle';q=[0,0];t=0;rows=[];acc=0;paused=false;    lastSt = '';$('bp').textContent='Pausar'}
 function launch(){reset();mode='run';rows=[row()]}
 $('bl').onclick=launch;
 $('bp').onclick=()=>{if(mode!=='run')return;paused=!paused;$('bp').textContent=paused?'Continuar':'Pausar'};
@@ -91,16 +92,6 @@ function step(dt){
  }
 }
 
-// // Frase de situação mostrada sob o canvas.
-// const M=s=>'\\('+s+'\\)',fm=Sim.fm;
-// function status(){
-//  const tn=Math.tan(ph.th);
-//  if(mode==='end'&&!ph.still)return'Chegou à base em '+f2(t)+' s com v = '+f2(q[1])+' m/s. Sem atrito: '+f2(t0)+' s e '+f2(a0*t0)+' m/s.';
-//  if(ph.stuck)return'Atrito estático segura o bloco: \( \tan\theta = \)'+f2(tn)+' \(\leq \mu_e = \)'+f2(ph.mus)+', logo '+M('f = F_{g∥}')+' e \(a = 0\).';
-//  if(!ph.atr)return'Sem atrito: só P e N atuam, f = 0 e a = g·sen θ = '+f2(a0)+' m/s².';
-//  return'Com atrito cinético: '+ M('f = \\mu_c N') +' e a = '+f2(ph.a)+' m/s² (tg θ = '+f2(tn)+' > μₑ = '+f2(ph.mus)+').';
-// }
-
 // Frase de situação mostrada sob o canvas.
 const M = s => '\\(' + s + '\\)';
 const fm = Sim.fm;
@@ -111,7 +102,7 @@ function status() {
     if (mode === 'end' && !ph.still) {
         return 'Chegou à base em ' + M(fm(t) + '\\,\\mathrm{s}') +
             ' com ' + M('v = ' + fm(q[1]) + '\\,\\mathrm{m/s}') +
-            '. Sem atrito: ' + M(t_0 + ' = ' + fm(t0) + '\\,\\mathrm{s}') +
+            '. Sem atrito: ' + M('t_0' + ' = ' + fm(t0) + '\\,\\mathrm{s}') +
             ' e ' + M('v_0 = ' + fm(a0 * t0) + '\\,\\mathrm{m/s}') + '.';
     }
 
