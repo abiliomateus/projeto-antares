@@ -155,13 +155,15 @@ function draw(){
   ctx.textAlign=ux>.3?'left':ux<-.3?'right':'center';
   ctx.fillText(lab+'='+f2(v)+' N',ox+dx+ux*8,oy+dy+uy*12+(Math.abs(uy)<.3?4:0));
  };
- if($('c_comp').checked){
-  F('F_g∥',ph.Pp,Cx,Cy,d[0]*ph.Pp*k,d[1]*ph.Pp*k,C('--a'),true,2);
-  F('F_g⊥',ph.N,Cx,Cy,-n[0]*ph.N*k,-n[1]*ph.N*k,C('--a'),true,2);
+ if($('c_f').checked){
+    if($('c_comp').checked){
+    F('F_g∥',ph.Pp,Cx,Cy,d[0]*ph.Pp*k,d[1]*ph.Pp*k,C('--a'),true,2);
+    F('F_g⊥',ph.N,Cx,Cy,-n[0]*ph.N*k,-n[1]*ph.N*k,C('--a'),true,2);
+    }
+    F('F_g',ph.W,Cx,Cy,0,ph.W*k,C('--a'));
+    F('N',ph.N,Cx,Cy,n[0]*ph.N*k,n[1]*ph.N*k,C('--acc'));
+    F('f',ph.f,Cx,Cy,-d[0]*ph.f*k,-d[1]*ph.f*k,C('--vx'));
  }
- F('F_g',ph.W,Cx,Cy,0,ph.W*k,C('--a'));
- F('N',ph.N,Cx,Cy,n[0]*ph.N*k,n[1]*ph.N*k,C('--acc'));
- F('f',ph.f,Cx,Cy,-d[0]*ph.f*k,-d[1]*ph.f*k,C('--vx'));
  if($('c_res').checked)F('F',ph.Fr,Cx+n[0]*(b/2+14),Cy+n[1]*(b/2+14),d[0]*ph.Fr*k,d[1]*ph.Fr*k,C('--vy'),false,3.4);
  // leituras e gráficos
  out('t',t);out('s',q[0]);out('v',q[1]);out('a',ph.a);out('W',ph.W);out('N',ph.N);out('f',ph.f);out('Fr',ph.Fr);

@@ -67,7 +67,7 @@
   T.appendChild(ch);
  }
  if(o.mostrarTema){
-  const nomes={auto:'automático',light:'claro',dark:'escuro'},ordem=['auto','light','dark'],b=document.createElement('button');b.className='chip';
+  const nomes={auto:'automático',light:'claro',dark:'escuro'},ordem=['auto','light','dark'],b=document.createElement('button');b.className='tema';
   let k=0;try{k=Math.max(0,ordem.indexOf(localStorage.getItem('tema')))}catch(e){}
   const aplica=()=>{const m=ordem[k],r=document.documentElement;m==='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',m);b.textContent='Tema: '+nomes[m]};
   b.onclick=()=>{k=(k+1)%3;try{localStorage.setItem('tema',ordem[k])}catch(e){}aplica()};aplica();T.appendChild(b);

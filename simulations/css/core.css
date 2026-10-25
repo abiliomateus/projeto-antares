@@ -77,12 +77,20 @@ mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;margin:.6em 0 !i
 .back a{color:var(--acc);text-decoration:none}
 .back a:hover{text-decoration:underline}
 .tools{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin:0 0 6px}
-.tools input[type=search]{flex:1 1 220px;font:inherit;padding:8px 10px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.tools input[type=search]{font:inherit;padding:8px 10px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink); width:100%; box-sizing: border-box;}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{flex:none;padding:5px 11px;border-radius:999px;font-size:1.1rem;border:1px solid var(--line);background:var(--card)}
+.tema {
+    display:flex;flex-wrap:wrap;gap:6px;
+    position: relative;
+    margin: 0 0 0 auto;
+    flex:none; padding:5px 11px;border-radius:999px;font-size:1.1rem;border:1px solid var(--line); background-color: transparent;
+}
 .chip small{opacity:.7;margin-left:5px}
 .chip.on{background:var(--acc);border-color:var(--acc);color: var(--card)}
 .chip:hover{background:var(--acc);border-color:var(--acc);color: var(--card)}
+h2.tp{font-size:1.05rem;margin:22px 0 10px}
+.tema:hover{background:var(--acc);border-color:var(--acc);color: var(--card)}
 h2.tp{font-size:1.05rem;margin:22px 0 10px}
 .menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .sim{display:flex;flex-direction:column;gap:6px;color:inherit;text-decoration:none}
