@@ -30,15 +30,14 @@ async function inicializarPagina() {
         console.log("Carregando estilos e plugins...");
 
         await Promise.all([
-            carregarCSS('css/core.css'),
+            carregarCSS('../css/core.css'),
         ]);
 
         // await carregarJS('js/core.js');
 
         // -> ADICIONE OUTROS PLUGINS (ex: jQuery, Axios) AQUI:
-        window.MathJax={tex:{inlineMath:[['\\(','\\)'],['\$','\$']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'},options:{enableMenu:false}};
-
-        await carregarJS('https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js');
+        await carregarJS('../js/mathjax-config.js');
+        await carregarJS('../js/tex-svg.js');
 
         console.log("Todos os scripts e plugins foram carregados com sucesso!");
 

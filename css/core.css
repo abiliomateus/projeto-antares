@@ -40,7 +40,7 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg); color:var(--ink); font:18px/1.4 var(--fonte);}
 .wrap{max-width:1120px;margin:0 auto;padding:0px 14px 0}
-h1{ font-size:1.5em;margin:0 0 2px;letter-spacing:-.01em}
+.h1{ font-size:1.5em; margin:0 0 2px; letter-spacing:-.01em}
 a, a:link, a:visited {color: var(--acc);text-decoration:none}
 header p{margin:0 0 14px;color:var(--mut)}
 main{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start}
@@ -78,8 +78,8 @@ mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;margin:.6em 0 !i
 .back a:hover{text-decoration:underline}
 .tools{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin:0 0 6px}
 .tools input[type=search]{font:inherit;padding:8px 10px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink); width:100%; box-sizing: border-box;}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{flex:none;padding:5px 11px;border-radius:999px;font-size:1.1rem;border:1px solid var(--line);background:var(--card)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{flex:none;padding:5px 11px;border-radius:999px;font-size:1rem;border:1px solid var(--line);background:var(--card)}
 .tema {
     display:flex;flex-wrap:wrap;gap:6px;
     position: relative;
@@ -87,15 +87,16 @@ mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;margin:.6em 0 !i
     flex:none; padding:5px 11px;border-radius:999px;font-size:1.1rem;border:1px solid var(--line); background-color: transparent;
 }
 .chip small{opacity:.7;margin-left:5px}
-.chip.on{background:var(--acc);border-color:var(--acc);color: var(--card)}
-.chip:hover{background:var(--acc);border-color:var(--acc);color: var(--card)}
+.chip.on{background:var(--acc); border-color:var(--acc); color: var(--card)}
+.chip:hover{background:var(--acc); border-color:var(--acc); color: var(--card)}
 h2.tp{font-size:1.05rem;margin:22px 0 10px}
+a.chips:hover{color: var(--card)}
 .tema:hover{background:var(--acc);border-color:var(--acc);color: var(--card)}
 h2.tp{font-size:1.05rem;margin:22px 0 10px}
 .menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .sim{display:flex;flex-direction:column;gap:6px;color:inherit;text-decoration:none}
 a.sim:hover{border-color:var(--acc)}
-a.sim:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+a.sim:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
 .sim h3{margin:0;font-size:1.05rem}
 .sim p{margin:0;color:var(--mut);font-size:1rem}
 .sim-ic{width:52px;height:52px;color:var(--acc)}

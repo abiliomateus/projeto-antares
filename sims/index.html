@@ -3,26 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Simulações de Física e Astronomia - Projeto Antαres</title>
-<link rel="icon" type="image/png" href="img/antares-circle.png">
+<title>Simulações de Física e Astronomia - projeto antαres</title>
+<link rel="icon" type="image/png" href="../img/icons/antares-192.png">
 </head>
 <body>
 
 <header id="site-header"></header>
 <div class="wrap">
-<header>
-<script src="js/header.js"></script>
+<div class="button"><a class="chip" href="/index.html">← Home</a></div>
+<script src="../js/header.js"></script>
 
-<header><h1 id="tt">Simulações de Física e Astronomia - Projeto Antαres</h1><p id="st"></p></header>
+<header><h2 id="tt">Simulações de Física e Astronomia - projeto antαres</h2><p id="st"></p></header>
 
 <div class="tools" id="tools"></div>
-<div id="lista">
-
-
-</div>
+<div id="lista"></div>
 <p class="note" id="nt"></p>
 </div>
-<script src="js/core.js"></script>
+
+<script src="../js/core.js"></script>
 <script src="js/catalogo.js"></script>
 
 
@@ -30,7 +28,7 @@
 /* Menu: desenha os cartões a partir de window.CATALOGO (catalogo.js). Para mudar o conteúdo,
    edite catalogo.js; para mudar o visual, edFite a seção "Menu" de core.css. */
 (function(){
- const C=window.CATALOGO||{},o=Object.assign({titulo:'Simulações de Física e Astronomia',subtitulo:'',agruparPorTopico:true,mostrarBusca:true,mostrarFiltros:true,mostrarEmBreve:true,mostrarTema:true,abrirEmNovaAba:false},C.opcoes);
+ const C=window.CATALOGO||{},o=Object.assign({titulo:'Simulações de Física e Astronomia  - projeto antαres',subtitulo:'',agruparPorTopico:true,mostrarBusca:true,mostrarFiltros:true,mostrarEmBreve:true,mostrarTema:true,abrirEmNovaAba:false},C.opcoes);
  const sims=C.simulacoes||[],tops=C.topicos||[],$=Sim.$,norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
  let filtro=(location.hash||'#todos').slice(1),busca='';
  if(filtro!=='todos'&&!tops.some(t=>t.id===filtro))filtro='todos';
@@ -66,19 +64,14 @@
    b.onclick=()=>{filtro=t.id;try{history.replaceState(null,'','#'+t.id)}catch(e){}render()};ch.appendChild(b)});
   T.appendChild(ch);
  }
- if(o.mostrarTema){
-  const nomes={auto:'automático',light:'claro',dark:'escuro'},ordem=['auto','light','dark'],b=document.createElement('button');b.className='tema';
-  let k=0;try{k=Math.max(0,ordem.indexOf(localStorage.getItem('tema')))}catch(e){}
-  const aplica=()=>{const m=ordem[k],r=document.documentElement;m==='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',m);b.textContent='Tema: '+nomes[m]};
-  b.onclick=()=>{k=(k+1)%3;try{localStorage.setItem('tema',ordem[k])}catch(e){}aplica()};aplica();T.appendChild(b);
- }
+
  render();
 })();
 </script>
 
 <footer></footer>
 
-<script src="js/footer.js"></script>
+<script src="../js/footer.js"></script>
 
 <script src="js/init.js"></script>
 

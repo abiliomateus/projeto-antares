@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (header) {
         header.insertAdjacentHTML("afterbegin", `
-            <a href="../index.html"><h1 class="header">
-                <img src="img/antares-circle.png"
+            <h1 class="header">
+                <img src="/img/icons/antares-512.png"
                      height="40em"
                      alt=""
                      style="vertical-align: middle; margin-right: 10px;">
-                Projeto Antαres
-            </h1></a>
+                projeto antαres
+            </h1>
             <p class="header">
                 Acessibilidade de Recursos Educacionais em Física e Astronomia
             </p>

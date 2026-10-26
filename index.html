@@ -6,15 +6,15 @@
 <meta name="theme-color" content="#0e131b">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Projeto Antαres</title>
-<link rel="icon" type="image/png" href="img/antares-circle.png">
-<link rel="stylesheet" href="simulations/css/core.css">
+<link rel="icon" type="image/png" href="./img/icons/antares-192.png">
+<link rel="stylesheet" href="./css/core.css">
 <!-- MathJax (saída SVG). Fórmulas nos textos de projeto.js: \( ... \). Precisa de internet; sem ela, aparecem como código LaTeX. -->
-<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'},options:{enableMenu:false}};</script>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+<script src="./js/mathjax-config.js"></script>
+<script async src="./js/tex-svg.js"></script>
 </head>
 <body>
 <header id="site-header"></header>
-<script src="simulations/js/header.js"></script>
+<script src="./js/header.js"></script>
 <div class="wrap">
 
 <header class="hero"><h1 id="tt"></h1><p id="st"></p></header>
@@ -23,15 +23,15 @@
 <section id="sobre" class="card sobre" hidden></section>
 <div id="secoes"></div>
 </div>
-<script src="simulations/js/core.js"></script>
-<script src="projeto.js"></script>
+<script src="./js/core.js"></script>
+<script src="./js/projeto.js"></script>
 <script>
 /* Portal: desenha o conteúdo de window.PROJETO (projeto.js). Para mudar o conteúdo, edite projeto.js;
    para mudar o visual, edite a seção "Portal" de core.css. */
 (function(){
- const C=window.PROJETO||{},o=Object.assign({nome:'Projeto Antαres',subtitulo:'',logo:'',mostrarNav:true,mostrarTema:true,abrirEmNovaAba:false},C.opcoes),$=Sim.$;
+ const C=window.PROJETO||{},o=Object.assign({nome:'projeto antαres',subtitulo:'',logo:'',mostrarNav:true,mostrarTema:true,abrirEmNovaAba:false},C.opcoes),$=Sim.$;
  const secs=(C.secoes||[]).filter(s=>(s.itens||[]).length);
- document.title='Projeto Antαres';$('tt').innerHTML=(o.logo?'<img class="logo" src="'+o.logo+'" alt="">':'')+o.nome;$('st').innerHTML=o.subtitulo;
+ document.title='projeto antαres';$('tt').innerHTML=(o.logo?'<img class="logo" src="'+o.logo+'" alt="">':'')+o.nome;$('st').innerHTML=o.subtitulo;
  const gen='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="24" cy="24" r="14"/></svg>';
  // cartão: link só se houver `arquivo` e o item estiver disponível; "em breve" só com disponivel:false
  function card(it){
@@ -71,7 +71,7 @@
 </script>
 
 <footer></footer>
-<script src="simulations/js/footer.js"></script>
+<script src="./js/footer.js"></script>
 
 </body>
 </html>
