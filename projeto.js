@@ -28,7 +28,7 @@
 const S='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">';
 const IC={
  generico:S+'<circle cx="24" cy="24" r="14"/><path d="M24 14v10l7 5"/></svg>',
- simulacoes:S+'<path d="M3 6H45 M3 18H45 M3 30H45 M3 42H45"/><g fill="currentColor" stroke="none"><circle cx="11" cy="6" r="3.5"/><circle cx="35" cy="18" r="3.5"/><circle cx="17" cy="30" r="3.5"/><circle cx="27" cy="42" r="3.5"/></g></svg>',
+ simulacoes:S+'<path d="M7 8H41 M7 22H41 M7 36H41"/><g fill="currentColor" stroke="none"><circle cx="14" cy="8" r="3.5"/><circle cx="34" cy="22" r="3.5"/><circle cx="21" cy="36" r="3.5"/></g></svg>',
  livro:S+'<path d="M8 9h13a4 4 0 0 1 3 1.5V40a4 4 0 0 0-3-1.5H8z"/><path d="M40 9H27a4 4 0 0 0-3 1.5V40a4 4 0 0 1 3-1.5h13z"/></svg>',
  material:S+'<path d="M12 6h18l8 8v28H12z"/><path d="M30 6v8h8"/><path d="M18 25h14M18 31h14M18 37h8"/></svg>'
 };
