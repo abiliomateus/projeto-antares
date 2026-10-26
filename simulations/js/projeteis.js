@@ -24,7 +24,7 @@ const {$,rk4,f2,arrow,css}=Sim, DT=1/500, P={}, cv=$('cv'), ctx=cv.getContext('2
 
 let s=null,t=0,mode='idle',paused=false,trail=[],past=[],rows=[],ymax=0,range=null,view={w:10,h:5},acc=0,cnt=0;
 
-const fit = Sim.fit(cv, .5, 340, 500),
+const fit = Sim.fit(cv, .35, 220, 420),
       ml = 46, mr = 16, mt = 16, mb = 32;
 
 Sim.interactive(cv,fit);

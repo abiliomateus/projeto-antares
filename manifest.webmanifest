@@ -9,8 +9,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#ffffff",
-  "theme_color": "#202124",
+  "background_color": "#0e131b",
+  "theme_color": "#0e131b",
   "icons": [
     {
       "src": "./img/icons/antares-192.png",
