@@ -2,6 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#202124">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Projeto Antαres</title>
 <link rel="icon" type="image/png" href="img/antares-circle.png">
@@ -54,6 +56,17 @@
   b.onclick=()=>{k=(k+1)%3;try{localStorage.setItem('tema',ordem[k])}catch(e){}aplica()};aplica();T.appendChild(b);
  }
  Sim.math(document.body);
+
+ if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("./service-worker.js")
+      .catch(err => {
+        console.error("Falha ao registrar o service worker:", err);
+      });
+  });
+}
+
 })();
 </script>
 
