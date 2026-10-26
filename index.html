@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Projeto Antares</title>
+<title>Projeto Antαres</title>
 <link rel="icon" type="image/png" href="img/antares-circle.png">
 <link rel="stylesheet" href="simulations/css/core.css">
 <!-- MathJax (saída SVG). Fórmulas nos textos de projeto.js: \( ... \). Precisa de internet; sem ela, aparecem como código LaTeX. -->
@@ -27,9 +27,9 @@
 /* Portal: desenha o conteúdo de window.PROJETO (projeto.js). Para mudar o conteúdo, edite projeto.js;
    para mudar o visual, edite a seção "Portal" de core.css. */
 (function(){
- const C=window.PROJETO||{},o=Object.assign({nome:'Projeto Antares',subtitulo:'',logo:'',mostrarNav:true,mostrarTema:true,abrirEmNovaAba:false},C.opcoes),$=Sim.$;
+ const C=window.PROJETO||{},o=Object.assign({nome:'Projeto Antαres',subtitulo:'',logo:'',mostrarNav:true,mostrarTema:true,abrirEmNovaAba:false},C.opcoes),$=Sim.$;
  const secs=(C.secoes||[]).filter(s=>(s.itens||[]).length);
- document.title=o.nome;$('tt').innerHTML=(o.logo?'<img class="logo" src="'+o.logo+'" alt="">':'')+o.nome;$('st').innerHTML=o.subtitulo;
+ document.title='Projeto Antαres';$('tt').innerHTML=(o.logo?'<img class="logo" src="'+o.logo+'" alt="">':'')+o.nome;$('st').innerHTML=o.subtitulo;
  const gen='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="24" cy="24" r="14"/></svg>';
  // cartão: link só se houver `arquivo` e o item estiver disponível; "em breve" só com disponivel:false
  function card(it){
