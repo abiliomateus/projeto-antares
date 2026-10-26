@@ -47,12 +47,12 @@ const out=Sim.readouts($('ro'),[['t','\\(t\\) (anos)'],['r','\\(r\\) (UA)'],['r1
 
 // ---- Gráficos (colunas: 1=r 2=r1 3=r2 4=v1 5=v2 6=v_rel 7=K 8=U 9=E 10=L) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas; as cores precisam coincidir com as de lá.
-const plots=[
- new Sim.Plot($('p1'),{title:'',mt:8,series:[{col:1,name:'',color:'--ink'},{col:2,name:'',color:'--acc'},{col:3,name:'',color:'--vx'}]}),
- new Sim.Plot($('p2'),{title:'',mt:8,series:[{col:4,name:'',color:'--acc'},{col:5,name:'',color:'--vx'},{col:6,name:'',color:'--ink'}]}),
- new Sim.Plot($('p3'),{title:'',mt:8,series:[{col:7,name:'',color:'--vx'},{col:8,name:'',color:'--vy'},{col:9,name:'',color:'--a'}]}),
- new Sim.Plot($('p4'),{title:'',mt:8,series:[{col:10,name:'',color:'--a'}]})
-];
+// const plots=[
+//  new Sim.Plot($('p1'),{title:'',mt:8,series:[{col:1,name:'',color:'--ink'},{col:2,name:'',color:'--acc'},{col:3,name:'',color:'--vx'}]}),
+//  new Sim.Plot($('p2'),{title:'',mt:8,series:[{col:4,name:'',color:'--acc'},{col:5,name:'',color:'--vx'},{col:6,name:'',color:'--ink'}]}),
+//  new Sim.Plot($('p3'),{title:'',mt:8,series:[{col:7,name:'',color:'--vx'},{col:8,name:'',color:'--vy'},{col:9,name:'',color:'--a'}]}),
+//  new Sim.Plot($('p4'),{title:'',mt:8,series:[{col:10,name:'',color:'--a'}]})
+// ];
 
 // ---- Física ----
 // Grandezas da órbita (Kepler) e condição inicial. rel(E) dá a posição e a velocidade relativas (UA, UA/ano) para a
@@ -165,7 +165,7 @@ function draw(){
  const tf=2*su.T,M0=P.M0*D;
  // referência tracejada do gráfico de distâncias: solução de Kepler, r = a(1 − e·cos E) com M = n·t + M0
  const kep=tt=>{const E=su.kepler(su.n*tt+M0),rr=su.a*(1-su.e*Math.cos(E));return[tt,rr,fa*rr,fb*rr,0,0,0,0,0,0,0]};
- plots[0].draw(rows,kep,tf);plots[1].draw(rows,null,tf);plots[2].draw(rows,null,tf,[()=>su.E0]);plots[3].draw(rows,null,tf,[()=>su.L0]);
+//  plots[0].draw(rows,kep,tf);plots[1].draw(rows,null,tf);plots[2].draw(rows,null,tf,[()=>su.E0]);plots[3].draw(rows,null,tf,[()=>su.L0]);
 }
 reset();
 Sim.loop(dt=>{step(dt);draw()});

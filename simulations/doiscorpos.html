@@ -36,12 +36,12 @@
 </main>
 <!-- Título e legenda dos gráficos em HTML (para usar MathJax); as cores devem coincidir com as de doiscorpos.js.
      Quatro cartões: a grade abaixo (2 × 2) é definida aqui, no style da seção. -->
-<section class="plots" style="grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr))">
+<!-- <section class="plots" style="grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr))">
 <div class="card"><div class="pt"><b>Distâncias</b> em função de \(t\) (UA)<span style="color:var(--ink)">\(r\)</span><span style="color:var(--acc)">\(r_1\)</span><span style="color:var(--vx)">\(r_2\)</span><span>(tracejado: Kepler)</span></div><div><canvas id="p1"></canvas></div></div>
 <div class="card"><div class="pt"><b>Velocidades</b> em função de \(t\) (km/s)<span style="color:var(--acc)">\(v_1\)</span><span style="color:var(--vx)">\(v_2\)</span><span style="color:var(--ink)">\(v_{rel}\)</span></div><div><canvas id="p2"></canvas></div></div>
 <div class="card"><div class="pt"><b>Energia</b> em função de \(t\) (M☉·UA²/ano²)<span style="color:var(--vx)">\(K\)</span><span style="color:var(--vy)">\(U\)</span><span style="color:var(--a)">\(E\)</span><span>(tracejado: \(-Gm_1m_2/2a\))</span></div><div><canvas id="p3"></canvas></div></div>
 <div class="card"><div class="pt"><b>Momento angular</b> em torno do CM (M☉·UA²/ano)<span style="color:var(--a)">\(L\)</span><span>(tracejado: \(\mu\sqrt{GMa(1-e^2)}\))</span></div><div><canvas id="p4"></canvas></div></div>
-</section>
+</section> -->
 <!-- <details class="card">
 <summary>Equações e método</summary>
 <p>Unidades: massas em \(M_\odot\), distâncias em UA e tempo em anos, em que \(G = 4\pi^2\ \mathrm{UA^3/(M_\odot\,ano^2)}\). Com \(r = |\vec r_2 - \vec r_1|\), a força gravitacional sobre cada corpo é atrativa, e as duas são iguais e opostas (3ª lei de Newton):</p>
