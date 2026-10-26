@@ -65,11 +65,11 @@ window.CATALOGO={
   {id:'loop',titulo:'Conservação de energia no loop',descricao:'Conservação de energia para uma partícula solta de uma altura \\(h\\) que percorre um loop de raio \\(R\\).',topico:'energia',tags:['energia','loop','normal'],arquivo:'loop.html',icone:IC.loop},
   {id:'colisao',titulo:'Colisão em 2D',descricao:'Aplicação da conservação do momento linear na colisão de partículas pontuais.',topico:'momento',tags:['momento','restituição','2D'],arquivo:'colisao.html',icone:IC.colisao},
   {id:'pendulo',titulo:'Pêndulo de Galileu',descricao:'Um pino prende o fio, mas a partícula sobe de novo até a altura \\(h\\): conservação de energia, tração \\(T\\) e força gravitacional \\(\\vec F_g\\).',topico:'energia',tags:['pêndulo','energia','pino'],arquivo:'pendulo.html',icone:IC.pendulo},
+  {id:'doiscorpos',titulo:'Problema de dois corpos',descricao:'Dois corpos em órbita em torno de um centro de massa comum.',topico:'gravitacao',tags:['órbitas'],disponivel:true,arquivo:'doiscorpos.html',icone:IC.orbita},
   {id:'massamola',titulo:'Massa-mola com e sem arrasto',descricao:'Oscilador harmônico clássico com ou sem amortecimento.',topico:'oscilacoes',tags:['oscilador','atrito','energia'],arquivo:'massamola.html',icone:IC.oscilador},
   // ---- em breve (sem arquivo: aparecem como cartão desativado) ----
   {id:'rolamento',titulo:'Rolamento em plano inclinado',descricao:'Disco, anel e esfera: quem chega primeiro? Momento de inércia \\(I\\).',topico:'rotacao',tags:['inércia'],disponivel:false,icone:IC.rolamento},
   {id:'momang',titulo:'Conservação do momento angular',descricao:'Patinadora que encolhe os braços: \\(L = I\\omega\\) constante.',topico:'rotacao',tags:['momento angular'],disponivel:false,icone:IC.giro},
-  {id:'kepler',titulo:'Órbitas e leis de Kepler',descricao:'Áreas iguais em tempos iguais, elipses e velocidade de escape.',topico:'gravitacao',tags:['órbitas'],disponivel:false,icone:IC.orbita}
  ]
 };
 })();

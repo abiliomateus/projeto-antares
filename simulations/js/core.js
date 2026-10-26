@@ -81,11 +81,22 @@ Sim.bar=wrap=>{let b=wrap.querySelector('.zbar');if(!b){b=document.createElement
     (opção, padrão 8×) e nunca mostra além da área original. Textos e traços ampliam junto; o que deve ficar fixo na tela
     (barras de energia) é desenhado depois de Sim.hud(ctx). Devolve {z, x, y, reset()}. */
 Sim.interactive=(cv,fit,o)=>{
- const ctx=cv.getContext('2d'),S={z:1,x:0,y:0,reset(){S.z=1;S.x=0;S.y=0;cursor()}},zmax=(o&&o.max)||8,wrap=cv.parentElement,ptr=new Map(),orig=ctx.clearRect.bind(ctx);
+ const ctx=cv.getContext('2d'),S={z:1,x:0,y:0,reset(){S.z=1;S.x=0;S.y=0;cursor()}},zmin = 0.25,zmax=(o&&o.max)||8,wrap=cv.parentElement,ptr=new Map(),orig=ctx.clearRect.bind(ctx);
  let dist0=0;
- const clamp=()=>{S.x=Math.min(0,Math.max(fit.w*(1-S.z),S.x));S.y=Math.min(0,Math.max(fit.h*(1-S.z),S.y))};
+//  const clamp=()=>{S.x=Math.min(0,Math.max(fit.w*(1-S.z),S.x));S.y=Math.min(0,Math.max(fit.h*(1-S.z),S.y))};
+ const clamp = () => {
+    if (S.z < 1) {
+        // Centraliza o desenho quando o zoom é reduzido.
+        S.x = fit.w * (1 - S.z) / 2;
+        S.y = fit.h * (1 - S.z) / 2;
+    } else {
+        // Restringe o deslocamento quando há ampliação.
+        S.x = Math.min(0, Math.max(fit.w * (1 - S.z), S.x));
+        S.y = Math.min(0, Math.max(fit.h * (1 - S.z), S.y));
+    }
+};
  const cursor=()=>{cv.style.cursor=S.z>1?'grab':'';cv.style.touchAction=S.z>1?'none':'pan-y'};   // com zoom, o dedo move o desenho em vez de rolar a página
- const zoomAt=(f,px,py)=>{const z=Math.min(zmax,Math.max(1,S.z*f)),k=z/S.z;S.x=px-(px-S.x)*k;S.y=py-(py-S.y)*k;S.z=z;clamp();cursor()};
+ const zoomAt=(f,px,py)=>{const z=Math.min(zmax,Math.max(zmin,S.z*f)),k=z/S.z;S.x=px-(px-S.x)*k;S.y=py-(py-S.y)*k;S.z=z;clamp();cursor()};
  const pos=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*(fit.w/(r.width||fit.w)),(e.clientY-r.top)*(fit.h/(r.height||fit.h))]};
  ctx.clearRect=()=>{const d=devicePixelRatio||1;clamp();ctx.setTransform(1,0,0,1,0,0);orig(0,0,cv.width,cv.height);ctx.setTransform(d*S.z,0,0,d*S.z,d*S.x,d*S.y)};
  cv.addEventListener('wheel',e=>{if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();const p=pos(e);zoomAt(Math.exp(-e.deltaY*.0025),p[0],p[1])},{passive:false});
@@ -104,7 +115,7 @@ Sim.interactive=(cv,fit,o)=>{
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  if(wrap&&wrap.style&&wrap.querySelector){
   const bar=Sim.bar(wrap);
-  [['+','Ampliar (Ctrl + roda do mouse)',()=>zoomAt(1.4,fit.w/2,fit.h/2)],['-','Reduzir',()=>zoomAt(1/1.4,fit.w/2,fit.h/2)],['1x','Restaurar o zoom (duplo clique)',()=>S.reset()]].forEach(([t,tt,f])=>{
+  [['+','Ampliar (Ctrl + roda do mouse)',()=>zoomAt(1.1,fit.w/2,fit.h/2)],['-','Reduzir',()=>zoomAt(1/1.1,fit.w/2,fit.h/2)],['1x','Restaurar o zoom (duplo clique)',()=>S.reset()]].forEach(([t,tt,f])=>{
    const b=document.createElement('button');b.type='button';b.textContent=t;if(t.length>1)b.className='txt';b.title=tt;b.setAttribute('aria-label',tt);b.onclick=f;bar.appendChild(b)});
  }
  cursor();return S;
