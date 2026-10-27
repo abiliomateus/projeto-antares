@@ -62,8 +62,21 @@ Sim.rk4=(f,q,h)=>{
     Desenhe sempre usando o.w e o.h (não canvas.width, que inclui o fator retina). */
 Sim.fit=(cv,ar,mn,mx)=>{
  const o={w:300,h:200},p=cv.parentElement;
- const r=()=>{const d=devicePixelRatio||1;o.w=p.clientWidth;o.h=Math.round(Math.max(mn,Math.min(o.w*ar,mx)));
-  cv.style.height=o.h+'px';cv.width=o.w*d;cv.height=o.h*d;cv.getContext('2d').setTransform(d,0,0,d,0,0)};
+//  const r=()=>{const d=devicePixelRatio||1;o.w=p.clientWidth;o.h=Math.round(Math.max(mn,Math.min(o.w*ar,mx)));
+const r=()=>{
+  const d=devicePixelRatio||1;
+  o.w=p.clientWidth;
+  o.h=p.matches(':fullscreen')
+    ? p.clientHeight
+    : Math.round(Math.max(mn,Math.min(o.w*ar,mx)));
+
+  cv.style.width='100%';
+  cv.style.height=o.h+'px';
+  cv.width=o.w*d;
+  cv.height=o.h*d;
+  cv.getContext('2d').setTransform(d,0,0,d,0,0);
+};
+//   cv.style.height=o.h+'px';cv.width=o.w*d;cv.height=o.h*d;cv.getContext('2d').setTransform(d,0,0,d,0,0)};
  new ResizeObserver(r).observe(p);r();return o;
 };
 
@@ -71,6 +84,98 @@ Sim.fit=(cv,ar,mn,mx)=>{
     Devolve o elemento .zbar do pai do canvas, criando-o se ainda não existir. */
 Sim.bar=wrap=>{let b=wrap.querySelector('.zbar');if(!b){b=document.createElement('div');b.className='zbar';wrap.style.position='relative';wrap.appendChild(b)}return b};
 
+Sim.speedbar = (cv, id, speeds = [0.25, 0.5, 1, 2]) => {
+  const wrap = cv.parentElement;
+  const ctl = Sim.ctl[id];
+  if (!wrap || !ctl) return;
+
+  const inp = ctl.inp;
+  const min = inp.min === '' ? -Infinity : Number(inp.min);
+  const max = inp.max === '' ? Infinity : Number(inp.max);
+  const valid = speeds.filter(v => v >= min && v <= max);
+
+  if (!valid.length) return;
+
+  const bar = Sim.bar(wrap);
+  const b = document.createElement('button');
+  b.type = 'button';
+
+  const update = () => {
+    const v = Number(inp.value);
+    const label = `Velocidade: ${v.toLocaleString('pt-BR')}×`;
+    b.textContent = `${v.toLocaleString('pt-BR')}×`;
+    b.title = `${label} — clique para alterar`;
+    b.setAttribute('aria-label', b.title);
+  };
+
+  b.onclick = () => {
+    const current = Number(inp.value);
+    const next = valid.find(v => v > current + 1e-9) ?? valid[0];
+
+    inp.value = String(next);
+    inp.dispatchEvent(new Event('input', { bubbles: true }));
+    update();
+  };
+
+  inp.addEventListener('input', update);
+  bar.appendChild(b);
+  update();
+};
+
+Sim.fullscreen = el => {
+  if (typeof el === 'string') el = document.querySelector(el);
+  if (!el) return;
+
+  return document.fullscreenElement
+    ? document.exitFullscreen()
+    : el.requestFullscreen?.();
+};
+
+Sim._keys = {
+  active: null,
+  installed: false
+};
+
+Sim.registerKeys = (wrap, actions) => {
+  const K = Sim._keys;
+
+  wrap._simKeys = { ...wrap._simKeys, ...actions };
+
+  const activate = () => { K.active = wrap; };
+  wrap.addEventListener('pointerdown', activate);
+  wrap.addEventListener('focusin', activate);
+
+  if (K.installed) return;
+  K.installed = true;
+
+  document.addEventListener('keydown', e => {
+    const el = e.target;
+    if (el.matches('input, textarea, select') ||
+        el.isContentEditable) return;
+
+    const w = K.active;
+    if (!w || !w._simKeys) return;
+
+    const a = w._simKeys;
+    let fn = null;
+
+    if (e.code === 'Space') fn = a.play;
+    else if (e.key === '+' || e.key === '=' ||
+             e.code === 'NumpadAdd') fn = a.zoomIn;
+    else if (e.key === '-' || e.code === 'NumpadSubtract')
+      fn = a.zoomOut;
+    else if (e.key === '0' || e.code === 'Numpad0')
+      fn = a.reset;
+    else if (e.code === 'KeyF' && !e.ctrlKey &&
+             !e.altKey && !e.metaKey)
+      fn = a.fullscreen;
+
+    if (fn) {
+      e.preventDefault();
+      fn();
+    }
+  });
+};
 /** Zoom e deslocamento (pan) do canvas principal de uma simulação, sem mudar o código de desenho.
     Chame uma vez, logo depois de Sim.fit: Sim.interactive(cv, fit).
     Como funciona: o desenho continua usando as coordenadas de sempre; a cada quadro, o ctx.clearRect do canvas (chamado no
@@ -115,8 +220,52 @@ Sim.interactive=(cv,fit,o)=>{
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  if(wrap&&wrap.style&&wrap.querySelector){
   const bar=Sim.bar(wrap);
-  [['+','Ampliar (Ctrl + roda do mouse)',()=>zoomAt(1.1,fit.w/2,fit.h/2)],['-','Reduzir',()=>zoomAt(1/1.1,fit.w/2,fit.h/2)],['=','Restaurar o zoom (duplo clique)',()=>S.reset()]].forEach(([t,tt,f])=>{
-   const b=document.createElement('button');b.type='button';b.textContent=t;if(t.length>2)b.className='txt';b.title=tt;b.setAttribute('aria-label',tt);b.onclick=f;bar.appendChild(b)});
+
+  const fs=document.createElement('button');
+fs.type='button';
+fs.textContent='⛶';
+fs.title='Tela cheia (Atalho: f)';
+fs.setAttribute('aria-label','Tela cheia');
+fs.dataset.fullscreen='';
+
+fs.onclick=()=>Sim.fullscreen(wrap);
+
+document.addEventListener('fullscreenchange',()=>{
+  const ativo=document.fullscreenElement===wrap;
+  fs.textContent=ativo?'⛶':'⛶';
+  fs.title=ativo?'Sair da tela cheia (Atalho: f)':'Tela cheia (Atalho: f)';
+  fs.setAttribute('aria-label',fs.title);
+});
+
+bar.appendChild(fs);
+
+const zoomIn = () => zoomAt(1.1, fit.w/2, fit.h/2);
+const zoomOut = () => zoomAt(1/1.1, fit.w/2, fit.h/2);
+const reset = () => S.reset();
+
+[
+  ['+', 'Ampliar (Atalho: +)', zoomIn],
+  ['-', 'Reduzir (Atalho: -)', zoomOut],
+  ['=', 'Restaurar o zoom (Atalho: 0)', reset]
+].forEach(([t, tt, f]) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = t;
+  b.title = tt;
+  b.setAttribute('aria-label', tt);
+  b.onclick = f;
+  bar.appendChild(b);
+});
+
+Sim.registerKeys(wrap, {
+  zoomIn,
+  zoomOut,
+  reset,
+  fullscreen: () => Sim.fullscreen(wrap)
+});
+
+//   [['+','Ampliar (Ctrl + roda do mouse)',()=>zoomAt(1.1,fit.w/2,fit.h/2)],['-','Reduzir',()=>zoomAt(1/1.1,fit.w/2,fit.h/2)],['=','Restaurar o zoom (duplo clique)',()=>S.reset()]].forEach(([t,tt,f])=>{
+//    const b=document.createElement('button');b.type='button';b.textContent=t;if(t.length>2)b.className='txt';b.title=tt;b.setAttribute('aria-label',tt);b.onclick=f;bar.appendChild(b)});
  }
  cursor();return S;
 };
@@ -130,7 +279,7 @@ Sim.playbar=(cv,getState,getPaused)=>{
  const wrap=cv.parentElement;if(!wrap||!wrap.style||!wrap.querySelector)return;
  const sv=p=>'<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">'+p+'</svg>';
  const I={play:sv('<path d="M7 4.5l12.5 7.5L7 19.5z" fill="currentColor"/>'),pause:sv('<path d="M6.5 4h4v16h-4zM13.5 4h4v16h-4z" fill="currentColor"/>'),reset:sv('<path d="M5.2 12a6.8 6.8 0 1 0 2-4.8" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="M4 3.5v5h5" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>')};
- const L={idle:['play','Soltar'],run:['pause','Pausar'],paused:['play','Continuar'],end:['play','Reiniciar e soltar de novo']};
+ const L={idle:['play','Soltar (Espaço)'],run:['pause','Pausar (Espaço)'],paused:['play','Continuar (Espaço)'],end:['play','Reiniciar e soltar de novo (Espaço)']};
  const mk=(html,tt,f)=>{const b=document.createElement('button');b.type='button';b.innerHTML=html;b.title=tt;b.setAttribute('aria-label',tt);b.onclick=f;return b};
  const play=mk(I.play,L.idle[1],()=>Sim.$(getState()==='run'?'bp':'bl').click());   // em andamento: pausa/continua; senão: solta
  const rst=mk(I.reset,'Reiniciar a simulação',()=>Sim.$('bc').click());
@@ -140,6 +289,9 @@ Sim.playbar=(cv,getState,getPaused)=>{
  let cur='';
  const tick=()=>{const s=getState(),k=s==='run'&&getPaused()?'paused':s;
   if(k!==cur){cur=k;const l=L[k]||L.idle;play.innerHTML=I[l[0]];play.title=l[1];play.setAttribute('aria-label',l[1])}
+  Sim.registerKeys(wrap, {
+  play: () => play.click()
+});
   requestAnimationFrame(tick)};
  requestAnimationFrame(tick);   // começa depois do carregamento do script (mode e paused ainda não existem agora)
 };

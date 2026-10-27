@@ -5,10 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
         header.insertAdjacentHTML("afterbegin", `
             <h1 class="header">
                 <img src="/img/icons/antares-512.png"
-                     height="40em"
+                     height="45em"
                      alt=""
                      style="vertical-align: middle; margin-right: 10px;">
-                projeto antαres
+                Projeto Antαres
             </h1>
             <p class="header">
                 Recursos Educacionais em Física e Astronomia

@@ -38,7 +38,7 @@ Sim.controls($('ctl'),[
  {id:'b',label:'Coeficiente de arrasto \\(b\\) (se ligado)',unit:'N·s/m',min:0,max:60,step:.01,val:1},
  {id:'g',label:'Gravidade \\(g\\)',unit:'m/s²',min:1,max:25,step:.1,val:9.8},
  {id:'nesp',label:'Espiras da mola (só o desenho)',unit:'',min:4,max:24,step:1,val:16},
- {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
+ {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.05,val:1}
 ],P,id=>{if(id==='spd'||id==='nesp')return;$('reg').value='';reset()});
 $('c_arr').addEventListener('change',reset);
 // Regime: ajusta b para ζ = 0,2 (sub), 1 (crítico) ou 2 (super), com o k e o m atuais: b = 2·ζ·√(k·m).
@@ -48,6 +48,8 @@ $('reg').addEventListener('change',e=>{
 });
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['x','\\(x\\) (m)'],['v','\\(v\\) (m/s)'],['Fel','\\(F_{el}\\) (N)'],['Fd','\\(F_d\\) (N)'],['Ec','\\(K\\) (J)'],['Ep','\\(U\\) (J)'],['Q','Dissipada \\(Q\\) (J)']]);
+
+Sim.speedbar(cv, 'spd');
 
 // ---- Gráficos (colunas: 1=x 2=v 3=Ec 4=Ep 5=E 6=Q 7=F_el 8=F_d) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas; as cores precisam coincidir com as de lá.
@@ -205,7 +207,7 @@ function draw(){
  }
  // barras de energia: Ep, Ec e Q como fração de E0 (a soma é sempre E0)
  if($('c_bar').checked){
-  const ec=.5*P.m*q[1]*q[1],ep=.5*P.k*x*x,bwid=200,bx0=W-mr-bwid,by0=8;let xx=bx0;
+  const ec=.5*P.m*q[1]*q[1],ep=.5*P.k*x*x,bwid=200,bx0=W-mr-bwid,by0=0.1*H;let xx=bx0;
   [[ep,C('--vy'),'U'],[ec,C('--vx'),'K'],[Q,C('--a'),'Q']].forEach(([v,col,nm],j)=>{const w=Math.max(0,Math.min(bwid-(xx-bx0),v/su.E0*bwid));ctx.fillStyle=col;ctx.fillRect(xx,by0,w,12);xx+=w;lab(nm,bx0+j*46,by0+28,col)});
   ctx.strokeStyle=C('--line');ctx.lineWidth=1;ctx.strokeRect(bx0,by0,bwid,12);lab('E₀ = '+f2(su.E0)+' J',bx0+bwid,by0+28,C('--mut'),'right');
  }
