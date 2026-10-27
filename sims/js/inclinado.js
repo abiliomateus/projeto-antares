@@ -44,6 +44,8 @@ $('c_atr').addEventListener('change',reset);
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','Tempo (s)'],['s','s (m)'],['v','v (m/s)'],['a','a (m/s²)'],['W','Peso P (N)'],['N','Normal N (N)'],['f','Atrito f (N)'],['Fr','Resultante (N)']]);
 
+Sim.speedbar(cv, 'spd');
+
 // ---- Gráficos (colunas: 1=s, 2=v, 3=Ec, 4=Ep, 5=E total) ----
 const plots=[
  new Sim.Plot($('p1'),{title:'posição s(t) em m',series:[{col:1,name:'s',color:'--acc'}]}),

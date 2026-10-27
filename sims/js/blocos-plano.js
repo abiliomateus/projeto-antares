@@ -42,6 +42,8 @@ $('c_atr').addEventListener('change',reset);
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','Tempo (s)'],['x','Deslocamento x (m)'],['v','v (m/s)'],['a','a (m/s²)'],['T','Tração T (N)'],['f1','Atrito f₁ (N)'],['f2','Atrito f₂ (N)'],['Fd','Força motriz (N)']]);
 
+Sim.speedbar(cv, 'spd');
+
 // ---- Gráficos (colunas: 1=x, 2=v, 3=Ec, 4=ΔEp, 5=ΔE) ----
 const plots=[
  new Sim.Plot($('p1'),{title:'deslocamento x(t) em m',series:[{col:1,name:'x',color:'--acc'}]}),

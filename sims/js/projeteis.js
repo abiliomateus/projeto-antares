@@ -50,6 +50,8 @@ Sim.controls($('ctl'),[
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','Tempo (s)'],['x','x (m)'],['y','y (m)'],['sp','|v| (m/s)'],['vx','vₓ (m/s)'],['vy','v_y (m/s)'],['ym','Altura máx. (m)'],['R','Alcance (m)']]);
 
+Sim.speedbar(cv, 'spd');
+
 // ---- Gráficos ----
 // Colunas de cada linha de dados: [t, x, y, |v|, vx, vy]  (índices 0 a 5).
 // Para um novo gráfico: crie um <canvas id="p4"> no HTML (dentro de .plots) e adicione aqui um

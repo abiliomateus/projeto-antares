@@ -38,7 +38,9 @@ Sim.controls($('ctl'),[
  {id:'e',label:'Restituição \\(e\\) (0 = grudam)',unit:'',min:0,max:1,step:.05,val:1},
  {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
 ],P,id=>{if(id!=='spd')reset()});
-const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['v1','\\(v_1\\) (m/s)'],['v2','\\(v_2\\) (m/s)'],['p','\\(p\\) (kg·m/s)'],['K','\\(E_c\\) (J)'],['dK','\\(\\Delta E_c\\) (J)'],['vcm','\\(v_{cm}\\) (m/s)'],['xcm','\\(x_{cm}\\) (m)']]);
+const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['v1','\\(v_1\\) (m/s)'],['v2','\\(v_2\\) (m/s)'],['p','\\(p\\) (kg·m/s)'],['K','\\(K\\) (J)'],['dK','\\(\\Delta K\\) (J)'],['vcm','\\(v_{cm}\\) (m/s)'],['xcm','\\(x_{cm}\\) (m)']]);
+
+Sim.speedbar(cv, 'spd');
 
 // ---- Gráficos (colunas: 1=x1 2=x2 3=v1 4=v2 5=p1 6=p2 7=p 8=K1 9=K2 10=K) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas; as cores precisam coincidir com as de lá.
@@ -91,9 +93,9 @@ function step(dt){
 const M_=x=>'\\('+x+'\\)',fm=Sim.fm,MS='\\,\\mathrm{m/s}',J='\\,\\mathrm{J}',KP='\\,\\mathrm{kg\\,m/s}';
 function status(){
  if(!su.hit)return'Sem colisão: '+M_('v_1\\le v_2')+', então o bloco 1 não alcança o bloco 2.';
- const tipo=su.e>=.999?'elástica ('+M_('E_c')+' se conserva)':su.e<=.001?'perfeitamente inelástica (os blocos seguem juntos)':'parcialmente inelástica';
- if(col)return'Colisão '+tipo+' em '+M_('t='+fm(TC)+'\\,\\mathrm{s}')+'. Momento: '+M_('p='+fm(su.pb[2])+KP+'\\to '+fm(su.pa[2])+KP)+' (conservado). Energia: '+M_('E_c='+fm(su.Kb[2])+J+'\\to '+fm(su.Ka[2])+J)+' ('+M_('\\Delta E_c='+fm(su.Ka[2]-su.Kb[2])+J)+'). Restituição medida: '+M_('(u_2-u_1)/(v_1-v_2)='+fm((su.u2-su.u1)/(su.v1-su.v2)))+'.';
- return'Colisão '+tipo+' prevista em '+M_('t='+fm(TC)+'\\,\\mathrm{s}')+', em '+M_('x=0')+'. Depois do choque: '+M_('u_1='+fm(su.u1)+MS)+' e '+M_('u_2='+fm(su.u2)+MS)+'. Perda de energia prevista: '+M_('\\Delta E_c=-\\tfrac{1}{2}\\mu(1-e^2)(v_1-v_2)^2='+fm(su.Ka[2]-su.Kb[2])+J)+'. Velocidade do CM: '+M_('v_{cm}='+fm(su.vcm)+MS)+'.';
+ const tipo=su.e>=.999?'elástica ('+M_('K')+' se conserva)':su.e<=.001?'perfeitamente inelástica (os blocos seguem juntos)':'parcialmente inelástica';
+ if(col)return'Colisão '+tipo+' em '+M_('t='+fm(TC)+'\\,\\mathrm{s}')+'. Momento: '+M_('p='+fm(su.pb[2])+KP+'\\to '+fm(su.pa[2])+KP)+' (conservado). Energia: '+M_('K='+fm(su.Kb[2])+J+'\\to '+fm(su.Ka[2])+J)+' ('+M_('\\Delta K='+fm(su.Ka[2]-su.Kb[2])+J)+'). Restituição medida: '+M_('(u_2-u_1)/(v_1-v_2)='+fm((su.u2-su.u1)/(su.v1-su.v2)))+'.';
+ return'Colisão '+tipo+' prevista em '+M_('t='+fm(TC)+'\\,\\mathrm{s}')+', em '+M_('x=0')+'. Depois do choque: '+M_('u_1='+fm(su.u1)+MS)+' e '+M_('u_2='+fm(su.u2)+MS)+'. Perda de energia prevista: '+M_('\\Delta K=-\\tfrac{1}{2}\\mu(1-e^2)(v_1-v_2)^2='+fm(su.Ka[2]-su.Kb[2])+J)+'. Velocidade do CM: '+M_('v_{cm}='+fm(su.vcm)+MS)+'.';
 }
 
 // ---- Desenho ----
