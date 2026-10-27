@@ -54,7 +54,7 @@ const plots=[
 // pb/pa = momento de [bloco 1, bloco 2, sistema] antes/depois; Kb/Ka = energia cinética. Sem colisão (v1 ≤ v2), os blocos
 // seguem como estão, com folga de 2 m.
 function setup(){
- const M=P.m1+P.m2,w1=.5*Math.cbrt(P.m1),w2=.5*Math.cbrt(P.m2),v1=P.v1,v2=P.v2,e=P.e,hit=v1>v2+1e-9;
+ const M=P.m1+P.m2,w1=1.5,w2=1.5,v1=P.v1,v2=P.v2,e=P.e,hit=v1>v2+1e-9;
  const u1=hit?((P.m1-e*P.m2)*v1+(1+e)*P.m2*v2)/M:v1,u2=hit?((P.m2-e*P.m1)*v2+(1+e)*P.m1*v1)/M:v2;
  const x10=hit?-w1/2-v1*TC:-w1/2-2,x20=hit?w2/2-v2*TC:w2/2,vcm=(P.m1*v1+P.m2*v2)/M,xcm0=(P.m1*x10+P.m2*x20)/M;
  const pr=(a,b)=>[P.m1*a,P.m2*b,P.m1*a+P.m2*b],kr=(a,b)=>[.5*P.m1*a*a,.5*P.m2*b*b,.5*P.m1*a*a+.5*P.m2*b*b];
