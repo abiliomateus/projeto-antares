@@ -32,13 +32,17 @@ document.addEventListener("DOMContentLoaded", function () {
         footer.insertAdjacentHTML("afterbegin", `
             <div  class="licenca">
               <p>
-    Este trabalho está licenciado sob uma Licença
-    <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br"
-       rel="license">
-      <em>Creative Commons Atribuição-NãoComercial 4.0 Internacional</em>
-    </a>.
+    Projeto Antαres · Criado por
+    <a href="https://antares.ufsc.br">Prof. Abílio Mateus (antares.ufsc.br)</a>
   </p>
-  <div id="versao"></div>
+  <p>
+    <span id="versao"></span>
+    · Conteúdo sob licença
+    <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt_BR"
+       target="_blank" rel="license noopener">
+      CC BY-NC 4.0
+    </a>
+  </p>
   </div>
         `);
     }
