@@ -1,9 +1,9 @@
 
 {
   "id": "./",
-  "name": "projeto pntαres",
-  "short_name": "projeto antαres",
-  "description": "Acessibilidade de Recursos Educacionais em Física e Astronomia",
+  "name": "projeto antαres",
+  "short_name": "antαres",
+  "description": "Recursos Educacionais em Física e Astronomia",
   "lang": "pt-BR",
   "start_url": "./",
   "scope": "./",

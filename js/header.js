@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 projeto antαres
             </h1>
             <p class="header">
-                Acessibilidade de Recursos Educacionais em Física e Astronomia
+                Recursos Educacionais em Física e Astronomia
             </p>
         `);
     }
