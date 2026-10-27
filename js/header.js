@@ -1,3 +1,14 @@
+function carregarJS(url) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = url;
+        script.async = true; // Garante execução na ordem em que terminar de baixar
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const header = document.querySelector("header");
 
@@ -27,7 +38,10 @@ document.addEventListener("DOMContentLoaded", function () {
       <em>Creative Commons Atribuição-NãoComercial 4.0 Internacional</em>
     </a>.
   </p>
+  <div id="versao"></div>
   </div>
         `);
     }
 });
+
+carregarJS('/js/version.js');
