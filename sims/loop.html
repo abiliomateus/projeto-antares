@@ -41,20 +41,7 @@
 <div class="card"><div class="pt"><b>Velocidade</b> em função de \(t\)<span style="color:var(--acc)">\(v\)</span></div><div><canvas id="p2"></canvas></div></div>
 <div class="card"><div class="pt"><b>Normal</b> em função de \(t\)<span style="color:var(--a)">\(N/(mg)\)</span></div><div><canvas id="p3"></canvas></div></div>
 </section>
-<details class="card">
-<summary>Equações e método</summary>
-<p>Sem atrito, a energia mecânica se conserva. Com \(y\) a altura da partícula:</p>
-\[ E = \tfrac{1}{2} m v^2 + m g y = m g h, \qquad v = \sqrt{2g\,(h - y)} \]
-<p>Na pista, a força normal \(N\) empurra a partícula para o lado de dentro da curva. Com \(\theta\) o ângulo da tangente com a horizontal e \(\kappa\) a curvatura (\(\kappa = 1/R\) no loop e nos arcos, \(0\) nos trechos retos):</p>
-\[ N = m\left(\kappa v^2 + g\cos\theta\right) \]
-<p>No topo do loop, \(\theta = 180^\circ\) e \(y = 2R\). A partícula só continua na pista se \(N \ge 0\), isto é, \(v^2 \ge gR\). Com a energia:</p>
-\[ m g h = \tfrac{1}{2} m v_{\mathrm{topo}}^2 + 2 m g R \quad\Rightarrow\quad h \ge h_c = \tfrac{5}{2}\,R \]
-<p>Se \(R < h < h_c\), a partícula perde o contato antes do topo, no ângulo \(\varphi\) (medido a partir da base) em que \(N = 0\), e segue em voo livre:</p>
-\[ \cos\varphi = -\frac{2\,(h - R)}{3R} \]
-<p>Se \(h \le R\), ela não passa da altura do centro do loop e volta pela mesma pista. Com atrito cinético (coeficiente \(\mu\)):</p>
-\[ \frac{dv}{dt} = -g\sin\theta - \mu\,\frac{N}{m}\,\mathrm{sgn}(v), \qquad Q = \int \mu N\,|v|\,dt, \qquad E + Q = m g h \]
-<p>A pista é uma rampa reta de inclinação \(\alpha\) ligada por um arco de raio \(R\) ao loop. A integração usa Runge-Kutta de 4ª ordem com passo fixo de \(1/480\) s.</p>
-</details>
+
 </div>
 
 <footer></footer>

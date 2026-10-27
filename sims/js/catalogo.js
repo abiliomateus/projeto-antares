@@ -21,7 +21,7 @@
      abrirEmNovaAba         abre as simulações em outra aba
    ===================================================================== */
 (function(){
-const S='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">';
+const S='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
 const IC={
  generico:S+'<circle cx="24" cy="24" r="14"/><path d="M24 14v10l7 5"/></svg>',
  projetil:S+'<path d="M5 40Q24-12 43 40" stroke-dasharray="4 4"/><circle cx="24" cy="14" r="4" fill="currentColor" stroke="none"/><path d="M3 42h42"/></svg>',

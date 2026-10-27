@@ -188,3 +188,4 @@ p.header {
 .zbar svg{width:16px;height:16px;display:block;margin:auto; }
 .zsep{flex:none;height:6px}
 @media (pointer:coarse){.zbar{gap:6px}.zbar button{width:40px;height:40px;font-size:20px}.zbar button.txt{font-size:14px}.zbar svg{width:20px;height:20px}}   /* telas de toque: botões maiores */
+

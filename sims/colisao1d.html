@@ -42,19 +42,7 @@
 <div class="card"><div class="pt"><b>Momento linear</b> em função de \(t\) (kg·m/s)<span style="color:var(--acc)">\(p_1\)</span><span style="color:var(--vx)">\(p_2\)</span><span style="color:var(--ink)">\(p\)</span></div><div><canvas id="p3"></canvas></div></div>
 <div class="card"><div class="pt"><b>Energia cinética</b> em função de \(t\) (J)<span style="color:var(--acc)">\(E_{c,1}\)</span><span style="color:var(--vx)">\(E_{c,2}\)</span><span style="color:var(--ink)">\(E_c\)</span></div><div><canvas id="p4"></canvas></div></div>
 </section>
-<!-- <details class="card">
-<summary>Equações e método</summary>
-<p>Os dois blocos andam sem atrito, com velocidades \(v_1\) e \(v_2\) antes do choque e \(u_1\) e \(u_2\) depois. Não há forças externas, então o momento total se conserva em qualquer colisão, e o coeficiente de restituição \(e\) diz quanto da velocidade relativa se recupera:</p>
-\[ m_1 v_1 + m_2 v_2 = m_1 u_1 + m_2 u_2, \qquad e = \frac{u_2 - u_1}{v_1 - v_2}, \qquad 0 \le e \le 1 \]
-<p>Resolvendo as duas equações, com \(M = m_1 + m_2\):</p>
-\[ u_1 = \frac{(m_1 - e\,m_2)\,v_1 + (1 + e)\,m_2 v_2}{M}, \qquad u_2 = \frac{(m_2 - e\,m_1)\,v_2 + (1 + e)\,m_1 v_1}{M} \]
-<p>Com \(e = 1\) (colisão elástica) a energia cinética se conserva; com \(e = 0\) (perfeitamente inelástica) os blocos saem juntos, com a velocidade do centro de massa. Em geral, a energia perdida depende só da massa reduzida \(\mu\) e da velocidade relativa:</p>
-\[ \Delta E_c = -\tfrac{1}{2}\,\mu\,(1 - e^2)\,(v_1 - v_2)^2, \qquad \mu = \frac{m_1 m_2}{m_1 + m_2} \]
-<p>O centro de massa não é afetado pelo choque: \(v_{cm} = (m_1 v_1 + m_2 v_2)/M\) é constante. No referencial do CM, o momento total é nulo e a colisão inverte as velocidades e as reduz pelo fator \(e\):</p>
-\[ u_i - v_{cm} = -e\,(v_i - v_{cm}), \qquad i = 1, 2 \]
-<p>Casos que valem a pena testar: massas iguais com \(e = 1\) trocam de velocidade; um bloco leve que bate num bloco pesado parado volta quase com a mesma velocidade; um bloco pesado que bate num leve parado quase não muda de velocidade e lança o leve a quase o dobro da sua velocidade.</p>
-<p>Os blocos têm largura \(0{,}5\sqrt[3]{m}\) (com \(m\) em kg), e o contato acontece quando a face direita do bloco 1 encontra a face esquerda do bloco 2, em \(x = 0\), no instante \(t = 2\) s. O choque é tratado como instantâneo, e o movimento antes e depois é uniforme (não há integração numérica).</p>
-</details> -->
+
 </div>
 <footer></footer>
 <script src="/js/core.js"></script>

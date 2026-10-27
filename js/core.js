@@ -143,6 +143,7 @@ Sim.playbar=(cv,getState,getPaused)=>{
   requestAnimationFrame(tick)};
  requestAnimationFrame(tick);   // começa depois do carregamento do script (mode e paused ainda não existem agora)
 };
+
 /** Desenho fixo na tela (sem zoom/pan): chame logo depois de ctx.save() e restaure com ctx.restore(). */
 Sim.hud=ctx=>{const d=devicePixelRatio||1;ctx.setTransform(d,0,0,d,0,0)};
 
