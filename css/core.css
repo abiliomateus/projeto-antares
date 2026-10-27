@@ -60,7 +60,7 @@ button.p{background:var(--acc);border-color:var(--acc);color: var(--card);font-w
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .row{display:grid;grid-template-columns:1fr auto;gap:2px 8px;margin-bottom:10px;font-size:.92rem}
 .row output{color:var(--mut);font-variant-numeric:tabular-nums}
-.row input{grid-column:1/-1;width:100%;accent-color:var(--acc)}
+.row input{grid-column:1/-1;width:90%;accent-color:var(--acc)}
 select{font:inherit;width:100%;padding:6px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);margin:2px 0 12px}
 .chk{display:flex;gap:8px;align-items:center;margin:6px 0;font-size:.92rem}
 .sw{width:18px;height:0;border-top:3px solid;display:inline-block}
@@ -182,7 +182,7 @@ p.header {
 /* ---- Zoom do canvas (Sim.interactive): botões na lateral direita ---- */
 /* .zbar{position:absolute;right:6px;top:40%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px} */
 .zbar{position:absolute;top:6px;left:50%;transform:translateX(-50%);display:flex;flex-direction:row;gap:4px}
-.zbar button{flex:none;width:28px;height:28px;padding:0;font-size:16px;line-height:1;border-radius:6px;opacity:1;color: var(--acc);}
+.zbar button{flex:none;width:1.5em;height:1.5em;padding:0;font-size:1em;line-height:1;border-radius:6px;opacity:1;color: var(--acc);}
 .zbar button:hover,.zbar button:focus-visible{opacity:1; background-color: var(--acc); color: var(--card)}
 .zbar button.txt{font-size:12px;font-weight:600;}
 .zbar svg{width:16px;height:16px;display:block;margin:auto; }

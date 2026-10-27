@@ -115,8 +115,8 @@ Sim.interactive=(cv,fit,o)=>{
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  if(wrap&&wrap.style&&wrap.querySelector){
   const bar=Sim.bar(wrap);
-  [['+','Ampliar (Ctrl + roda do mouse)',()=>zoomAt(1.1,fit.w/2,fit.h/2)],['-','Reduzir',()=>zoomAt(1/1.1,fit.w/2,fit.h/2)],['1x','Restaurar o zoom (duplo clique)',()=>S.reset()]].forEach(([t,tt,f])=>{
-   const b=document.createElement('button');b.type='button';b.textContent=t;if(t.length>1)b.className='txt';b.title=tt;b.setAttribute('aria-label',tt);b.onclick=f;bar.appendChild(b)});
+  [['+','Ampliar (Ctrl + roda do mouse)',()=>zoomAt(1.1,fit.w/2,fit.h/2)],['-','Reduzir',()=>zoomAt(1/1.1,fit.w/2,fit.h/2)],['=','Restaurar o zoom (duplo clique)',()=>S.reset()]].forEach(([t,tt,f])=>{
+   const b=document.createElement('button');b.type='button';b.textContent=t;if(t.length>2)b.className='txt';b.title=tt;b.setAttribute('aria-label',tt);b.onclick=f;bar.appendChild(b)});
  }
  cursor();return S;
 };

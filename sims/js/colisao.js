@@ -69,18 +69,70 @@ function setup(){
  const vm=Math.hypot(v2[0]-v1[0],v2[1]-v1[1]),hit=vm>=.05;
  const c=[(P.m1*v1[0]+P.m2*v2[0])/M,(P.m1*v1[1]+P.m2*v2[1])/M],cm=Math.hypot(c[0],c[1]),rho=P.m2/M*P.e*vm;
  let u1=v1,u2=v2,phi=a1,clamp=false,two=false,all=true,dc=0,gdeg=180;
- if(hit){
-  phi=a1+P.dfl*R;
-  if(cm>rho-1e-9){                                    // origem fora (ou na borda) da circunferência: só um cone de direções
-   const psi=Math.atan2(c[1],c[0]),gam=Math.asin(Math.min(1,rho/cm)),d=wrap(phi-psi);
-   all=false;dc=wrap(psi-a1)/R;gdeg=gam/R;                // cone de direções possíveis: centro dc e meia-abertura gdeg (graus, relativos a ang1)
-   if(Math.abs(d)>gam+1e-9){phi=psi+Math.sign(d)*gam;clamp=true}
+ 
+if(hit){
+
+  // Colisão unidimensional quando o desvio de 1 é zero
+  const cross=v1[0]*v2[1]-v1[1]*v2[0];
+  const collinear=P.v2<.05 ||
+    Math.abs(cross)<1e-8*Math.max(1,P.v1*P.v2);
+
+  if(Math.abs(P.dfl)<1e-9 && P.v1>=.05 && collinear){
+
+    // Eixo orientado na direção inicial da partícula 1
+    const ex=v1[0]/P.v1,ey=v1[1]/P.v1;
+    const w1=P.v1;
+    const w2=v2[0]*ex+v2[1]*ey;
+
+    // Velocidades finais na colisão unidimensional
+    const s1=((P.m1-P.e*P.m2)*w1+
+              (1+P.e)*P.m2*w2)/M;
+
+    const s2=((P.m2-P.e*P.m1)*w2+
+              (1+P.e)*P.m1*w1)/M;
+
+    u1=[s1*ex,s1*ey];
+    u2=[s2*ex,s2*ey];
+
+  }else{
+
+    // Modelo bidimensional original
+    phi=a1+P.dfl*R;
+
+    if(cm>rho-1e-9){
+      const psi=Math.atan2(c[1],c[0]),
+            gam=Math.asin(Math.min(1,rho/cm)),
+            d=wrap(phi-psi);
+
+      all=false;
+      dc=wrap(psi-a1)/R;
+      gdeg=gam/R;
+
+      if(Math.abs(d)>gam+1e-9){
+        phi=psi+Math.sign(d)*gam;
+        clamp=true;
+      }
+    }
+
+    const ux=Math.cos(phi),uy=Math.sin(phi),
+          uc=ux*c[0]+uy*c[1],
+          sq=Math.sqrt(Math.max(0,uc*uc-cm*cm+rho*rho));
+
+    two=cm>rho+1e-9 && uc-sq>1e-9;
+
+    const s=Math.max(0,
+      ($('c_alt').checked&&two)?uc-sq:uc+sq
+    );
+
+    u1=[s*ux,s*uy];
+
+    u2=[
+      c[0]-P.m1/P.m2*(u1[0]-c[0]),
+      c[1]-P.m1/P.m2*(u1[1]-c[1])
+    ];
   }
-  const ux=Math.cos(phi),uy=Math.sin(phi),uc=ux*c[0]+uy*c[1],sq=Math.sqrt(Math.max(0,uc*uc-cm*cm+rho*rho));
-  two=cm>rho+1e-9&&uc-sq>1e-9;
-  const s=Math.max(0,($('c_alt').checked&&two)?uc-sq:uc+sq);
-  u1=[s*ux,s*uy];u2=[c[0]-P.m1/P.m2*(u1[0]-c[0]),c[1]-P.m1/P.m2*(u1[1]-c[1])];
- }
+}
+ 
  return{M,v1,v2,c,u1,u2,hit,clamp,two,all,dc,gdeg,dUsed:wrap(phi-a1)/R,tEnd:TC+2.5,p1:[-v1[0]*TC,-v1[1]*TC],p2:[-v2[0]*TC,-v2[1]*TC]};
 }
 // Intervalo de θ₁ possível (graus, relativo a ang1): limites do slider (sl) e texto do rótulo (txt, LaTeX).

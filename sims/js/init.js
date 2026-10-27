@@ -17,7 +17,7 @@ function carregarJS(url) {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
         script.src = url;
-        script.async = false; // Garante execução na ordem em que terminar de baixar
+        script.async = true; // Garante execução na ordem em que terminar de baixar
         script.onload = resolve;
         script.onerror = reject;
         document.head.appendChild(script);
@@ -30,14 +30,13 @@ async function inicializarPagina() {
         console.log("Carregando estilos e plugins...");
 
         await Promise.all([
-            carregarCSS('../css/core.css'),
-        ]);
+            carregarCSS('/css/core.css'),
+       ]);
 
-        // await carregarJS('js/core.js');
+        await carregarJS('/js/mathjax-config.js');
+        await carregarJS('https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js');
 
         // -> ADICIONE OUTROS PLUGINS (ex: jQuery, Axios) AQUI:
-        await carregarJS('../js/mathjax-config.js');
-        await carregarJS('../js/tex-svg.js');
 
         console.log("Todos os scripts e plugins foram carregados com sucesso!");
 
