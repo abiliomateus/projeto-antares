@@ -47,6 +47,7 @@ const out=Sim.readouts($('ro'),[['t','\\(t\\) (anos)'],['r','\\(r\\) (UA)'],['r1
 
 Sim.panel(cv, $('ctl'));
 Sim.panel(cv, $('book'), { type: 'book' });
+Sim.legend('#legenda');
 
 // ---- Gráficos (colunas: 1=r 2=r1 3=r2 4=v1 5=v2 6=v_rel 7=K 8=U 9=E 10=L) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas; as cores precisam coincidir com as de lá.

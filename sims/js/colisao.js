@@ -51,6 +51,7 @@ const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['p','\\(|\\vec p|\\) (kg·m
 
 Sim.panel(cv, $('ctl'));
 Sim.panel(cv, $('book'), { type: 'book' });
+Sim.legend('#legenda');
 
 // ---- Gráficos (colunas: 1=|v1| 2=|v2| 3=px 4=py 5=|p| 6=Ec1 7=Ec2 8=Ec) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas: por isso title e name vazios e mt pequeno.

@@ -46,6 +46,7 @@ const out=Sim.readouts($('ro'),[['t','Tempo (s)'],['s','s (m)'],['v','v (m/s)'],
 
 Sim.panel(cv, $('ctl'));
 Sim.panel(cv, $('book'), { type: 'book' });
+Sim.legend('#legenda');
 
 // ---- Gráficos (colunas: 1=s, 2=v, 3=Ec, 4=Ep, 5=E total) ----
 const plots=[

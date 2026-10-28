@@ -48,6 +48,7 @@ const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['y','Deslocamento \\(y\\) (
 
 Sim.panel(cv, $('ctl'));
 Sim.panel(cv, $('book'), { type: 'book' });
+Sim.legend('#legenda');
 
 // ---- Gráficos (colunas: 1=x, 2=v, 3=Ec, 4=ΔEp, 5=ΔE) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas: por isso title e name vazios e mt pequeno.
