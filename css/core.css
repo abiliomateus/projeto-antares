@@ -276,10 +276,14 @@ body.sim-fullscreen-active {
 
 @media (max-width: 600px) and (orientation: portrait) {
   .dica-orientacao {
+    max-width: 50%;
+    padding:5px;
+    left:50%;
+    transform: translateX(50%);
     display: block;
-    font-size: 0.85rem;
+    font-size: 1rem;
     text-align: center;
-    opacity: 0.8;
     color: var(--acc);
+    border-radius:999px; border:1px solid var(--acc);
   }
 }
