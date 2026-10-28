@@ -40,7 +40,7 @@ const IC={
 };
 window.CATALOGO={
  opcoes:{
-  titulo:'Simulações de Física e Astronomia',
+  titulo:'Simulações de Física',
   subtitulo:'Mecânica básica: cinemática, leis de Newton, momento, rotação e gravitação. Cada simulação roda direto no navegador.',
   agruparPorTopico:true,mostrarBusca:true,mostrarFiltros:true,mostrarEmBreve:false,mostrarTema:false,abrirEmNovaAba:false
  },

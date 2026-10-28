@@ -49,13 +49,30 @@
 </div>
 <!-- Ordem importa: o núcleo primeiro, depois a simulação -->
 <div id="book" class="book">
-<p>Sem resistência do ar: 
-    \[x(t)=v_0\cos\theta\,t \quad\text{e}\quad y(t)=h_0+v_0\mathrm{sen}\theta\,t-\frac{1}{2}gt^2.\]
-A velocidade horizontal é constante e a vertical varia linearmente: 
-\[v_y(t)=v_0\mathrm{sen}\theta-gt.\]
+<span class="mathconfig">
+\( 
+\let\oldvec=\vec
+\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
+\let\oldhat=\hat
+\let\oldimath=\imath
+\let\oldjmath=\jmath
+\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
+\)
+</span>
+<p>O <em>movimento de um projétil</em> é um exemplo de movimento em duas dimensões. Na ausência da resistência do ar, a aceleração é \(\vec{a} = -g\hat{\jmath} + 0\hat\imath\). As coordenadas da partícula são dadas por:
+    \[x(t)=v_0\cos\theta_0\,t\] 
+    \[y(t)=h_0+v_0\sin\theta_0\,t-\frac{1}{2}gt^2,\]
+onde \(h_0\) é a altura inicial, \(v_0\) é a magnitude da velocidade inicial e \(\theta_0\), o ângulo de lançamento.</p>
+<p>A componente horizontal da velocidade é constante e a vertical varia linearmente em função do tempo:
+\[v_x(t) = v_0 \cos\theta_0\]
+\[v_y(t)=v_0\sin\theta_0-gt.\]
 </p>
 
-<p>Com arrasto quadrático, \(\vec{a}=-g\hat{\jmath}-k|\vec{v}|\vec{v}\), com \(k\) em \(\mathrm{m}^{-1}\). Não há solução analítica simples, então o código integra as equações com o método de Runge–Kutta de quarta ordem, usando passo fixo de \(1/240\,\mathrm{s}\). Nos gráficos, a linha tracejada representa sempre a solução analítica sem arrasto.</p>
+<p>Considerando uma força de arrasto proporcional a \(v^2\) (componente quadrática), a aceleração possui uma componente contrária à velocidade da partícula
+    \[\vec{a}=-g\hat{\jmath}-\dfrac{b}{m}v^2\hat{v},\]
+onde \(b\) é o coeficiente de arrasto. Não há solução analítica simples, então o código integra as equações com o <a href="https://pt.wikipedia.org/wiki/M%C3%A9todo_de_Runge-Kutta" target="_blank">método de Runge–Kutta</a> de quarta ordem, usando passo fixo de \(1/240\,\mathrm{s}\).</p>
+
+<p>Nos gráficos, a linha tracejada representa sempre a solução analítica sem arrasto.</p>
 </div>
 
 <footer></footer>

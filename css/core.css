@@ -267,3 +267,19 @@ body.sim-fullscreen-active {
   flex-shrink: 0;
   color: var(--acc);
 }
+
+.mathconfig{display:none}
+
+.dica-orientacao {
+  display: none;
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .dica-orientacao {
+    display: block;
+    font-size: 0.85rem;
+    text-align: center;
+    opacity: 0.8;
+    color: var(--acc);
+  }
+}
