@@ -17,7 +17,7 @@
    Linhas de dados dos gráficos: [t, x, y, |v|, vx, vy] (ver row()).
    ===================================================================== */
 (function(){
-const {$,rk4,f2,arrow,css}=Sim, DT=1/240, P={}, cv=$('cv'), ctx=cv.getContext('2d');
+const {$,rk4,f2,arrow,css}=Sim, DT=1/500, P={}, cv=$('cv'), ctx=cv.getContext('2d');
 // Tela principal: proporção 0,58, altura entre 260 e 520 px.
 // ml/mr/mt/mb = margens (px) reservadas aos números dos eixos.
 // const fit=Sim.fit(cv,.58,260,520), ml=46,mr=16,mt=16,mb=32;
@@ -44,7 +44,7 @@ Sim.controls($('ctl'),[
  {id:'ang',label:'Ângulo de lançamento',unit:'°',min:0,max:90,step:1,val:30},
  {id:'h0',label:'Altura inicial',unit:'m',min:0,max:50,step:.5,val:0},
  {id:'g',label:'Gravidade',unit:'m/s²',min:1,max:25,step:.1,val:9.8},
- {id:'k',label:'Coeficiente de arrasto (quadrático) b',unit:'kg/m',min:0,max:.1,step:.0001,val:0.01164156},
+ {id:'b',label:'Coeficiente de arrasto (quadrático)',unit:'kg/m',min:0,max:.1,step:.0001,val:0.01164156},
  {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
 ],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
@@ -52,6 +52,7 @@ const out=Sim.readouts($('ro'),[['t','Tempo (s)'],['x','x (m)'],['y','y (m)'],['
 
 Sim.panel(cv, $('ctl'));
 Sim.panel(cv, $('book'), { type: 'book' });
+Sim.legend('#legenda');
 
 // ---- Gráficos ----
 // Colunas de cada linha de dados: [t, x, y, |v|, vx, vy]  (índices 0 a 5).
@@ -79,7 +80,7 @@ const mkView = i => ({
 // É aqui que se muda a física: vento (some uma velocidade do ar a vx e vy no cálculo do arrasto),
 // força de Magnus (bola com efeito), gravidade variável com a altura, etc.
 // Arrasto quadrático: a = -k·|v|·v, com k = (coeficiente de arrasto)/(massa), em 1/m.
-const deriv=q=>{const sp=Math.hypot(q[2],q[3]);return[q[2],q[3],-(P.k/P.m)*sp*q[2],-P.g-(P.k/P.m)*sp*q[3]]};
+const deriv=q=>{const sp=Math.hypot(q[2],q[3]);return[q[2],q[3],-(P.b/P.m)*sp*q[2],-P.g-(P.b/P.m)*sp*q[3]]};
 // Linha de dados do instante atual, no formato dos gráficos.
 const row=()=>[t,s[0],s[1],Math.hypot(s[2],s[3]),s[2],s[3]];
 // Volta ao modo de pré-visualização (chamada a cada mudança de slider). Não apaga `past`.

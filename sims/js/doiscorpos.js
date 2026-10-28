@@ -45,7 +45,8 @@ Sim.controls($('ctl'),[
 ],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (anos)'],['r','\\(r\\) (UA)'],['r1','\\(r_1\\) (UA)'],['r2','\\(r_2\\) (UA)'],['v1','\\(v_1\\) (km/s)'],['v2','\\(v_2\\) (km/s)'],['E','\\(E\\) (M☉·UA²/ano²)'],['L','\\(L\\) (M☉·UA²/ano)']]);
 
-Sim.settings(cv, $('ctl'));
+Sim.panel(cv, $('ctl'));
+Sim.panel(cv, $('book'), { type: 'book' });
 
 // ---- Gráficos (colunas: 1=r 2=r1 3=r2 4=v1 5=v2 6=v_rel 7=K 8=U 9=E 10=L) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas; as cores precisam coincidir com as de lá.

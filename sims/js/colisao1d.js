@@ -40,7 +40,8 @@ Sim.controls($('ctl'),[
 ],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['v1','\\(v_1\\) (m/s)'],['v2','\\(v_2\\) (m/s)'],['p','\\(p\\) (kg·m/s)'],['K','\\(K\\) (J)'],['dK','\\(\\Delta K\\) (J)'],['vcm','\\(v_{cm}\\) (m/s)'],['xcm','\\(x_{cm}\\) (m)']]);
 
-Sim.settings(cv, $('ctl'));
+Sim.panel(cv, $('ctl'));
+Sim.panel(cv, $('book'), { type: 'book' });
 
 // ---- Gráficos (colunas: 1=x1 2=x2 3=v1 4=v2 5=p1 6=p2 7=p 8=K1 9=K2 10=K) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas; as cores precisam coincidir com as de lá.

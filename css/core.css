@@ -28,9 +28,10 @@
 }
 
 @font-face {
-  font-family: 'Libertinus';
-  src: local('Libertinus'),
-      url('fonts/LibertinusMath-Regular.woff2') format('woff2');
+  font-family: 'Libertine';
+  src: local('Libertine'),
+      url('fonts/LibertinusMath-Regular.woff2') format('woff2'),
+      url('fonts/LinLibertine_R.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -191,11 +192,11 @@ p.header {
 
 /* ---- Zoom do canvas (Sim.interactive): botões na lateral direita ---- */
 /* .zbar{position:absolute;right:6px;top:40%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px} */
-.zbar{position:absolute;top:2%;left:50%;transform:translateX(-50%);display:flex;flex-direction:row;gap:4px}
-.zbar button{flex:none;width:2.5em;height:1.5em;padding:0;font-size:1em;line-height:1;border-radius:6px;opacity:1;color: var(--acc);}
-.zbar button:hover,.zbar button:focus-visible{opacity:1; background-color: var(--acc); color: var(--card)}
+.zbar{position:absolute;top:2%;left:50%;transform:translateX(-50%);display:flex;flex-direction:row;gap:4px;}
+.zbar button{flex:none;width:2em;height:1.5em;padding:0;font-size:1em;line-height:1;border-radius:6px;color: var(--acc);opacity: 0.6;}
+.zbar button:hover,.zbar button:focus-visible{opacity:1; background-color: var(--acc); color: var(--card); }
 .zbar button.txt{font-size:12px;font-weight:600;}
-.zbar svg{width:16px;height:16px;display:block;margin:auto; }
+.zbar svg{width:1em;height:1em;display:block;margin:auto;}
 .zsep{flex:none;height:6px}
 @media (pointer:coarse){.zbar{gap:6px}.zbar button{width:40px;height:40px;font-size:20px}.zbar button.txt{font-size:14px}.zbar svg{width:20px;height:20px}}   /* telas de toque: botões maiores */
 
@@ -229,7 +230,7 @@ body.sim-fullscreen-active {
   overflow: hidden;
 }
 
-.book{font-size:1em; font-family: 'Libertinus', serif;}
+.book{font-size:1em; font-family: 'Libertine', serif;}
 
 .book mjx-container[jax="SVG"] {
   font-size: 100%;
@@ -237,4 +238,32 @@ body.sim-fullscreen-active {
 
 .book mjx-container[jax="SVG"] svg {
   max-width: 100%;
+}
+
+.legenda {
+  margin:0 0 1em;
+}
+.sim-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  font-size: 0.8rem;
+  color: var(--ink, #666);
+  padding: 0.5em 0;
+}
+
+.sim-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.sim-legend-item svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--acc);
 }

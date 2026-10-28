@@ -44,7 +44,8 @@ $('c_atr').addEventListener('change',reset);
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['y','Altura \\(y\\) (m)'],['v','\\(v\\) (m/s)'],['N','Normal \\(N\\) (N)'],['Ec','\\(K\\) (J)'],['Ep','\\(U\\) (J)'],['E','\\(E = K + U\\) (J)'],['Q','Dissipada \\(Q\\) (J)']]);
 
-Sim.settings(cv, $('ctl'));
+Sim.panel(cv, $('ctl'));
+Sim.panel(cv, $('book'), { type: 'book' });
 
 // ---- Gráficos (colunas: 1=Ec 2=Ep 3=E 4=Q 5=v 6=N/(m·g)) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas; as cores precisam coincidir com as de lá.

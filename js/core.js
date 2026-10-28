@@ -100,15 +100,15 @@ Sim.icons = {
 
   pause: '<path d="M8 5v14M16 5v14"/>',
 
-  restart: '<path d="M3 11a9 9 0 1 1 2.6 6.4"/><path d="M1 3v7h7"/>',
+  restart: '<path d="M2.5 10a9 9 0 1 1 2.6 6.4"/><path d="M1 3v7h7"/>',
 
   share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>',
 
-  settings: '<path d="M12 6.9a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.3a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9h-.3a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2v-.3a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.3a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/>',
+  settings: '<path d="m 12,8.6776473 a 3.3223528,3.3223528 0 1 0 0,6.6447057 3.3223528,3.3223528 0 0 0 0,-6.6447057 z"/> <path d="m 19.05,16.55 0.1,0.1 a 1.7,1.7 0 0 1 -2.4,2.4 l -0.1,-0.1 a 1.7,1.7 0 0 0 -2.9,1.2 v 0.3 a 1.7,1.7 0 0 1 -3.4,0 v -0.2 a 1.7,1.7 0 0 0 -2.9,-1.2 l -0.1,0.1 a 1.7,1.7 0 0 1 -2.4,-2.4 l 0.1,-0.1 a 1.7,1.7 0 0 0 -1.2,-2.9 h -0.3 a 1.7,1.7 0 0 1 0,-3.4 h 0.2 a 1.7,1.7 0 0 0 1.2,-2.9 l -0.1,-0.1 a 1.7,1.7 0 0 1 2.4,-2.4 l 0.1,0.1 a 1.7,1.7 0 0 0 2.9,-1.2 v -0.3 a 1.7,1.7 0 0 1 3.4,0 v 0.2 a 1.7,1.7 0 0 0 2.9,1.2 l 0.1,-0.1 a 1.7,1.7 0 0 1 2.4,2.4 l -0.1,0.1 a 1.7,1.7 0 0 0 1.2,2.9 h 0.3 a 1.7,1.7 0 0 1 0,3.4 h -0.2 a 1.7,1.7 0 0 0 -1.2,2.9 z" />',
 
   close: '<path d="M18 6 6 18M6 6l12 12"/>',
 
-  copyCheck: '<path d="m9 12 4 4 12-12"/>',
+  copyCheck: '<path d="m3 12 4 4 12-12"/>',
 
   exitfullscreen: '<path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/>',
 
@@ -142,6 +142,45 @@ Sim.iconButton = (name, title, onClick, size = 18) => {
     Devolve o elemento .zbar do pai do canvas, criando-o se ainda não existir. */
 Sim.bar=wrap=>{let b=wrap.querySelector('.zbar');if(!b){b=document.createElement('div');b.className='zbar';wrap.style.position='relative';wrap.appendChild(b)}return b};
 
+Sim.legend = (target) => {
+  if (typeof target === 'string')
+    target = document.querySelector(target);
+
+  if (!target || target.querySelector('.sim-legend')) return;
+
+  const items = [
+    ['play', 'Iniciar / continuar'],
+    ['pause', 'Pausar'],
+    ['restart', 'Reiniciar'],
+    ['zoomIn', 'Ampliar'],
+    ['zoomOut', 'Reduzir'],
+    ['fullscreen', 'Tela cheia'],
+    ['settings', 'Configurações'],
+    ['book', 'Fundamentos físicos'],
+    ['link', 'Copiar o link da simulação'],
+  ];
+
+  const legend = document.createElement('div');
+  legend.className = 'sim-legend';
+
+  items.forEach(([name, label]) => {
+    const item = document.createElement('div');
+    item.className = 'sim-legend-item';
+
+    const icon = document.createElement('span');
+    icon.innerHTML = Sim.icon(name, 16);
+    icon.setAttribute('aria-hidden', 'true');
+
+    const text = document.createElement('span');
+    text.textContent = label;
+
+    item.append(icon, text);
+    legend.appendChild(item);
+  });
+
+  target.appendChild(legend);
+  return legend;
+};
 /**
  * Painel flutuante de configurações sobre o canvas.
  * Move o container existente para o painel, sem duplicar os controles.
@@ -156,7 +195,7 @@ book: {
   title: 'Fundamentos físicos',
   left: '50%',
   right: 'auto',
-  width: 'min(600px, calc(100% - 60px))'
+  width: 'min(800px, calc(100% - 60px))'
 }
 };
 
@@ -200,10 +239,10 @@ Sim.panel = (cv, box, opts = {}) => {
     maxHeight,
     overflowY: 'auto',
     padding: '14px',
-    border: '1px solid var(--border, #ccc)',
+    border: '1px solid var(--line, #ccc)',
     borderRadius: '10px',
-    background: 'var(--surface, #fff)',
-    color: 'var(--text, #222)',
+    background: 'var(--card, #fff)',
+    color: 'var(--ink, #222)',
     boxShadow: '0 4px 18px #0003',
     boxSizing: 'border-box'
   });
@@ -296,138 +335,6 @@ Sim.panel = (cv, box, opts = {}) => {
 
   return panel;
 };
-
-// Mantém compatibilidade com as chamadas existentes.
-Sim.settings = (cv, box) =>
-  Sim.panel(cv, box, {
-    icon: 'settings',
-    title: 'Configurações'
-});
-
-// Sim.settings = (cv, box) => {
-//   if (typeof box === 'string') box = document.querySelector(box);
-
-//   const wrap = cv?.parentElement;
-//   if (!wrap || !box) return;
-
-//   const bar = Sim.bar(wrap);
-
-//   // Botão de configurações
-//   const btn = Sim.iconButton(
-//     'settings',
-//     'Configurações da simulação',
-//     () => toggle()
-//   );
-
-//   bar.appendChild(btn);
-
-//   // Painel flutuante
-//   const panel = document.createElement('section');
-//   panel.className = 'sim-settings';
-//   panel.hidden = true;
-//   panel.setAttribute('aria-label', 'Configurações da simulação');
-
-//   Object.assign(panel.style, {
-//     position: 'absolute',
-//     zIndex: '20',
-//     top: '50px',
-//     left: 'calc(50% - min(340px, calc(100% - 60px))/2)',
-//     right: 'auto',
-//     width: 'min(340px, calc(100% - 60px))',
-//     maxHeight: '95%',
-//     overflowY: 'auto',
-//     padding: '14px',
-//     border: '1px solid var(--line, #ccc)',
-//     borderRadius: '10px',
-//     background: 'var(--card, #fff)',
-//     color: 'var(--ink, #222)',
-//     boxShadow: '0 4px 18px #0003',
-//     boxSizing: 'border-box'
-//   });
-
-//   // Cabeçalho e botão de fechar
-//   const head = document.createElement('div');
-
-//   Object.assign(head.style, {
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'space-between',
-//     gap: '8px',
-//     marginBottom: '12px'
-//   });
-
-//   const title = document.createElement('strong');
-//   title.textContent = 'Configurações';
-
-//   const close = Sim.iconButton(
-//   'close',
-//   'Fechar configurações',
-//   () => toggle(false)
-//   );
-
-// Object.assign(close.style, {
-//   width: '32px',
-//   height: '32px',
-//   minWidth: '32px',
-//   padding: '6px',
-//   flex: '0 0 32px',
-//   display: 'grid',
-//   placeItems: 'center'
-// });
-
-//   head.append(title, close);
-
-//   // Reserva a posição original de #ctl para não alterar o fluxo da página.
-//   const placeholder = document.createComment('posição original dos controles');
-//   box.parentNode.insertBefore(placeholder, box);
-
-//   panel.appendChild(head);
-//   panel.appendChild(box);
-//   wrap.appendChild(panel);
-
-//   function toggle(force) {
-//     const open = force ?? panel.hidden;
-
-//     panel.hidden = !open;
-//     btn.setAttribute(
-//       'aria-expanded',
-//       String(open)
-//     );
-
-//     if (open) {
-//       close.focus();
-//     } else {
-//       btn.focus();
-//     }
-//   }
-
-//   // Fecha ao clicar fora do painel ou pressionar Esc.
-//   document.addEventListener('pointerdown', e => {
-//     if (
-//       !panel.hidden &&
-//       !panel.contains(e.target) &&
-//       !btn.contains(e.target)
-//     ) {
-//       toggle(false);
-//     }
-//   });
-
-//   panel.addEventListener('pointerdown', e => e.stopPropagation());
-
-//   document.addEventListener('keydown', e => {
-//     if (e.key === 'Escape' && !panel.hidden) toggle(false);
-//   });
-
-//   // Permite restaurar #ctl à posição original, se necessário.
-//   panel.restore = () => {
-//     placeholder.parentNode?.insertBefore(box, placeholder);
-//     placeholder.remove();
-//     panel.remove();
-//     btn.remove();
-//   };
-
-//   return panel;
-// };
 
 Sim.speedbar = (cv, id, speeds = [0.25, 0.5, 1, 2]) => {
   const wrap = cv.parentElement;
@@ -603,7 +510,7 @@ Sim.interactive=(cv,fit,o)=>{
   const fs=document.createElement('button');
 fs.type='button';
 fs.innerHTML=Sim.icon('fullscreen');
-fs.title='Tela cheia (Atalho: f)';
+fs.title='Tela cheia (Tecla f)';
 fs.setAttribute('aria-label','Tela cheia');
 fs.dataset.fullscreen='';
 
@@ -612,7 +519,7 @@ fs.onclick=()=>Sim.fullscreen(wrap);
 document.addEventListener('fullscreenchange',()=>{
   const ativo=document.fullscreenElement===wrap;
   fs.innerHTML=ativo?Sim.icon('exitfullscreen'):Sim.icon('fullscreen');
-  fs.title=ativo?'Sair da tela cheia (Atalho: f)':'Tela cheia (Atalho: f)';
+  fs.title=ativo?'Sair da tela cheia (Tecla f)':'Tela cheia (Tecla f)';
   fs.setAttribute('aria-label',fs.title);
 });
 
@@ -623,8 +530,8 @@ const zoomOut = () => zoomAt(1/1.1, fit.w/2, fit.h/2);
 const reset = () => S.reset();
 
 [
-  ['zoomIn', 'Ampliar (Atalho: +)', zoomIn],
-  ['zoomOut', 'Reduzir (Atalho: -)', zoomOut],
+  ['zoomIn', 'Ampliar (Tecla + )', zoomIn],
+  ['zoomOut', 'Reduzir (Tecla - )', zoomOut],
   // ['resetZoom', 'Restaurar o zoom (Atalho: 0)', reset]
 ].forEach(([t, tt, f]) => {
   const b = document.createElement('button');
@@ -646,6 +553,7 @@ Sim.registerKeys(wrap, {
 //   [['+','Ampliar (Ctrl + roda do mouse)',()=>zoomAt(1.1,fit.w/2,fit.h/2)],['-','Reduzir',()=>zoomAt(1/1.1,fit.w/2,fit.h/2)],['=','Restaurar o zoom (duplo clique)',()=>S.reset()]].forEach(([t,tt,f])=>{
 //    const b=document.createElement('button');b.type='button';b.textContent=t;if(t.length>2)b.className='txt';b.title=tt;b.setAttribute('aria-label',tt);b.onclick=f;bar.appendChild(b)});
  }
+ cv._simZoom = S;
  cursor();return S;
 };
 /** Botões de play/pause (um só botão que alterna) e de reiniciar sobre o canvas, no topo da barra do zoom. Úteis no celular,
@@ -679,9 +587,10 @@ Sim.playbar=(cv,getState,getPaused)=>{
   ()=>Sim.$(getState()==='run'?'bp':'bl').click()
  );
 
- const rst=mk('restart','Reiniciar a simulação',
-  ()=>Sim.$('bc').click()
- );
+ const rst = mk('restart', 'Reiniciar a simulação', () => {
+  Sim.$('bc').click();
+  cv._simZoom?.reset();
+});
 
  const sep=document.createElement('span');
  sep.className='zsep';
