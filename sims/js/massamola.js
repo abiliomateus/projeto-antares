@@ -154,7 +154,7 @@ function dashpot(xa,xb,y,Lc,pos){
 // Retrato de fase: v em função de x. A elipse tracejada é a trajetória sem arrasto (E = E0); com arrasto, a curva
 // espirala para a origem (subamortecido) ou vai direto a ela (crítico e superamortecido).
 function phase(){
- const C=css,W=fph.w,H=fph.h,m=34,A=P.x0*1.15,B=P.x0*su.w0*1.15,X=x=>m+(x+A)/(2*A)*(W-2*m),Y=v=>H-m-(v+B)/(2*B)*(H-2*m);
+ const C=css,W=fph.w,H=fph.h,m=34,A=P.x0,B=P.x0*su.w0,X=x=>m+(x+A)/(2*A)*(W-2*m),Y=v=>H-m-(v+B)/(2*B)*(H-2*m);
  pctx.clearRect(0,0,W,H);pctx.lineWidth=1;pctx.font=C('--normalfont');
  const sx=Sim.nice(A/2),sv=Sim.nice(B/2);
  for(let g=-Math.floor(A/sx)*sx;g<=A+1e-9;g+=sx){pctx.strokeStyle=C('--grid');pctx.beginPath();pctx.moveTo(X(g),m/2);pctx.lineTo(X(g),H-m);pctx.stroke();if(Math.abs(g)>1e-9){pctx.fillStyle=C('--mut');pctx.textAlign='center';pctx.fillText(+g.toFixed(4),X(g),H-m+14)}}

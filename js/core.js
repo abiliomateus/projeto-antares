@@ -109,6 +109,8 @@ Sim.icons = {
   close: '<path d="M18 6 6 18M6 6l12 12"/>',
 
   copyCheck: '<path d="m9 12 4 4 12-12"/>',
+
+  exitfullscreen: '<path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/>',
 };
 
 Sim.icon = (name, size = 18) => {
@@ -167,10 +169,11 @@ Sim.settings = (cv, box) => {
   Object.assign(panel.style, {
     position: 'absolute',
     zIndex: '20',
-    top: '12px',
-    right: '48px',
+    top: '50px',
+    left: 'calc(50% - min(340px, calc(100% - 60px))/2)',
+    right: 'auto',
     width: 'min(340px, calc(100% - 60px))',
-    maxHeight: '80%',
+    maxHeight: '95%',
     overflowY: 'auto',
     padding: '14px',
     border: '1px solid var(--line, #ccc)',
@@ -448,7 +451,7 @@ fs.onclick=()=>Sim.fullscreen(wrap);
 
 document.addEventListener('fullscreenchange',()=>{
   const ativo=document.fullscreenElement===wrap;
-  fs.textContent=ativo?'⛶':'⛶';
+  fs.innerHTML=ativo?Sim.icon('exitfullscreen'):Sim.icon('fullscreen');
   fs.title=ativo?'Sair da tela cheia (Atalho: f)':'Tela cheia (Atalho: f)';
   fs.setAttribute('aria-label',fs.title);
 });
@@ -462,7 +465,7 @@ const reset = () => S.reset();
 [
   ['zoomIn', 'Ampliar (Atalho: +)', zoomIn],
   ['zoomOut', 'Reduzir (Atalho: -)', zoomOut],
-  ['resetZoom', 'Restaurar o zoom (Atalho: 0)', reset]
+  // ['resetZoom', 'Restaurar o zoom (Atalho: 0)', reset]
 ].forEach(([t, tt, f]) => {
   const b = document.createElement('button');
   b.type = 'button';
@@ -496,10 +499,10 @@ Sim.playbar=(cv,getState,getPaused)=>{
  if(!wrap||!wrap.style||!wrap.querySelector)return;
 
  const L={
-  idle:['play','Soltar (Espaço)'],
+  idle:['play','Iniciar (Espaço)'],
   run:['pause','Pausar (Espaço)'],
   paused:['play','Continuar (Espaço)'],
-  end:['play','Reiniciar e soltar de novo (Espaço)']
+  end:['play','Reiniciar (Espaço)']
  };
 
  const mk=(name,tt,f)=>{

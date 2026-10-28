@@ -120,20 +120,20 @@ function status(){
 // velocidades: escala fixa (a maior velocidade possível de um corpo mede 45 px).
 const sup='⁰¹²³⁴⁵⁶⁷⁸⁹',sci=v=>{if(!v)return'0';const ex=Math.floor(Math.log10(Math.abs(v))),m=v/Math.pow(10,ex);return m.toFixed(1).replace('.',',')+'×10'+String(ex).split('').map(c=>c==='-'?'⁻':sup[+c]).join('')};
 function draw(){
- const C=css,W=fit.w,H=fit.h,bx=su.box,mg=34,{fa,fb}=su;
+ const C=css,W=fit.w,H=fit.h,bx=su.box,mg=60,{fa,fb}=su, ml=20, mr=20, mt=50,mb=20;
  const sc=Math.min((W-2*mg)/(bx.x1-bx.x0),(H-2*mg)/(bx.y1-bx.y0)),cx=(bx.x0+bx.x1)/2,cy=(bx.y0+bx.y1)/2,X=x=>W/2+(x-cx)*sc,Y=y=>H/2-(y-cy)*sc,ox=X(0),oy=Y(0);
  ctx.clearRect(0,0,W,H);
  const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font=C('--normalfont');ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
  // grade e eixos (CM na origem), marcas em UA
- const stp=Sim.nice(Math.max(bx.x1-bx.x0,bx.y1-bx.y0)/7),gx0=cx-W/2/sc,gx1=cx+W/2/sc,gy0=cy-H/2/sc,gy1=cy+H/2/sc;
+ const stp=Sim.nice(Math.max(bx.x1-bx.x0,bx.y1-bx.y0)/7),gx0=cx-W/2/sc,gx1=cx+W/2/sc,gy0=cy-(H-mg)/2/sc,gy1=cy+(H-mg)/2/sc;
  ctx.lineWidth=1;ctx.strokeStyle=C('--grid');
  for(let g=Math.ceil(gx0/stp)*stp;g<=gx1;g+=stp){ctx.beginPath();ctx.moveTo(X(g),0);ctx.lineTo(X(g),H);ctx.stroke()}
  for(let g=Math.ceil(gy0/stp)*stp;g<=gy1;g+=stp){ctx.beginPath();ctx.moveTo(0,Y(g));ctx.lineTo(W,Y(g));ctx.stroke()}
- ctx.strokeStyle=C('--ghost');ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(0,oy);ctx.lineTo(W,oy);ctx.moveTo(ox,0);ctx.lineTo(ox,H);ctx.stroke();
+ ctx.strokeStyle=C('--ghost');ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(0,oy);ctx.lineTo(W,oy);ctx.moveTo(ox,0.8*mg);ctx.lineTo(ox,H);ctx.stroke();
  ctx.font=C('--normalfont');ctx.fillStyle=C('--mut');
  for(let g=Math.ceil(gx0/stp)*stp;g<=gx1;g+=stp)if(Math.abs(g)>1e-9){ctx.textAlign='center';ctx.fillText(+g.toFixed(6),X(g),oy+14)}
  for(let g=Math.ceil(gy0/stp)*stp;g<=gy1;g+=stp)if(Math.abs(g)>1e-9){ctx.textAlign='right';ctx.fillText(+g.toFixed(6),ox-5,Y(g)+4)}
- lab('x (UA)',W-8,oy-8,C('--mut'),'right');lab('y (UA)',ox+8,14,C('--mut'));
+ lab('x (UA)',W-8,oy-8,C('--mut'),'right');lab('y (UA)',ox+8,mg+10,C('--mut'));
  // órbitas elípticas (analíticas, tracejadas): dos corpos (cópias reduzidas da relativa) e da massa reduzida (relativa)
  const ell=(s,col,w)=>{ctx.setLineDash([6,5]);ctx.strokeStyle=col;ctx.lineWidth=w;ctx.beginPath();
   for(let i=0;i<=240;i++){const p=su.rel(2*Math.PI*i/240);i?ctx.lineTo(X(s*p.x),Y(s*p.y)):ctx.moveTo(X(s*p.x),Y(s*p.y))}ctx.stroke();ctx.setLineDash([])};
@@ -156,7 +156,7 @@ function draw(){
  const rp=su.a*(1-su.e),Fmax=G*P.m1*P.m2/(rp*rp),F=G*P.m1*P.m2/(r*r),kf=60/Fmax,vmax=Math.max(fa,fb)*Math.sqrt(G*su.M*(1+su.e)/rp),kv=45/vmax;
  const b1=[X(x1),Y(y1)],b2=[X(x2),Y(y2)];
  if($('c_f').checked){arr('F_g,1='+sci(F*FN)+' N',b1[0],b1[1],ux*F*kf,-uy*F*kf,C('--a'));arr('F_g,2='+sci(F*FN)+' N',b2[0],b2[1],-ux*F*kf,uy*F*kf,C('--a'))}
- if($('c_v').checked){[[st,0,C('--vy'),'v₁'],[st,4,C('--vx'),'v₂']].forEach(([s,i,col,nm])=>{const vx=s[i+2],vy=s[i+3];arr(nm+'='+f2(Math.hypot(vx,vy)*KMS)+' km/s',i?b2[0]:b1[0],i?b2[1]:b1[1],vx*kv,-vy*kv,col,2.2)})}
+ if($('c_v').checked){[[st,0,C('--vy'),'v₁'],[st,4,C('--vx'),'v₂']].forEach(([s,i,col,nm])=>{const vx=s[i+2],vy=s[i+3];arr(nm+'='+f2(Math.hypot(vx,vy)*KMS)+' km/s',i?b2[0]:b1[0],i?b2[1]:b1[1],1.5*vx*kv,-1.5*vy*kv,col,2.2)})}
  // CM (cruz) e corpos
  ctx.strokeStyle=C('--ink');ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ox-7,oy);ctx.lineTo(ox+7,oy);ctx.moveTo(ox,oy-7);ctx.lineTo(ox,oy+7);ctx.stroke();lab('CM',ox+9,oy-9,C('--ink'));
  [[b1,P.m1,C('--vy'),'1'],[b2,P.m2,C('--vx'),'2']].forEach(([p,m,col,nm])=>{const rr=5+4*Math.cbrt(m);ctx.fillStyle=col;ctx.beginPath();ctx.arc(p[0],p[1],rr,0,7);ctx.fill();lab(nm,p[0],p[1]+4,C('--sky'),'center')});
