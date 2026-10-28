@@ -34,7 +34,7 @@ async function inicializarPagina() {
        ]);
 
         await carregarJS('/js/mathjax-config.js');
-        await carregarJS('https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js');
+        await carregarJS('/js/mathjax/tex-svg.js');
 
         // -> ADICIONE OUTROS PLUGINS (ex: jQuery, Axios) AQUI:
 

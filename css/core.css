@@ -276,7 +276,8 @@ body.sim-fullscreen-active {
 
 @media (max-width: 600px) and (orientation: portrait) {
   .dica-orientacao {
-    max-width: 50%;
+    max-width: 600px;
+    width: 90%;
     padding:5px;
     left:50%;
     transform: translateX(50%);
