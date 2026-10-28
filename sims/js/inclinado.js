@@ -44,7 +44,7 @@ $('c_atr').addEventListener('change',reset);
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','Tempo (s)'],['s','s (m)'],['v','v (m/s)'],['a','a (m/s²)'],['W','Força gravitacional (N)'],['N','Normal N (N)'],['f','Atrito f (N)'],['Fr','Resultante (N)']]);
 
-Sim.speedbar(cv, 'spd');
+Sim.settings(cv, $('ctl'));
 
 // ---- Gráficos (colunas: 1=s, 2=v, 3=Ec, 4=Ep, 5=E total) ----
 const plots=[

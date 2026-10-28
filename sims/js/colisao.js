@@ -49,7 +49,7 @@ Sim.controls($('ctl'),[
 $('c_alt').addEventListener('change',reset);
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['p','\\(|\\vec p|\\) (kg·m/s)'],['ec','\\(K\\) (J)'],['dec','\\(\\Delta K\\) (J)'],['v1','\\(|\\vec v_1|\\) (m/s)'],['v2','\\(|\\vec v_2|\\) (m/s)'],['a1','direção de \\(\\vec v_1\\) (°)'],['a2','direção de \\(\\vec v_2\\) (°)']]);
 
-Sim.speedbar(cv, 'spd');
+Sim.settings(cv, $('ctl'));
 
 // ---- Gráficos (colunas: 1=|v1| 2=|v2| 3=px 4=py 5=|p| 6=Ec1 7=Ec2 8=Ec) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas: por isso title e name vazios e mt pequeno.

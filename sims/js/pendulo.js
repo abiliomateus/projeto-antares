@@ -44,7 +44,7 @@ $('c_ar').addEventListener('change',reset);
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['th','\\(\\theta\\) (°)'],['v','\\(v\\) (m/s)'],['T','Tração \\(T\\) (N)'],['Ec','\\(K\\) (J)'],['Ep','\\(U\\) (J)'],['E','\\(E\\) (J)'],['Q','Dissipada \\(Q\\) (J)']]);
 
-Sim.speedbar(cv, 'spd');
+Sim.settings(cv, $('ctl'));
 
 // ---- Gráficos (colunas: 1=Ec 2=Ep 3=E 4=Q 5=h 6=T/F_g) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas; as cores precisam coincidir com as de lá.

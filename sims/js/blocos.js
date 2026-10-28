@@ -46,7 +46,7 @@ $('c_atr').addEventListener('change',reset);
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['x','Deslocamento \\(x\\) (m)'],['v','\\(v\\) (m/s)'],['a','\\(a\\) (m/s²)'],['T','Tração \\(T\\) (N)'],['f1','Atrito \\(f_1\\) (N)'],['f2','Atrito \\(f_2\\) (N)'],['Fd','Força motriz \\(F_d\\) (N)']]);
 
-Sim.speedbar(cv, 'spd');
+Sim.settings(cv, $('ctl'));
 
 // ---- Gráficos (colunas: 1=x, 2=v, 3=Ec, 4=ΔEp, 5=ΔE) ----
 // Título e legenda ficam em HTML (com MathJax) acima de cada canvas: por isso title e name vazios e mt pequeno.
