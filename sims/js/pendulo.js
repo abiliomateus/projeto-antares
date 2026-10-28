@@ -184,8 +184,8 @@ function draw(){
  // barras de energia: Ep, Ec e Q como fração de E0 (a soma é sempre E0)
  const E0=P.m*P.g*su.h0,ec=.5*P.m*(c.vx*c.vx+c.vy*c.vy),ep=P.m*P.g*(c.y+su.L);
  if($('c_bar').checked){
-  const bw=200,bx0=W-20-bw,by0=8;let x=bx0;
-  [[ep,C('--vy'),'Ep'],[ec,C('--vx'),'Ec'],[Qd,C('--a'),'Q']].forEach(([v,col,nm],j)=>{const w=Math.max(0,Math.min(bw-(x-bx0),v/E0*bw));ctx.fillStyle=col;ctx.fillRect(x,by0,w,12);x+=w;lab(nm,bx0+j*46,by0+28,col)});
+  const bw=200,bx0=W-20-bw,by0=0.1*H;let x=bx0;
+  [[ep,C('--vy'),'U'],[ec,C('--vx'),'K'],[Qd,C('--a'),'Q']].forEach(([v,col,nm],j)=>{const w=Math.max(0,Math.min(bw-(x-bx0),v/E0*bw));ctx.fillStyle=col;ctx.fillRect(x,by0,w,12);x+=w;lab(nm,bx0+j*46,by0+28,col)});
   ctx.strokeStyle=C('--line');ctx.lineWidth=1;ctx.strokeRect(bx0,by0,bw,12);lab('E₀ = '+f2(E0)+' J',bx0+bw,by0+28,C('--mut'),'right');
  }
  // leituras, texto e gráficos

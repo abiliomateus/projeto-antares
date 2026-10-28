@@ -152,7 +152,7 @@ function status(){
 // Mundo em metros (y para cima); X() e Y() convertem para pixels. A janela vai do início da rampa ao fim do
 // trecho plano e de y = 0 até max(h, 2R). Partícula desenhada como ponto de tamanho fixo.
 function draw(){
- const C=css,W=fit.w,H=fit.h,mL=52,mR=20,mT=40,mB=34,xs=geom(su.s0).x,xe=su.Lx,yt=Math.max(P.h,2*P.R);
+ const C=css,W=fit.w,H=fit.h,mL=52,mR=20,mT=40,mB=34,xs=1.3*geom(su.s0).x,xe=su.Lx,yt=1.3*Math.max(P.h,2*P.R);
  const sc=Math.min((W-mL-mR)/(xe-xs),(H-mT-mB)/yt),X=x=>mL+(x-xs)*sc,Y=y=>H-mB-y*sc;
  ctx.clearRect(0,0,W,H);
  const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font=C('--normalfont');ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
@@ -185,7 +185,7 @@ function draw(){
  ctx.fillStyle=C('--ink');ctx.beginPath();ctx.arc(px,py,9.5,0,7);ctx.fill();
  // barras de energia: Ep, Ec e Q como fração de E0 (a soma é sempre E0)
  if($('c_bar').checked){
-  const E0=P.m*P.g*P.h,ec=.5*P.m*(c.vx*c.vx+c.vy*c.vy),ep=P.m*P.g*c.y,bw=200,bx=W-mR-bw,by=8;let x=bx;
+  const E0=P.m*P.g*P.h,ec=.5*P.m*(c.vx*c.vx+c.vy*c.vy),ep=P.m*P.g*c.y,bw=200,bx=W-mR-bw,by=0.15*H;let x=bx;
   [[ep,C('--vy'),'U'],[ec,C('--vx'),'K'],[Q,C('--a'),'Q']].forEach(([v,col,nm],j)=>{const w=Math.max(0,Math.min(bw-(x-bx),v/E0*bw));ctx.fillStyle=col;ctx.fillRect(x,by,w,12);x+=w;lab(nm,bx+j*46,by+28,col)});
   ctx.strokeStyle=C('--line');ctx.lineWidth=1;ctx.strokeRect(bx,by,bw,12);lab('E₀ = '+f2(E0)+' J',bx+bw,by+28,C('--mut'),'right');
  }
