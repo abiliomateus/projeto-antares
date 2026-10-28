@@ -144,14 +144,14 @@ function status(){
 // Mundo em metros (y para cima, origem em O). A janela é centrada em x = 0 e cobre as duas oscilações.
 // Partícula desenhada como círculo de tamanho fixo (a massa não altera o desenho).
 function draw(){
- const C=css,W=fit.w,H=fit.h,mT=16,mB=26;
+ const C=css,W=fit.w,H=fit.h,mT=36,mB=26;
  const Wd=Math.max(su.L*Math.sin(P.th0*D),su.r)+.25,yt=su.h0>su.r?Math.max(.25,su.r-su.d+.15):.25;
  const sc=Math.min((W-30)/(2*Wd),(H-mT-mB)/(yt+su.L+.2)),X=x=>W/2+x*sc,Y=y=>mT+(yt-y)*sc;
  ctx.clearRect(0,0,W,H);
  const lab=(s,x,y,col,al)=>{ctx.fillStyle=col;ctx.font=C('--normalfont');ctx.textAlign=al||'left';ctx.fillText(s,x,y)};
  // altura inicial h (referência: a partícula deve voltar a esta linha) e trajetórias circulares
  if($('c_h').checked){ctx.setLineDash([6,5]);ctx.lineWidth=1.3;ctx.strokeStyle=C('--ink');const yh=-su.L*Math.cos(P.th0*D);
-  ctx.beginPath();ctx.moveTo(X(-Wd),Y(yh));ctx.lineTo(X(Wd),Y(yh));ctx.stroke();ctx.setLineDash([]);lab('h = '+f2(su.h0)+' m',X(Wd)-4,Y(yh)-5,C('--ink'),'right')}
+  ctx.beginPath();ctx.moveTo(X(-Wd),Y(yh));ctx.lineTo(X(0.8*Wd),Y(yh));ctx.stroke();ctx.setLineDash([]);lab('h = '+f2(su.h0)+' m',X(0.8*Wd)-4,Y(yh)-5,C('--ink'),'right')}
  if($('c_g').checked){ctx.setLineDash([3,4]);ctx.lineWidth=1.2;ctx.strokeStyle=C('--ghost');ctx.beginPath();
   for(let a=-P.th0*D;a<=1e-9;a+=.02)ctx.lineTo(X(su.L*Math.sin(a)),Y(-su.L*Math.cos(a)));
   const tm=su.h0>=2*su.r?Math.PI:Math.acos(1-su.h0/su.r);
@@ -182,14 +182,6 @@ function draw(){
  }
  ctx.fillStyle=C('--ink');ctx.beginPath();ctx.arc(bx,by,12,0,7);ctx.fill();
 
- //  // barras de energia: Ep, Ec e Q como fração de E0 (a soma é sempre E0)
-//  const E0=P.m*P.g*su.h0,ec=.5*P.m*(c.vx*c.vx+c.vy*c.vy),ep=P.m*P.g*(c.y+su.L);
-//  if($('c_bar').checked){
-//   const bw=200,bx0=W-20-bw,by0=0.1*H;let x=bx0;
-//   [[ep,C('--vy'),'U'],[ec,C('--vx'),'K'],[Qd,C('--a'),'Q']].forEach(([v,col,nm],j)=>{const w=Math.max(0,Math.min(bw-(x-bx0),v/E0*bw));ctx.fillStyle=col;ctx.fillRect(x,by0,w,12);x+=w;lab(nm,bx0+j*46,by0+28,col)});
-//   ctx.strokeStyle=C('--line');ctx.lineWidth=1;ctx.strokeRect(bx0,by0,bw,12);lab('E₀ = '+f2(E0)+' J',bx0+bw,by0+28,C('--mut'),'right');
-//  }
-
 // barras de energia: Ep, Ec e Q como fração de E0
 const E0=P.m*P.g*su.h0,
       ec=.5*P.m*(c.vx*c.vx+c.vy*c.vy),
@@ -214,10 +206,10 @@ if($('c_bar').checked){
   ctx.lineWidth=1;
   ctx.strokeRect(bx,by,bw,bh);
 
-  lab('U',bx-bw-5,by+bh,C('--vy'));
-  lab('K',bx-bw-5,by+bh-bh/3,C('--vx'));
-  lab('Q',bx-bw-5,by+bh-2*bh/3,C('--a'));
-  lab('E₀ = '+f2(E0)+' J',bx-bw-35,by-8,C('--mut'));
+  lab('U',bx-5,by+bh,C('--vy'),'right');
+  lab('K',bx-5,by+bh-bh/3,C('--vx'),'right');
+  lab('Q',bx-5,by+bh-2*bh/3,C('--a'),'right');
+  lab('E₀ = '+f2(E0)+' J',bx-5,by-8,C('--mut'),'right');
 }
 
  // leituras, texto e gráficos
