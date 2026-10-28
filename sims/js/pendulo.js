@@ -181,13 +181,45 @@ function draw(){
   }
  }
  ctx.fillStyle=C('--ink');ctx.beginPath();ctx.arc(bx,by,12,0,7);ctx.fill();
- // barras de energia: Ep, Ec e Q como fração de E0 (a soma é sempre E0)
- const E0=P.m*P.g*su.h0,ec=.5*P.m*(c.vx*c.vx+c.vy*c.vy),ep=P.m*P.g*(c.y+su.L);
- if($('c_bar').checked){
-  const bw=200,bx0=W-20-bw,by0=0.1*H;let x=bx0;
-  [[ep,C('--vy'),'U'],[ec,C('--vx'),'K'],[Qd,C('--a'),'Q']].forEach(([v,col,nm],j)=>{const w=Math.max(0,Math.min(bw-(x-bx0),v/E0*bw));ctx.fillStyle=col;ctx.fillRect(x,by0,w,12);x+=w;lab(nm,bx0+j*46,by0+28,col)});
-  ctx.strokeStyle=C('--line');ctx.lineWidth=1;ctx.strokeRect(bx0,by0,bw,12);lab('E₀ = '+f2(E0)+' J',bx0+bw,by0+28,C('--mut'),'right');
- }
+
+ //  // barras de energia: Ep, Ec e Q como fração de E0 (a soma é sempre E0)
+//  const E0=P.m*P.g*su.h0,ec=.5*P.m*(c.vx*c.vx+c.vy*c.vy),ep=P.m*P.g*(c.y+su.L);
+//  if($('c_bar').checked){
+//   const bw=200,bx0=W-20-bw,by0=0.1*H;let x=bx0;
+//   [[ep,C('--vy'),'U'],[ec,C('--vx'),'K'],[Qd,C('--a'),'Q']].forEach(([v,col,nm],j)=>{const w=Math.max(0,Math.min(bw-(x-bx0),v/E0*bw));ctx.fillStyle=col;ctx.fillRect(x,by0,w,12);x+=w;lab(nm,bx0+j*46,by0+28,col)});
+//   ctx.strokeStyle=C('--line');ctx.lineWidth=1;ctx.strokeRect(bx0,by0,bw,12);lab('E₀ = '+f2(E0)+' J',bx0+bw,by0+28,C('--mut'),'right');
+//  }
+
+// barras de energia: Ep, Ec e Q como fração de E0
+const E0=P.m*P.g*su.h0,
+      ec=.5*P.m*(c.vx*c.vx+c.vy*c.vy),
+      ep=P.m*P.g*(c.y+su.L);
+
+if($('c_bar').checked){
+  const bh=.35*H,bw=14,gap=5,
+        bx=W-25,by=0.1*H;
+  let y=by+bh;
+
+  [[ep,C('--vy'),'U'],
+   [ec,C('--vx'),'K'],
+   [Qd,C('--a'),'Q']].forEach(([v,col,nm])=>{
+    const h=bh*Math.max(0,Math.min(1,v/E0));
+    y-=h;
+    ctx.fillStyle=col;
+    ctx.fillRect(bx,y,bw,h);
+    // y-=gap;
+  });
+
+  ctx.strokeStyle=C('--line');
+  ctx.lineWidth=1;
+  ctx.strokeRect(bx,by,bw,bh);
+
+  lab('U',bx-bw-5,by+bh,C('--vy'));
+  lab('K',bx-bw-5,by+bh-bh/3,C('--vx'));
+  lab('Q',bx-bw-5,by+bh-2*bh/3,C('--a'));
+  lab('E₀ = '+f2(E0)+' J',bx-bw-35,by-8,C('--mut'));
+}
+
  // leituras, texto e gráficos
  const r=row();
  out('t',t);out('th',c.fl?'voo livre':c.th/D);out('v',Math.hypot(c.vx,c.vy));out('T',tens(c));out('Ec',r[1]);out('Ep',r[2]);out('E',r[3]);out('Q',Qd);
