@@ -14,7 +14,7 @@
 <div class="button"><a class="chip" href="index.html">← Voltar</a></div>
 <header>
     <h2>Movimento de projéteis</h2>
-    <p>Ajuste os parâmetros, lance e compare a trajetória simulada (linha cheia) com a ideal (tracejada).</p>
+    <p>Ajuste os parâmetros no botão de configuração, lance e compare a trajetória simulada (linha cheia) com a ideal (tracejada).</p>
 </header>
 
 <!-- Ids que o JS espera encontrar: cv (canvas), ro (leituras), cmp (nota de comparação), bl/bp/bc (botões),
@@ -25,6 +25,7 @@
 <aside class="card">
 <div class="btns"><button class="p" id="bl">Lançar</button><button id="bp">Pausar</button><button id="bc">Limpar</button></div>
 <div id="ctl"></div>
+
 <strong>Opções</strong><br>
 
 <label for="pl" style="font-size:.92rem">Corpo celeste</label>
@@ -44,6 +45,15 @@
 </section>
 </div>
 <!-- Ordem importa: o núcleo primeiro, depois a simulação -->
+<div id="book" class="book">
+<p>Sem resistência do ar: 
+    \[x(t)=v_0\cos\theta\,t \quad\text{e}\quad y(t)=h_0+v_0\mathrm{sen}\theta\,t-\frac{1}{2}gt^2.\]
+A velocidade horizontal é constante e a vertical varia linearmente: 
+\[v_y(t)=v_0\mathrm{sen}\theta-gt.\]
+</p>
+
+<p>Com arrasto quadrático, \(\vec{a}=-g\hat{\jmath}-k|\vec{v}|\vec{v}\), com \(k\) em \(\mathrm{m}^{-1}\). Não há solução analítica simples, então o código integra as equações com o método de Runge–Kutta de quarta ordem, usando passo fixo de \(1/240\,\mathrm{s}\). Nos gráficos, a linha tracejada representa sempre a solução analítica sem arrasto.</p>
+</div>
 
 <footer></footer>
 

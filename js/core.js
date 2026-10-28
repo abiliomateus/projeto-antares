@@ -111,6 +111,9 @@ Sim.icons = {
   copyCheck: '<path d="m9 12 4 4 12-12"/>',
 
   exitfullscreen: '<path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/>',
+
+  book: '<path d="M12 7v14"/><path d="M3 18V5a1 1 0 0 1 1-1h3a5 5 0 0 1 5 5 5 5 0 0 1 5-5h3a1 1 0 0 1 1 1v13h-4a5 5 0 0 0-5 3 5 5 0 0 0-5-3H3z"/>',
+
 };
 
 Sim.icon = (name, size = 18) => {
@@ -143,51 +146,69 @@ Sim.bar=wrap=>{let b=wrap.querySelector('.zbar');if(!b){b=document.createElement
  * Painel flutuante de configurações sobre o canvas.
  * Move o container existente para o painel, sem duplicar os controles.
  */
-Sim.settings = (cv, box) => {
+Sim.panelDefaults = {
+  settings: {
+    icon: 'settings',
+    title: 'Configurações'
+  },
+book: {
+  icon: 'book',
+  title: 'Fundamentos físicos',
+  left: '50%',
+  right: 'auto',
+  width: 'min(600px, calc(100% - 60px))'
+}
+};
+
+Sim.panel = (cv, box, opts = {}) => {
   if (typeof box === 'string') box = document.querySelector(box);
 
   const wrap = cv?.parentElement;
-  if (!wrap || !box) return;
+  if (!wrap || !box || !box.parentNode) return;
+
+  const defaults = Sim.panelDefaults[opts.type || 'settings'] || {};
+  opts = { ...defaults, ...opts };
+
+  const {
+    icon = 'settings',
+    title = 'Configurações',
+    top = 'calc(3% + 32px)',
+    left = 'calc(50% - min(340px, calc(100% - 60px))/2)',
+    right = 'auto',
+    width = 'min(340px, calc(100% - 60px))',
+    maxHeight = '95%'
+  } = opts;
 
   const bar = Sim.bar(wrap);
-
-  // Botão de configurações
-  const btn = Sim.iconButton(
-    'settings',
-    'Configurações da simulação',
-    () => toggle()
-  );
-
+  const btn = Sim.iconButton(icon, title, () => toggle());
+  btn.setAttribute('aria-expanded', 'false');
   bar.appendChild(btn);
 
-  // Painel flutuante
   const panel = document.createElement('section');
-  panel.className = 'sim-settings';
+  panel.className = 'sim-panel';
   panel.hidden = true;
-  panel.setAttribute('aria-label', 'Configurações da simulação');
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-label', title);
 
   Object.assign(panel.style, {
     position: 'absolute',
     zIndex: '20',
-    top: '50px',
-    left: 'calc(50% - min(340px, calc(100% - 60px))/2)',
-    right: 'auto',
-    width: 'min(340px, calc(100% - 60px))',
-    maxHeight: '95%',
+    top,
+    right,
+    left,
+    width,
+    maxHeight,
     overflowY: 'auto',
     padding: '14px',
-    border: '1px solid var(--line, #ccc)',
+    border: '1px solid var(--border, #ccc)',
     borderRadius: '10px',
-    background: 'var(--card, #fff)',
-    color: 'var(--ink, #222)',
+    background: 'var(--surface, #fff)',
+    color: 'var(--text, #222)',
     boxShadow: '0 4px 18px #0003',
     boxSizing: 'border-box'
   });
 
-  
-  // Cabeçalho e botão de fechar
   const head = document.createElement('div');
-
   Object.assign(head.style, {
     display: 'flex',
     alignItems: 'center',
@@ -196,53 +217,51 @@ Sim.settings = (cv, box) => {
     marginBottom: '12px'
   });
 
-  const title = document.createElement('strong');
-  title.textContent = 'Configurações';
+  if (opts.type === 'book') {
+  panel.style.left = '50%';
+  panel.style.right = 'auto';
+  panel.style.transform = 'translateX(-50%)';
+  }
+
+  const heading = document.createElement('strong');
+  heading.textContent = title;
 
   const close = Sim.iconButton(
-  'close',
-  'Fechar configurações',
-  () => toggle(false)
+    'close',
+    'Fechar',
+    () => toggle(false)
   );
 
-Object.assign(close.style, {
-  width: '32px',
-  height: '32px',
-  minWidth: '32px',
-  padding: '6px',
-  flex: '0 0 32px',
-  display: 'grid',
-  placeItems: 'center'
-});
+  Object.assign(close.style, {
+    width: '32px',
+    height: '32px',
+    minWidth: '32px',
+    padding: '6px',
+    flex: '0 0 32px',
+    display: 'grid',
+    placeItems: 'center'
+  });
 
-  head.append(title, close);
+  head.append(heading, close);
 
-  // Reserva a posição original de #ctl para não alterar o fluxo da página.
-  const placeholder = document.createComment('posição original dos controles');
+  // Preserva a posição original do conteúdo.
+  const placeholder = document.createComment('posição original do painel');
   box.parentNode.insertBefore(placeholder, box);
 
-  panel.appendChild(head);
-  panel.appendChild(box);
+  panel.append(head, box);
   wrap.appendChild(panel);
 
   function toggle(force) {
     const open = force ?? panel.hidden;
 
     panel.hidden = !open;
-    btn.setAttribute(
-      'aria-expanded',
-      String(open)
-    );
+    btn.setAttribute('aria-expanded', String(open));
 
-    if (open) {
-      close.focus();
-    } else {
-      btn.focus();
-    }
+    if (open) close.focus();
+    else btn.focus();
   }
 
-  // Fecha ao clicar fora do painel ou pressionar Esc.
-  document.addEventListener('pointerdown', e => {
+  function onPointerDown(e) {
     if (
       !panel.hidden &&
       !panel.contains(e.target) &&
@@ -250,17 +269,26 @@ Object.assign(close.style, {
     ) {
       toggle(false);
     }
-  });
+  }
 
-  panel.addEventListener('pointerdown', e => e.stopPropagation());
+  function onKeyDown(e) {
+    if (e.key === 'Escape' && !panel.hidden) {
+      toggle(false);
+    }
+  }
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && !panel.hidden) toggle(false);
-  });
+  document.addEventListener('pointerdown', onPointerDown);
+  document.addEventListener('keydown', onKeyDown);
 
-  // Permite restaurar #ctl à posição original, se necessário.
+  // Permite restaurar o conteúdo e remover o painel.
   panel.restore = () => {
-    placeholder.parentNode?.insertBefore(box, placeholder);
+    document.removeEventListener('pointerdown', onPointerDown);
+    document.removeEventListener('keydown', onKeyDown);
+
+    if (placeholder.parentNode) {
+      placeholder.parentNode.insertBefore(box, placeholder);
+    }
+
     placeholder.remove();
     panel.remove();
     btn.remove();
@@ -268,6 +296,138 @@ Object.assign(close.style, {
 
   return panel;
 };
+
+// Mantém compatibilidade com as chamadas existentes.
+Sim.settings = (cv, box) =>
+  Sim.panel(cv, box, {
+    icon: 'settings',
+    title: 'Configurações'
+});
+
+// Sim.settings = (cv, box) => {
+//   if (typeof box === 'string') box = document.querySelector(box);
+
+//   const wrap = cv?.parentElement;
+//   if (!wrap || !box) return;
+
+//   const bar = Sim.bar(wrap);
+
+//   // Botão de configurações
+//   const btn = Sim.iconButton(
+//     'settings',
+//     'Configurações da simulação',
+//     () => toggle()
+//   );
+
+//   bar.appendChild(btn);
+
+//   // Painel flutuante
+//   const panel = document.createElement('section');
+//   panel.className = 'sim-settings';
+//   panel.hidden = true;
+//   panel.setAttribute('aria-label', 'Configurações da simulação');
+
+//   Object.assign(panel.style, {
+//     position: 'absolute',
+//     zIndex: '20',
+//     top: '50px',
+//     left: 'calc(50% - min(340px, calc(100% - 60px))/2)',
+//     right: 'auto',
+//     width: 'min(340px, calc(100% - 60px))',
+//     maxHeight: '95%',
+//     overflowY: 'auto',
+//     padding: '14px',
+//     border: '1px solid var(--line, #ccc)',
+//     borderRadius: '10px',
+//     background: 'var(--card, #fff)',
+//     color: 'var(--ink, #222)',
+//     boxShadow: '0 4px 18px #0003',
+//     boxSizing: 'border-box'
+//   });
+
+//   // Cabeçalho e botão de fechar
+//   const head = document.createElement('div');
+
+//   Object.assign(head.style, {
+//     display: 'flex',
+//     alignItems: 'center',
+//     justifyContent: 'space-between',
+//     gap: '8px',
+//     marginBottom: '12px'
+//   });
+
+//   const title = document.createElement('strong');
+//   title.textContent = 'Configurações';
+
+//   const close = Sim.iconButton(
+//   'close',
+//   'Fechar configurações',
+//   () => toggle(false)
+//   );
+
+// Object.assign(close.style, {
+//   width: '32px',
+//   height: '32px',
+//   minWidth: '32px',
+//   padding: '6px',
+//   flex: '0 0 32px',
+//   display: 'grid',
+//   placeItems: 'center'
+// });
+
+//   head.append(title, close);
+
+//   // Reserva a posição original de #ctl para não alterar o fluxo da página.
+//   const placeholder = document.createComment('posição original dos controles');
+//   box.parentNode.insertBefore(placeholder, box);
+
+//   panel.appendChild(head);
+//   panel.appendChild(box);
+//   wrap.appendChild(panel);
+
+//   function toggle(force) {
+//     const open = force ?? panel.hidden;
+
+//     panel.hidden = !open;
+//     btn.setAttribute(
+//       'aria-expanded',
+//       String(open)
+//     );
+
+//     if (open) {
+//       close.focus();
+//     } else {
+//       btn.focus();
+//     }
+//   }
+
+//   // Fecha ao clicar fora do painel ou pressionar Esc.
+//   document.addEventListener('pointerdown', e => {
+//     if (
+//       !panel.hidden &&
+//       !panel.contains(e.target) &&
+//       !btn.contains(e.target)
+//     ) {
+//       toggle(false);
+//     }
+//   });
+
+//   panel.addEventListener('pointerdown', e => e.stopPropagation());
+
+//   document.addEventListener('keydown', e => {
+//     if (e.key === 'Escape' && !panel.hidden) toggle(false);
+//   });
+
+//   // Permite restaurar #ctl à posição original, se necessário.
+//   panel.restore = () => {
+//     placeholder.parentNode?.insertBefore(box, placeholder);
+//     placeholder.remove();
+//     panel.remove();
+//     btn.remove();
+//   };
+
+//   return panel;
+// };
 
 Sim.speedbar = (cv, id, speeds = [0.25, 0.5, 1, 2]) => {
   const wrap = cv.parentElement;

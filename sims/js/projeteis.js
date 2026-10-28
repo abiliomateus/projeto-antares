@@ -17,7 +17,7 @@
    Linhas de dados dos gráficos: [t, x, y, |v|, vx, vy] (ver row()).
    ===================================================================== */
 (function(){
-const {$,rk4,f2,arrow,css}=Sim, DT=1/500, P={}, cv=$('cv'), ctx=cv.getContext('2d');
+const {$,rk4,f2,arrow,css}=Sim, DT=1/240, P={}, cv=$('cv'), ctx=cv.getContext('2d');
 // Tela principal: proporção 0,58, altura entre 260 e 520 px.
 // ml/mr/mt/mb = margens (px) reservadas aos números dos eixos.
 // const fit=Sim.fit(cv,.58,260,520), ml=46,mr=16,mt=16,mb=32;
@@ -50,7 +50,8 @@ Sim.controls($('ctl'),[
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','Tempo (s)'],['x','x (m)'],['y','y (m)'],['sp','|v| (m/s)'],['vx','vₓ (m/s)'],['vy','v_y (m/s)'],['ym','Altura máx. (m)'],['R','Alcance (m)']]);
 
-Sim.settings(cv, $('ctl'));
+Sim.panel(cv, $('ctl'));
+Sim.panel(cv, $('book'), { type: 'book' });
 
 // ---- Gráficos ----
 // Colunas de cada linha de dados: [t, x, y, |v|, vx, vy]  (índices 0 a 5).
