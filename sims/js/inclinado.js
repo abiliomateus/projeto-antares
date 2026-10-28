@@ -39,10 +39,10 @@ Sim.controls($('ctl'),[
  {id:'g',label:'Gravidade',unit:'m/s²',min:1,max:25,step:.1,val:9.8},
  {id:'L',label:'Comprimento da rampa',unit:'m',min:2,max:20,step:.5,val:8},
  {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
-],P,id=>{if(id!=='spd')reset()});
+],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 $('c_atr').addEventListener('change',reset);
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
-const out=Sim.readouts($('ro'),[['t','Tempo (s)'],['s','s (m)'],['v','v (m/s)'],['a','a (m/s²)'],['W','Peso P (N)'],['N','Normal N (N)'],['f','Atrito f (N)'],['Fr','Resultante (N)']]);
+const out=Sim.readouts($('ro'),[['t','Tempo (s)'],['s','s (m)'],['v','v (m/s)'],['a','a (m/s²)'],['W','Força gravitacional (N)'],['N','Normal N (N)'],['f','Atrito f (N)'],['Fr','Resultante (N)']]);
 
 Sim.speedbar(cv, 'spd');
 
@@ -117,7 +117,7 @@ function status() {
     }
 
     if (!ph.atr) {
-        return 'Sem atrito: só ' + M('P') + ' e ' + M('N') +
+        return 'Sem atrito: só ' + M('F_g') + ' e ' + M('N') +
             ' atuam, ' + M('f = 0') + ' e ' +
             M('a = g\\,\\mathrm{sen}\\,\\theta = ' + fm(a0) +
               '\\,\\mathrm{m/s^2}') + '.';
@@ -134,7 +134,7 @@ function status() {
 // ---- Desenho ----
 // Convenção de pixels (y para baixo): d = direção rampa abaixo, n = normal que sai da superfície.
 function draw(){
- const C=css,W=fit.w,H=fit.h,{th,sn,cs}=ph,L=P.L,mL=130,mR=40,mT=125,mB=44;
+ const C=css,W=fit.w,H=fit.h,{th,sn,cs}=ph,L=P.L,mL=50,mR=50,mT=125,mB=44;
  const sc=Math.min((W-mL-mR)/Math.max(L*cs,.5),(H-mT-mB)/Math.max(L*sn,.5)),ex=L*cs*sc;
  const Tx=mL+(W-mL-mR-ex)/2,Bx=Tx+ex,By=H-mB,Ty=By-L*sn*sc,d=[cs,sn],n=[sn,-cs];
  ctx.clearRect(0,0,W,H);
@@ -174,6 +174,10 @@ function draw(){
  const ta=!ph.still&&ph.a>1e-9?Math.sqrt(2*ph.Smax/ph.a):0,tf=Math.min(Math.max(ta,isFinite(t0)?t0:0,1),25);
  plots.forEach(p=>p.draw(rows,id,tf));
 }
+
+Sim.urlLoad();
 reset();
+Sim.urlButton(cv);
+
 Sim.loop(dt=>{step(dt);draw()});
 })();

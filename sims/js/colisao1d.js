@@ -37,7 +37,7 @@ Sim.controls($('ctl'),[
  {id:'v2',label:'Velocidade \\(v_2\\)',unit:'m/s',min:-10,max:10,step:.5,val:-1},
  {id:'e',label:'Restituição \\(e\\) (0 = grudam)',unit:'',min:0,max:1,step:.05,val:1},
  {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
-],P,id=>{if(id!=='spd')reset()});
+],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['v1','\\(v_1\\) (m/s)'],['v2','\\(v_2\\) (m/s)'],['p','\\(p\\) (kg·m/s)'],['K','\\(K\\) (J)'],['dK','\\(\\Delta K\\) (J)'],['vcm','\\(v_{cm}\\) (m/s)'],['xcm','\\(x_{cm}\\) (m)']]);
 
 Sim.speedbar(cv, 'spd');
@@ -156,6 +156,8 @@ function bars(k){
   if(k&&i===2&&su.hit&&A[2]-B[2]>1e-9){c.setLineDash([3,3]);c.strokeStyle=C('--a');c.lineWidth=1.6;c.strokeRect(xd,Y(A[2]),bw,Y(B[2])-Y(A[2]));c.setLineDash([]);c.fillStyle=C('--a');c.font='600 11px system-ui,sans-serif';c.textAlign='left';c.fillText('perda',xd+bw+4,(Y(A[2])+Y(B[2]))/2+4)}
  });
 }
+Sim.urlLoad();
 reset();
+Sim.urlButton(cv);
 Sim.loop(dt=>{step(dt);draw()});
 })();

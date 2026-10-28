@@ -42,7 +42,7 @@ Sim.controls($('ctl'),[
  {id:'om',label:'Orientação da órbita',unit:'°',min:0,max:360,step:5,val:0},
  {id:'M0',label:'Posição inicial (anomalia média \\(M_0\\))',unit:'°',min:0,max:360,step:5,val:0},
  {id:'spd',label:'Velocidade da animação',unit:'x',min:.1,max:3,step:.1,val:1}
-],P,id=>{if(id!=='spd')reset()});
+],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (anos)'],['r','\\(r\\) (UA)'],['r1','\\(r_1\\) (UA)'],['r2','\\(r_2\\) (UA)'],['v1','\\(v_1\\) (km/s)'],['v2','\\(v_2\\) (km/s)'],['E','\\(E\\) (M☉·UA²/ano²)'],['L','\\(L\\) (M☉·UA²/ano)']]);
 
 Sim.speedbar(cv, 'spd');
@@ -169,6 +169,8 @@ function draw(){
  const kep=tt=>{const E=su.kepler(su.n*tt+M0),rr=su.a*(1-su.e*Math.cos(E));return[tt,rr,fa*rr,fb*rr,0,0,0,0,0,0,0]};
 //  plots[0].draw(rows,kep,tf);plots[1].draw(rows,null,tf);plots[2].draw(rows,null,tf,[()=>su.E0]);plots[3].draw(rows,null,tf,[()=>su.L0]);
 }
+Sim.urlLoad();
 reset();
+Sim.urlButton(cv);
 Sim.loop(dt=>{step(dt);draw()});
 })();

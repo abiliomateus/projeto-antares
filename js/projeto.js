@@ -39,7 +39,7 @@ window.PROJETO={
   subtitulo:'',
   mostrarNav:true,mostrarTema:true,abrirEmNovaAba:false,mostrarFiltros:true,
  },
- sobre:'<p>Projeto para elaboração e distribuição de material de apoio (livros e notas de aula), nas áreas de Física e Astronomia, seguindo o modelo dos chamados Recursos Educacionais Abertos (do inglês, <em>Open Educational Resources</em>, sigla OER).</p>',
+ sobre:'<p>Projeto para elaboração e distribuição de material de apoio (livros, notas de aula e simulações), nas áreas de Física e Astronomia, seguindo o modelo dos chamados Recursos Educacionais Abertos (do inglês, <em>Open Educational Resources</em>, sigla OER).</p>',
  secoes:[
   {id:'simulacoes',titulo:'Simulações',descricao:'Simulações interativas que rodam diretamente no navegador. Não é necessário instalar nada.',itens:[
    {titulo:'Simulações de Física',descricao:'Mecânica básica: cinemática, leis de Newton, momento, energia, rotação, gravitação e oscilações. As grandezas físicas principais são apresentadas em gráficos em tempo real.',arquivo:'sims/index.html',botao:'Abrir as simulações',tags:['mecânica','interativo','gráficos'],icone:IC.simulacoes,destaque:true},

@@ -80,6 +80,57 @@ const r=()=>{
  new ResizeObserver(r).observe(p);r();return o;
 };
 
+
+Sim.icons = {
+  link: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+
+  copy: '<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>',
+
+  zoomIn: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M10.5 7.5v6M7.5 10.5h6"/>',
+
+  zoomOut: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M7.5 10.5h6"/>',
+
+  resetZoom: '<circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 4.5 4.5"/><path d="M9 8.5l2-1.5v7"/><path d="M9 14h4"/>',
+
+  maximize: '<path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/>',
+
+  fullscreen: '<path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/>',
+
+  play: '<path d="m7 4 13 8-13 8z"/>',
+
+  pause: '<path d="M8 5v14M16 5v14"/>',
+
+  restart: '<path d="M3 11a9 9 0 1 1 2.6 6.4"/><path d="M1 3v7h7"/>',
+
+  share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>',
+
+  settings: '<circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.6a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.6-1.4-2.4 1.4-1.1a7 7 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.6a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.6 1.4 2.4-1.4 1.1a7 7 0 0 1 0 2z"/>',
+
+  copyCheck: '<path d="m9 12 4 4 12-12"/>',
+};
+
+Sim.icon = (name, size = 18) => {
+  const paths = Sim.icons[name];
+  if (!paths) return '';
+
+  return `<svg xmlns="http://www.w3.org/2000/svg"
+    width="${size}" height="${size}" viewBox="0 0 24 24"
+    fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round"
+    aria-hidden="true">${paths}</svg>`;
+};
+
+Sim.iconButton = (name, title, onClick, size = 18) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.innerHTML = Sim.icon(name, size);
+  b.title = title;
+  b.setAttribute('aria-label', title);
+  b.onclick = onClick;
+  return b;
+};
+
+
 /** Barra de botões sobre o canvas (lateral direita, centralizada na vertical), compartilhada pelo zoom e pelo play/pause.
     Devolve o elemento .zbar do pai do canvas, criando-o se ainda não existir. */
 Sim.bar=wrap=>{let b=wrap.querySelector('.zbar');if(!b){b=document.createElement('div');b.className='zbar';wrap.style.position='relative';wrap.appendChild(b)}return b};
@@ -126,9 +177,43 @@ Sim.fullscreen = el => {
   if (typeof el === 'string') el = document.querySelector(el);
   if (!el) return;
 
-  return document.fullscreenElement
-    ? document.exitFullscreen()
-    : el.requestFullscreen?.();
+  const cls = 'sim-fullscreen';
+  const active = document.fullscreenElement ||
+                 document.webkitFullscreenElement;
+
+  // Se estiver em tela cheia nativa, sair.
+  if (active) {
+    return (document.exitFullscreen ||
+            document.webkitExitFullscreen)?.call(document);
+  }
+
+  // Se o modo CSS estiver ativo, sair.
+  if (el.classList.contains(cls)) {
+    el.classList.remove(cls);
+    document.body.classList.remove('sim-fullscreen-active');
+    return;
+  }
+
+  // Tentar tela cheia nativa.
+  const enter = el.requestFullscreen ||
+                el.webkitRequestFullscreen;
+
+  if (enter) {
+    try {
+      const result = enter.call(el);
+      if (result && typeof result.catch === 'function') {
+        return result.catch(() => {
+          el.classList.add(cls);
+          document.body.classList.add('sim-fullscreen-active');
+        });
+      }
+      return result;
+    } catch (_) {}
+  }
+
+  // Alternativa para iOS.
+  el.classList.add(cls);
+  document.body.classList.add('sim-fullscreen-active');
 };
 
 Sim._keys = {
@@ -223,7 +308,7 @@ Sim.interactive=(cv,fit,o)=>{
 
   const fs=document.createElement('button');
 fs.type='button';
-fs.textContent='⛶';
+fs.innerHTML=Sim.icon('fullscreen');
 fs.title='Tela cheia (Atalho: f)';
 fs.setAttribute('aria-label','Tela cheia');
 fs.dataset.fullscreen='';
@@ -244,13 +329,13 @@ const zoomOut = () => zoomAt(1/1.1, fit.w/2, fit.h/2);
 const reset = () => S.reset();
 
 [
-  ['+', 'Ampliar (Atalho: +)', zoomIn],
-  ['-', 'Reduzir (Atalho: -)', zoomOut],
-  ['=', 'Restaurar o zoom (Atalho: 0)', reset]
+  ['zoomIn', 'Ampliar (Atalho: +)', zoomIn],
+  ['zoomOut', 'Reduzir (Atalho: -)', zoomOut],
+  ['resetZoom', 'Restaurar o zoom (Atalho: 0)', reset]
 ].forEach(([t, tt, f]) => {
   const b = document.createElement('button');
   b.type = 'button';
-  b.textContent = t;
+  b.innerHTML =  Sim.icon(t);
   b.title = tt;
   b.setAttribute('aria-label', tt);
   b.onclick = f;
@@ -276,24 +361,67 @@ Sim.registerKeys(wrap, {
     Ícone e dica do botão: ▶ "Soltar" (idle), ⏸ "Pausar" (run), ▶ "Continuar" (pausada), ▶ "Reiniciar e soltar de novo" (end).
     Chame uma vez por simulação: Sim.playbar(cv, () => mode, () => paused). */
 Sim.playbar=(cv,getState,getPaused)=>{
- const wrap=cv.parentElement;if(!wrap||!wrap.style||!wrap.querySelector)return;
- const sv=p=>'<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">'+p+'</svg>';
- const I={play:sv('<path d="M7 4.5l12.5 7.5L7 19.5z" fill="currentColor"/>'),pause:sv('<path d="M6.5 4h4v16h-4zM13.5 4h4v16h-4z" fill="currentColor"/>'),reset:sv('<path d="M5.2 12a6.8 6.8 0 1 0 2-4.8" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="M4 3.5v5h5" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>')};
- const L={idle:['play','Soltar (Espaço)'],run:['pause','Pausar (Espaço)'],paused:['play','Continuar (Espaço)'],end:['play','Reiniciar e soltar de novo (Espaço)']};
- const mk=(html,tt,f)=>{const b=document.createElement('button');b.type='button';b.innerHTML=html;b.title=tt;b.setAttribute('aria-label',tt);b.onclick=f;return b};
- const play=mk(I.play,L.idle[1],()=>Sim.$(getState()==='run'?'bp':'bl').click());   // em andamento: pausa/continua; senão: solta
- const rst=mk(I.reset,'Reiniciar a simulação',()=>Sim.$('bc').click());
- const sep=document.createElement('span');sep.className='zsep';
- const f=document.createDocumentFragment();f.appendChild(play);f.appendChild(rst);f.appendChild(sep);
- const bar=Sim.bar(wrap);bar.insertBefore(f,bar.firstChild);
+ const wrap=cv.parentElement;
+ if(!wrap||!wrap.style||!wrap.querySelector)return;
+
+ const L={
+  idle:['play','Soltar (Espaço)'],
+  run:['pause','Pausar (Espaço)'],
+  paused:['play','Continuar (Espaço)'],
+  end:['play','Reiniciar e soltar de novo (Espaço)']
+ };
+
+ const mk=(name,tt,f)=>{
+  const b=document.createElement('button');
+  b.type='button';
+  b.innerHTML=Sim.icon(name,16);
+  b.title=tt;
+  b.setAttribute('aria-label',tt);
+  b.onclick=f;
+  return b;
+ };
+
+ const play=mk('play',L.idle[1],
+  ()=>Sim.$(getState()==='run'?'bp':'bl').click()
+ );
+
+ const rst=mk('restart','Reiniciar a simulação',
+  ()=>Sim.$('bc').click()
+ );
+
+ const sep=document.createElement('span');
+ sep.className='zsep';
+
+ const f=document.createDocumentFragment();
+ f.appendChild(play);
+ f.appendChild(rst);
+ f.appendChild(sep);
+
+ const bar=Sim.bar(wrap);
+ bar.insertBefore(f,bar.firstChild);
+
  let cur='';
- const tick=()=>{const s=getState(),k=s==='run'&&getPaused()?'paused':s;
-  if(k!==cur){cur=k;const l=L[k]||L.idle;play.innerHTML=I[l[0]];play.title=l[1];play.setAttribute('aria-label',l[1])}
-  Sim.registerKeys(wrap, {
-  play: () => play.click()
-});
-  requestAnimationFrame(tick)};
- requestAnimationFrame(tick);   // começa depois do carregamento do script (mode e paused ainda não existem agora)
+
+ const tick=()=>{
+  const s=getState();
+  const k=s==='run'&&getPaused()?'paused':s;
+
+  if(k!==cur){
+   cur=k;
+   const l=L[k]||L.idle;
+   play.innerHTML=Sim.icon(l[0],16);
+   play.title=l[1];
+   play.setAttribute('aria-label',l[1]);
+  }
+
+  Sim.registerKeys(wrap,{
+   play:()=>play.click()
+  });
+
+  requestAnimationFrame(tick);
+ };
+
+ requestAnimationFrame(tick);
 };
 
 /** Desenho fixo na tela (sem zoom/pan): chame logo depois de ctx.save() e restaure com ctx.restore(). */
@@ -322,6 +450,93 @@ Sim.controls=(box,defs,P,onChange)=>{
   inp.addEventListener('input',()=>{upd();onChange(d.id)});upd();
   Sim.ctl[d.id]={inp,upd,span:r.querySelector('span'),lab:null};
  });
+};
+
+Sim.urlLoad = () => {
+  const params = new URLSearchParams(location.search);
+  Sim._loadingURL = true;
+
+  try {
+    // Restaura os controles
+    Object.entries(Sim.ctl || {}).forEach(([id, ctl]) => {
+      if (!params.has(id)) return;
+
+      const inp = ctl.inp;
+      const value = params.get(id);
+
+      if (inp.type === 'checkbox') {
+        inp.checked = value === '1';
+        inp.dispatchEvent(new Event('change', { bubbles: true }));
+      } else {
+        inp.value = value;
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    });
+
+    // Restaura o preset de gravidade
+    const pl = document.getElementById('pl');
+
+    if (pl && params.has('pl')) {
+      pl.value = params.get('pl');
+      pl.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  } finally {
+    Sim._loadingURL = false;
+  }
+};
+
+Sim.url = () => {
+  const url = new URL(location.href);
+
+  // Serializa os controles registrados
+  Object.entries(Sim.ctl || {}).forEach(([id, ctl]) => {
+    const inp = ctl.inp;
+
+    url.searchParams.set(
+      id,
+      inp.type === 'checkbox'
+        ? (inp.checked ? '1' : '0')
+        : inp.value
+    );
+  });
+
+  // Inclui o preset de gravidade
+  const pl = document.getElementById('pl');
+
+  if (pl) {
+    url.searchParams.set('pl', pl.value);
+  }
+
+  return url.href;
+};
+
+// Adiciona um botão para copiar o link
+Sim.urlButton = cv => {
+  const b = Sim.iconButton(
+    'link',
+    'Copiar link da simulação',
+    async () => {
+      const url = Sim.url();
+
+      try {
+        await navigator.clipboard.writeText(url);
+
+        b.innerHTML = Sim.icon('copyCheck');
+        b.title = 'Link copiado!';
+        b.setAttribute('aria-label', b.title);
+
+        setTimeout(() => {
+          b.innerHTML = Sim.icon('link');
+          b.title = 'Copiar link da simulação';
+          b.setAttribute('aria-label', b.title);
+        }, 1500);
+      } catch {
+        prompt('Copie o link da simulação:', url);
+      }
+    }
+  );
+
+  Sim.bar(cv.parentElement).appendChild(b);
 };
 
 /** Muda os limites de um slider já criado (o navegador ajusta o valor se ele ficar fora).

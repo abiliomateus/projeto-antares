@@ -46,7 +46,7 @@ Sim.controls($('ctl'),[
  {id:'g',label:'Gravidade',unit:'m/s²',min:1,max:25,step:.1,val:9.8},
  {id:'k',label:'Coeficiente de arrasto (quadrático) b',unit:'kg/m',min:0,max:.1,step:.0001,val:0.01164156},
  {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
-],P,id=>{if(id!=='spd')reset()});
+],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','Tempo (s)'],['x','x (m)'],['y','y (m)'],['sp','|v| (m/s)'],['vx','vₓ (m/s)'],['vy','v_y (m/s)'],['ym','Altura máx. (m)'],['R','Alcance (m)']]);
 
@@ -159,7 +159,9 @@ function draw(){
  const id=tt=>{const vy=i.vy-P.g*tt;return[tt,i.vx*tt,P.h0+i.vy*tt-.5*P.g*tt*tt,Math.hypot(i.vx,vy),i.vx,vy]};
  plots.forEach(p=>p.draw(rows,id,i.tf));
 }
+Sim.urlLoad();
 reset();
+Sim.urlButton(cv);
 // Liga tudo ao relógio: a cada quadro, avança a física e redesenha.
 Sim.loop(dt=>{step(dt);draw()});
 })();

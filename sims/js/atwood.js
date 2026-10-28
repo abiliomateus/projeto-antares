@@ -41,7 +41,7 @@ Sim.controls($('ctl'),[
  {id:'g',label:'Gravidade \\(g\\)',unit:'m/s²',min:1,max:25,step:.1,val:9.8},
 //  {id:'H',label:'Altura dos planos \\(H\\)',unit:'m',min:2,max:12,step:.5,val:6},
  {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
-],P,id=>{if(id!=='spd')reset()});
+],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 // $('c_atr').addEventListener('change',reset);
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['y','Deslocamento \\(y\\) (m)'],['v','\\(v\\) (m/s)'],['a','\\(a\\) (m/s²)'],['T','Tração \\(T\\) (N)'],['Fd','Força motriz \\(F_d\\) (N)']]);
@@ -188,6 +188,8 @@ function draw(){
  const ta=!ph.still?Math.sqrt(2*(ph.a>0?Xp:Xm)/Math.abs(ph.a)):0,tf=Math.min(Math.max(ta,isFinite(t0)?t0:0,1),25);
  plots.forEach(p=>p.draw(rows,id,tf));
 }
+Sim.urlLoad();
 reset();
+Sim.urlButton(cv);
 Sim.loop(dt=>{step(dt);draw()});
 })();

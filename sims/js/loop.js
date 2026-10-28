@@ -39,7 +39,7 @@ Sim.controls($('ctl'),[
  {id:'mu',label:'Coeficiente de atrito \\(\\mu\\) (se ligado)',unit:'',min:0,max:.5,step:.01,val:.1},
  {id:'g',label:'Gravidade \\(g\\)',unit:'m/s²',min:1,max:25,step:.1,val:9.8},
  {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
-],P,id=>{if(id!=='spd')reset()});
+],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 $('c_atr').addEventListener('change',reset);
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['y','Altura \\(y\\) (m)'],['v','\\(v\\) (m/s)'],['N','Normal \\(N\\) (N)'],['Ec','\\(K\\) (J)'],['Ep','\\(U\\) (J)'],['E','\\(E = K + U\\) (J)'],['Q','Dissipada \\(Q\\) (J)']]);
@@ -220,7 +220,9 @@ if($('c_bar').checked){
  {const s=status();if(s!==lastSt){lastSt=s;$('cmp').textContent=s;Sim.math($('cmp'))}}   // só re-renderiza quando o texto muda
  plots.forEach(p=>p.draw(rows,null,8));
 }
+Sim.urlLoad();
 reset();
+Sim.urlButton(cv);
 Sim.loop(dt=>{step(dt);draw()});
 })();
 

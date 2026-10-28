@@ -38,7 +38,7 @@ Sim.controls($('ctl'),[
  {id:'gam',label:'Resistência do ar \\(\\gamma\\) (se ligada)',unit:'1/s',min:0,max:.6,step:.01,val:.1},
  {id:'g',label:'Gravidade \\(g\\)',unit:'m/s²',min:1,max:25,step:.1,val:9.8},
  {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
-],P,id=>{if(id!=='spd')reset()});
+],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 $('c_pino').addEventListener('change',reset);
 $('c_ar').addEventListener('change',reset);
 $('pl').addEventListener('change',e=>{const i=$('g');i.value=e.target.value;i.dispatchEvent(new Event('input'))});
@@ -219,6 +219,8 @@ if($('c_bar').checked){
  const per=Math.PI*Math.sqrt(su.L/P.g)+Math.PI*Math.sqrt(su.r/P.g),tf=Math.min(TMAX,4*per);
  plots[0].draw(rows,null,tf);plots[1].draw(rows,tt=>[tt,0,0,0,0,su.h0,0],tf);plots[2].draw(rows,null,tf);
 }
+Sim.urlLoad();
 reset();
+Sim.urlButton(cv);
 Sim.loop(dt=>{step(dt);draw()});
 })();

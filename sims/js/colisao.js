@@ -45,7 +45,7 @@ Sim.controls($('ctl'),[
  {id:'dfl',label:'Desvio de 1, \\(\\theta_1\\)',unit:'°',min:-180,max:180,step:1,val:30},
  {id:'e',label:'Coeficiente de restituição \\(e\\)',unit:'',min:0,max:1,step:.05,val:1},
  {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
-],P,id=>{if(id!=='spd')reset()});
+],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 $('c_alt').addEventListener('change',reset);
 const out=Sim.readouts($('ro'),[['t','\\(t\\) (s)'],['p','\\(|\\vec p|\\) (kg·m/s)'],['ec','\\(K\\) (J)'],['dec','\\(\\Delta K\\) (J)'],['v1','\\(|\\vec v_1|\\) (m/s)'],['v2','\\(|\\vec v_2|\\) (m/s)'],['a1','direção de \\(\\vec v_1\\) (°)'],['a2','direção de \\(\\vec v_2\\) (°)']]);
 
@@ -252,6 +252,8 @@ function draw(){
  {const st=status();if(st!==lastSt){lastSt=st;$('cmp').textContent=st;Sim.math($('cmp'))}}   // só re-renderiza quando o texto muda
  plots.forEach(p=>p.draw(rows,null,su.tEnd));
 }
+Sim.urlLoad();
 reset();
+Sim.urlButton(cv);
 Sim.loop(dt=>{step(dt);draw()});
 })();

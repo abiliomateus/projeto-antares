@@ -218,6 +218,8 @@ function draw(){
  const tf=su.tEnd,env=su.reg==='sub'||su.reg==='sem'?[tt=>P.x0*Math.exp(-su.gam*tt),tt=>-P.x0*Math.exp(-su.gam*tt)]:[];   // envoltória ±x0·e^(−γt)
  plots[0].draw(rows,null,tf,env);plots[1].draw(rows,null,tf);plots[2].draw(rows,null,tf);phase();
 }
+Sim.urlLoad();
 reset();
+Sim.urlButton(cv);
 Sim.loop(dt=>{step(dt);draw()});
 })();
