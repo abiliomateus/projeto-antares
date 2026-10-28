@@ -21,18 +21,16 @@
      ctl (sliders), pl (corpo celeste), cv_v/cv_a/cv_i/cv_t (caixas de seleção), p1/p2/p3 (gráficos).
      Cada <canvas> fica dentro de um <div> SEM padding: é a largura desse div que define o tamanho do canvas. -->
 <main>
-<section class="card"><div id="cv0" style="position: relative"><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p></section>
+<section class="card"><div id="cv0" style="position: relative"><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details>
+</section>
+
 <aside class="card">
 <div class="btns"><button class="p" id="bl">Lançar</button><button id="bp">Pausar</button><button id="bc">Limpar</button></div>
 <div id="ctl"></div>
 
-<details class="legenda" open>
-    <summary>Legenda</summary>
-    <div id="legenda"></div>
-</details>
-
 <strong>Opções</strong><br>
 
+<label class="chk" style="font-weight:600"><input type="checkbox" id="c_ar" checked>Com arrasto (resistência do ar)</label>
 <label for="pl" style="font-size:.92rem">Corpo celeste</label>
 <!-- Corpos celestes: value = g em m/s². Para incluir outro, adicione uma <option>. -->
 <select id="pl"><option value="9.8">Terra (9,8 m/s²)</option><option value="1.62">Lua (1,62 m/s²)</option><option value="3.71">Marte (3,71 m/s²)</option><option value="24.8">Júpiter (24,8 m/s²)</option></select>

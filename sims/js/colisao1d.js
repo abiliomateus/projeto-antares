@@ -31,8 +31,8 @@ let t=0,mode='idle',paused=false,col=false,rows=[],acc=0,cnt=0,lastSt='',su;
 // ---- Parâmetros ajustáveis (valor em P.<id>) ----
 // Os rótulos aceitam HTML e LaTeX (MathJax): \( ... \), escrito aqui como '\\( ... \\)'.
 Sim.controls($('ctl'),[
- {id:'m1',label:'Massa \\(m_1\\)',unit:'kg',min:.1,max:100,step:.1,val:2},
- {id:'m2',label:'Massa \\(m_2\\)',unit:'kg',min:.1,max:100,step:.1,val:1},
+ {id:'m1',label:'Massa \\(m_1\\)',unit:'kg',min:.1,max:20,step:.1,val:5},
+ {id:'m2',label:'Massa \\(m_2\\)',unit:'kg',min:.1,max:20,step:.1,val:3},
  {id:'v1',label:'Velocidade \\(v_1\\)',unit:'m/s',min:-10,max:10,step:.5,val:4},
  {id:'v2',label:'Velocidade \\(v_2\\)',unit:'m/s',min:-10,max:10,step:.5,val:-1},
  {id:'e',label:'Restituição \\(e\\) (0 = grudam)',unit:'',min:0,max:1,step:.05,val:1},
@@ -94,26 +94,26 @@ function step(dt){
 // Frase de situação mostrada sob o canvas (LaTeX; renderizada por MathJax quando o texto muda).
 const M_=x=>'\\('+x+'\\)',fm=Sim.fm,MS='\\,\\mathrm{m/s}',J='\\,\\mathrm{J}',KP='\\,\\mathrm{kg\\,m/s}';
 function status(){
- if(!su.hit)return'Sem colisão: '+M_('v_1\\le v_2')+', então o bloco 1 não alcança o bloco 2.';
+ if(!su.hit)return'Sem colisão: '+M_('v_{1i}\\le v_{2i}')+', então o bloco 1 não alcança o bloco 2.';
  const tipo=su.e>=.999?'elástica ('+M_('K')+' se conserva)':su.e<=.001?'perfeitamente inelástica (os blocos seguem juntos)':'parcialmente inelástica';
- if(col)return'Colisão '+tipo+' em '+M_('t='+fm(TC)+'\\,\\mathrm{s}')+'. Momento: '+M_('p='+fm(su.pb[2])+KP+'\\to '+fm(su.pa[2])+KP)+' (conservado). Energia: '+M_('K='+fm(su.Kb[2])+J+'\\to '+fm(su.Ka[2])+J)+' ('+M_('\\Delta K='+fm(su.Ka[2]-su.Kb[2])+J)+'). Restituição medida: '+M_('(u_2-u_1)/(v_1-v_2)='+fm((su.u2-su.u1)/(su.v1-su.v2)))+'.';
- return'Colisão '+tipo+' prevista em '+M_('t='+fm(TC)+'\\,\\mathrm{s}')+', em '+M_('x=0')+'. Depois do choque: '+M_('u_1='+fm(su.u1)+MS)+' e '+M_('u_2='+fm(su.u2)+MS)+'. Perda de energia prevista: '+M_('\\Delta K=-\\tfrac{1}{2}\\mu(1-e^2)(v_1-v_2)^2='+fm(su.Ka[2]-su.Kb[2])+J)+'. Velocidade do CM: '+M_('v_{cm}='+fm(su.vcm)+MS)+'.';
+ if(col)return'Colisão '+tipo+' em '+M_('t='+fm(TC)+'\\,\\mathrm{s}')+'. Momento: '+M_('p='+fm(su.pb[2])+KP+'\\to '+fm(su.pa[2])+KP)+' (conservado). Energia: '+M_('K='+fm(su.Kb[2])+J+'\\to '+fm(su.Ka[2])+J)+' ('+M_('\\Delta K='+fm(su.Ka[2]-su.Kb[2])+J)+'). Restituição medida: '+M_('(v_{2f}-v_{1f})/(v_{1i}-v_{2i})='+fm((su.u2-su.u1)/(su.v1-su.v2)))+'.';
+ return'Colisão '+tipo+' prevista em '+M_('t='+fm(TC)+'\\,\\mathrm{s}')+', em '+M_('x=0')+'. Depois do choque: '+M_('v_{1f}='+fm(su.u1)+MS)+' e '+M_('v_{2f}='+fm(su.u2)+MS)+'. Perda de energia prevista: '+M_('\\Delta K=-\\tfrac{1}{2}\\mu(1-e^2)(v_{1i}-v_{2i})^2='+fm(su.Ka[2]-su.Kb[2])+J)+'. Velocidade do CM: '+M_('v_{cm}='+fm(su.vcm)+MS)+'.';
 }
 
 // ---- Desenho ----
 // Trilho: mundo em metros na horizontal, y em pixels. A janela cobre os blocos em t = 0, no choque e no fim. Com
 // "Referencial do CM", subtrai-se de todas as posições e velocidades as do CM. Velocidades: 7 px por m/s (no máximo 140 px).
 function draw(){
- const C=css,W=fit.w,H=fit.h,fy=Math.round(H*.68),bh=Math.max(32,Math.min(50,H*.10)),cmf=$('c_cm').checked,off=tt=>cmf?xcm(tt):0,vo=cmf?su.vcm:0;
+ const C=css,W=fit.w,H=fit.h,fy=Math.round(H*.68),bh=Math.max(32,Math.min(50,H*.13)),cmf=$('c_cm').checked,off=tt=>cmf?xcm(tt):0,vo=cmf?su.vcm:0;
  let x0=1e9,x1=-1e9;
  [[0,false],[TC,false],[TC,true],[TEND,true]].forEach(([tt,af])=>{const s=pos(tt,af),o=off(tt);x0=Math.min(x0,s[0]-su.w1/2-o,s[2]-su.w2/2-o);x1=Math.max(x1,s[0]+su.w1/2-o,s[2]+su.w2/2-o)});
  const pad=Math.max(1.2,(x1-x0)*.06);x0-=pad;x1+=pad;
  const sc=(W-30)/(x1-x0),X=x=>15+(x-x0)*sc,o=off(t),s=pos(t,col);
  ctx.clearRect(0,0,W,H);
- const lab=(q,x,y,c,al)=>{ctx.fillStyle=c;ctx.font='600 12px system-ui,sans-serif';ctx.textAlign=al||'left';ctx.fillText(q,x,y)};
+ const lab=(q,x,y,c,al)=>{ctx.fillStyle=c;ctx.font=C('--normalfont');ctx.textAlign=al||'left';ctx.fillText(q,x,y)};
  // trilho com régua (metros; no referencial do CM, relativos ao CM)
  ctx.strokeStyle=C('--ground');ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(8,fy);ctx.lineTo(W-8,fy);ctx.stroke();
- const stp=Sim.nice((x1-x0)/8);ctx.lineWidth=1;ctx.font='11px system-ui,sans-serif';ctx.fillStyle=C('--mut');ctx.strokeStyle=C('--mut');
+ const stp=Sim.nice((x1-x0)/8);ctx.lineWidth=1;ctx.font=C('--normalfont');ctx.fillStyle=C('--mut');ctx.strokeStyle=C('--mut');
  for(let g=Math.ceil(x0/stp)*stp;g<=x1;g+=stp){ctx.beginPath();ctx.moveTo(X(g),fy+3);ctx.lineTo(X(g),fy+9);ctx.stroke();ctx.textAlign='center';ctx.fillText(+g.toFixed(6),X(g),fy+22)}
  lab(cmf?"x′ (m), relativo ao CM":'x (m)',W-10,fy+38,C('--mut'),'right');
  // ponto do choque (só no referencial do laboratório)
@@ -121,7 +121,7 @@ function draw(){
  // blocos e velocidades
  [[s[0],s[1],su.w1,C('--vy'),'m₁','v₁'],[s[2],s[3],su.w2,C('--vx'),'m₂','v₂']].forEach(([x,v,w,col_,nm,vn])=>{
   const xl=X(x-w/2-o),wp=w*sc;
-  ctx.fillStyle=col_;ctx.globalAlpha=.2;ctx.fillRect(xl,fy-bh,wp,bh);ctx.globalAlpha=1;ctx.strokeStyle=col_;ctx.lineWidth=2;ctx.strokeRect(xl,fy-bh,wp,bh);
+  ctx.fillStyle=col_;ctx.globalAlpha=.2;ctx.fillRect(xl,fy-bh,wp,bh);ctx.globalAlpha=1;ctx.strokeStyle=col_;ctx.lineWidth=2.4;ctx.strokeRect(xl,fy-bh,wp,bh);
   lab(nm,xl+wp/2,fy-bh/2+4,col_,'center');
   if($('c_v').checked){const vv=v-vo,L=Math.max(-140,Math.min(140,vv*7)),ay=fy-bh-14,ax=xl+wp/2;
    if(Math.abs(L)>2){arrow(ctx,ax,ay,L,0,col_,2.8);lab(vn+' = '+f2(vv)+' m/s',ax+L+(L>=0?8:-8),ay+4,col_,L>=0?'left':'right')}else lab(vn+' = 0',ax,ay-4,col_,'center')}

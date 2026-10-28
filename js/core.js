@@ -752,7 +752,8 @@ Sim.setLabel=(id,html)=>{const c=Sim.ctl[id];if(c.lab===html)return;c.lab=html;c
     @param itens  lista de [chave, rótulo], ex.: [['t','Tempo (s)'], ['x','x (m)']]
     @returns função set(chave, valor): número (formatado com Sim.f2) ou texto. */
 Sim.readouts=(box,items)=>{
- items.forEach(([k,l])=>{const d=document.createElement('div');d.innerHTML='<small>'+l+'</small><b id="r_'+k+'">–</b>';box.appendChild(d)});
+ items.forEach(([k,l])=>{const d=document.createElement('div');d.innerHTML='<small>'+l+'</small><b id="r_'+k+'">–</b>';
+ box.appendChild(d)});
  return (k,v)=>{Sim.$('r_'+k).textContent=typeof v==='number'?Sim.f2(v):v};
 };
 

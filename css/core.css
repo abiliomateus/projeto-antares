@@ -241,7 +241,7 @@ body.sim-fullscreen-active {
 }
 
 .legenda {
-  margin:0 0 1em;
+  margin:0;
 }
 .sim-legend {
   display: flex;

@@ -80,7 +80,7 @@ const mkView = i => ({
 // É aqui que se muda a física: vento (some uma velocidade do ar a vx e vy no cálculo do arrasto),
 // força de Magnus (bola com efeito), gravidade variável com a altura, etc.
 // Arrasto quadrático: a = -k·|v|·v, com k = (coeficiente de arrasto)/(massa), em 1/m.
-const deriv=q=>{const sp=Math.hypot(q[2],q[3]);return[q[2],q[3],-(P.b/P.m)*sp*q[2],-P.g-(P.b/P.m)*sp*q[3]]};
+const deriv=q=>{const b=$('c_ar').checked?P.b:0;sp=Math.hypot(q[2],q[3]);return[q[2],q[3],-(b/P.m)*sp*q[2],-P.g-(b/P.m)*sp*q[3]]};
 // Linha de dados do instante atual, no formato dos gráficos.
 const row=()=>[t,s[0],s[1],Math.hypot(s[2],s[3]),s[2],s[3]];
 // Volta ao modo de pré-visualização (chamada a cada mudança de slider). Não apaga `past`.
@@ -108,7 +108,11 @@ function step(dt){
    t+=f*DT;trail.push([s[0],0]);rows.push(row());range=s[0];mode='land';
    past.push(trail);if(past.length>5)past.shift();
    const i=ideal(),df=i.R>0?(range-i.R)/i.R*100:0;
-   $('cmp').textContent='Alcance simulado: '+f2(range)+' m. Sem arrasto seria '+f2(i.R)+' m ('+(df>=0?'+':'−')+Math.abs(df).toFixed(1).replace('.',',')+'%).';
+   if (($('c_ar').checked) && (P.b > 1e-5) ) {
+    $('cmp').textContent = 'Alcance simulado: '+f2(range)+' m. Sem arrasto seria '+f2(i.R)+' m ('+(df>=0?'+':'−')+Math.abs(df).toFixed(1).replace('.',',')+'%).';
+   } else{
+    $('cmp').textContent = 'Alcance simulado: '+f2(range)+' m.';
+   }
    return;
   }
   s=n;t+=DT;if(s[1]>ymax)ymax=s[1];
