@@ -104,7 +104,9 @@ Sim.icons = {
 
   share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4M8.7 13.3l6.6 4.4"/>',
 
-  settings: '<circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.6a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.6-1.4-2.4 1.4-1.1a7 7 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.6a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.6 1.4 2.4-1.4 1.1a7 7 0 0 1 0 2z"/>',
+  settings: '<path d="M12 6.9a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.3a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9h-.3a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2v-.3a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.3a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/>',
+
+  close: '<path d="M18 6 6 18M6 6l12 12"/>',
 
   copyCheck: '<path d="m9 12 4 4 12-12"/>',
 };
@@ -134,6 +136,135 @@ Sim.iconButton = (name, title, onClick, size = 18) => {
 /** Barra de botões sobre o canvas (lateral direita, centralizada na vertical), compartilhada pelo zoom e pelo play/pause.
     Devolve o elemento .zbar do pai do canvas, criando-o se ainda não existir. */
 Sim.bar=wrap=>{let b=wrap.querySelector('.zbar');if(!b){b=document.createElement('div');b.className='zbar';wrap.style.position='relative';wrap.appendChild(b)}return b};
+
+/**
+ * Painel flutuante de configurações sobre o canvas.
+ * Move o container existente para o painel, sem duplicar os controles.
+ */
+Sim.settings = (cv, box) => {
+  if (typeof box === 'string') box = document.querySelector(box);
+
+  const wrap = cv?.parentElement;
+  if (!wrap || !box) return;
+
+  const bar = Sim.bar(wrap);
+
+  // Botão de configurações
+  const btn = Sim.iconButton(
+    'settings',
+    'Configurações da simulação',
+    () => toggle()
+  );
+
+  bar.appendChild(btn);
+
+  // Painel flutuante
+  const panel = document.createElement('section');
+  panel.className = 'sim-settings';
+  panel.hidden = true;
+  panel.setAttribute('aria-label', 'Configurações da simulação');
+
+  Object.assign(panel.style, {
+    position: 'absolute',
+    zIndex: '20',
+    top: '12px',
+    right: '48px',
+    width: 'min(340px, calc(100% - 60px))',
+    maxHeight: '80%',
+    overflowY: 'auto',
+    padding: '14px',
+    border: '1px solid var(--line, #ccc)',
+    borderRadius: '10px',
+    background: 'var(--card, #fff)',
+    color: 'var(--ink, #222)',
+    boxShadow: '0 4px 18px #0003',
+    boxSizing: 'border-box'
+  });
+
+  
+  // Cabeçalho e botão de fechar
+  const head = document.createElement('div');
+
+  Object.assign(head.style, {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '8px',
+    marginBottom: '12px'
+  });
+
+  const title = document.createElement('strong');
+  title.textContent = 'Configurações';
+
+  const close = Sim.iconButton(
+  'close',
+  'Fechar configurações',
+  () => toggle(false)
+  );
+
+Object.assign(close.style, {
+  width: '32px',
+  height: '32px',
+  minWidth: '32px',
+  padding: '6px',
+  flex: '0 0 32px',
+  display: 'grid',
+  placeItems: 'center'
+});
+
+  head.append(title, close);
+
+  // Reserva a posição original de #ctl para não alterar o fluxo da página.
+  const placeholder = document.createComment('posição original dos controles');
+  box.parentNode.insertBefore(placeholder, box);
+
+  panel.appendChild(head);
+  panel.appendChild(box);
+  wrap.appendChild(panel);
+
+  function toggle(force) {
+    const open = force ?? panel.hidden;
+
+    panel.hidden = !open;
+    btn.setAttribute(
+      'aria-expanded',
+      String(open)
+    );
+
+    if (open) {
+      close.focus();
+    } else {
+      btn.focus();
+    }
+  }
+
+  // Fecha ao clicar fora do painel ou pressionar Esc.
+  document.addEventListener('pointerdown', e => {
+    if (
+      !panel.hidden &&
+      !panel.contains(e.target) &&
+      !btn.contains(e.target)
+    ) {
+      toggle(false);
+    }
+  });
+
+  panel.addEventListener('pointerdown', e => e.stopPropagation());
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !panel.hidden) toggle(false);
+  });
+
+  // Permite restaurar #ctl à posição original, se necessário.
+  panel.restore = () => {
+    placeholder.parentNode?.insertBefore(box, placeholder);
+    placeholder.remove();
+    panel.remove();
+    btn.remove();
+  };
+
+  return panel;
+};
 
 Sim.speedbar = (cv, id, speeds = [0.25, 0.5, 1, 2]) => {
   const wrap = cv.parentElement;
