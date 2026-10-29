@@ -1,1 +1,12 @@
 !.gitignore
+js/atwood.js
+js/blocos-plano.js
+js/blocos.js
+js/colisao.js
+js/colisao1d.js
+js/doiscorpos.js
+js/inclinado.js
+js/loop.js
+js/massamola.js
+js/pendulo.js
+js/projeteis.js
