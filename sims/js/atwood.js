@@ -136,8 +136,8 @@ function draw(){
  const BL=[Ax+d1[0]*L1*sc,Ay+d1[1]*L1*sc],BR=[Ax+d2[0]*L2*sc,Ay+d2[1]*L2*sc];
  ctx.clearRect(0,0,W,H);
  // planos e chão
- ctx.fillStyle=C('--ground');ctx.beginPath();ctx.moveTo(Ax,Ay);ctx.lineTo(BR[0],BR[1]);ctx.lineTo(BR[0],yb);ctx.lineTo(BL[0],yb);ctx.lineTo(BL[0],BL[1]);ctx.closePath();ctx.fill();
- ctx.strokeStyle=C('--ground');ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(12,yb);ctx.lineTo(W-12,yb);ctx.stroke();
+//  ctx.fillStyle=C('--ground');ctx.beginPath();ctx.moveTo(Ax,Ay);ctx.lineTo(BR[0],BR[1]);ctx.lineTo(BR[0],yb);ctx.lineTo(BL[0],yb);ctx.lineTo(BL[0],BL[1]);ctx.closePath();ctx.fill();
+//  ctx.strokeStyle=C('--ground');ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(12,yb);ctx.lineTo(W-12,yb);ctx.stroke();
 //  ctx.strokeStyle=C('--ink');ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(BL[0],BL[1]);ctx.lineTo(Ax,Ay);ctx.lineTo(BR[0],BR[1]);ctx.stroke();
  ctx.font=C('--normalfont');ctx.fillStyle=C('--mut');ctx.strokeStyle=C('--mut');ctx.lineWidth=1.5;
 //  if(P.ang1>1){ctx.beginPath();ctx.arc(BL[0],BL[1],40,-90*R,0);ctx.stroke();ctx.textAlign='left'}
