@@ -2,7 +2,7 @@
 set -e
 
 # Tag de versão a ser criada
-TAG="1.0.4"
+TAG="1.0.5"
 
 # Cria a tag se ela ainda não existir
 if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then

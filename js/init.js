@@ -17,7 +17,7 @@ function carregarJS(url) {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
         script.src = url;
-        script.async = true; // Garante execução na ordem em que terminar de baixar
+        script.async = false; // Garante execução na ordem em que terminar de baixar
         script.onload = resolve;
         script.onerror = reject;
         document.head.appendChild(script);
@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
   </div>
         `);
     }
+    carregarJS('/js/version.js');
 
     const description = document.getElementById("sim-description");
 
@@ -98,5 +99,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-carregarJS('/js/version.js');
 
