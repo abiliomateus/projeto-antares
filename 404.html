@@ -7,6 +7,9 @@
 <title>Página não encontrada — Projeto Antαres</title>
 <link rel="icon" type="image/png" href="./img/icons/antares-192.png">
 <script src="/js/init.min.js"></script>
+<script>
+try{const th=localStorage.getItem('tema');if(th==='light'||th==='dark')document.documentElement.setAttribute('data-theme',th)}catch(e){}
+</script>
 
   <style>
     * { box-sizing: border-box; }
@@ -62,7 +65,7 @@
       O endereço acessado não corresponde a uma página disponível.
       Talvez ela tenha mudado de lugar ou o endereço esteja incorreto.
     </p>
-    <a href="./">Voltar ao Projeto Antαres</a>
+    <a href="/">Voltar ao Projeto Antαres</a>
   </main>
 </body>
 </html>
