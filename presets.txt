@@ -1,0 +1,4 @@
+
+P6.18
+
+http://localhost:8000/sims/colisao.html?m1=2&m2=1&v1=0&ang1=0&v2=1&ang2=0&dfl=45&e=1&spd=1

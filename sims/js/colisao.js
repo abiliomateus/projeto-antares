@@ -42,8 +42,8 @@ Sim.controls($('ctl'),[
  {id:'ang1',label:'Direção de \\(\\vec v_1\\)',unit:'°',min:-180,max:180,step:5,val:0},
  {id:'v2',label:'Módulo de \\(\\vec v_2\\)',unit:'m/s',min:0,max:10,step:.5,val:0},
  {id:'ang2',label:'Direção de \\(\\vec v_2\\)',unit:'°',min:-180,max:180,step:5,val:0},
- {id:'dfl',label:'Desvio de 1, \\(\\theta_1\\)',unit:'°',min:-180,max:180,step:1,val:30},
- {id:'e',label:'Coeficiente de restituição \\(e\\)',unit:'',min:0,max:1,step:.05,val:1},
+ {id:'dfl',label:'Desvio de 1, \\(\\theta_1\\)',unit:'°',min:-180,max:180,step:5,val:30},
+ {id:'e',label:'Coeficiente de restituição \\(e\\)',unit:'',min:0,max:1,step:.1,val:1},
  {id:'spd',label:'Velocidade da animação',unit:'×',min:.1,max:2,step:.1,val:1}
 ],P,id=>{if(!Sim._loadingURL && id!=='spd')reset()});
 $('c_alt').addEventListener('change',reset);

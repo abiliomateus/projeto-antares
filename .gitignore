@@ -1,0 +1,15 @@
+!.gitignore
+local-scripts
+js/core.js
+js/init.js
+sims/js/atwood.js
+sims/js/blocos-plano.js
+sims/js/blocos.js
+sims/js/colisao.js
+sims/js/colisao1d.js
+sims/js/doiscorpos.js
+sims/js/inclinado.js
+sims/js/loop.js
+sims/js/massamola.js
+sims/js/pendulo.js
+sims/js/projeteis.js
