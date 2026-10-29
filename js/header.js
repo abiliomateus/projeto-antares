@@ -46,6 +46,17 @@ document.addEventListener("DOMContentLoaded", function () {
   </div>
         `);
     }
+
+    const description = document.getElementById("sim-description");
+
+    if (description) {
+        description.insertAdjacentHTML('beforeend','<p class="note" style="margin: 0 0 1em">Use o botão de configuração (&#9881) para ajustar os valores das variáveis.</p>');
+        description.insertAdjacentHTML('beforeend', `
+        <p class="dica-orientacao">
+          ↻ Dica: use o celular na horizontal para aproveitar melhor a simulação!
+        </p>
+        `);
+    }
 });
 
 carregarJS('/js/version.js');
