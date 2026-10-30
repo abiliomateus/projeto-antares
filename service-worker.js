@@ -6,7 +6,9 @@ const CACHE = "antares-cache-v1";
 const ARQUIVOS = [
   "./",
   "./index.html",
-  "./manifest.webmanifest"
+  "./manifest.webmanifest",
+  "./js/core.min.js",
+  "./js/init.min.js",
 ];
 
 self.addEventListener("install", event => {
