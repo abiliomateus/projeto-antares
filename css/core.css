@@ -73,7 +73,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .row input{grid-column:1/-1;width:100%;accent-color:var(--acc)}
 select{font:inherit;width:100%;padding:6px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);margin:2px 0 12px}
 .chk{display:flex;gap:8px;align-items:center;margin:6px 0;font-size:.92rem}
-.sw{width:18px;height:0;border-top:3px solid;display:inline-block}
+.sw{width:20px;height:0;border-top:4px solid;display:inline-block}
 details{margin-top:14px;font-size:.92rem}
 summary{cursor:pointer;font-weight:600}
 code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88em}
@@ -193,12 +193,12 @@ p.header {
 /* ---- Zoom do canvas (Sim.interactive): botões na lateral direita ---- */
 /* .zbar{position:absolute;right:6px;top:40%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px} */
 .zbar{position:absolute;top:2%;left:50%;transform:translateX(-50%);display:flex;flex-direction:row;gap:4px;}
-.zbar button{flex:none;width:2em;height:1.5em;padding:0;font-size:1em;line-height:1;border-radius:6px;color: var(--acc);opacity: 0.6;}
+.zbar button{flex:none;width:2em;height:1.5em;padding:0;font-size:1em;line-height:1;border-radius:6px;color: var(--acc);opacity: 0.6; flex-wrap: wrap;}
 .zbar button:hover,.zbar button:focus-visible{opacity:1; background-color: var(--acc); color: var(--card); }
 .zbar button.txt{font-size:12px;font-weight:600;}
 .zbar svg{width:1em;height:1em;display:block;margin:auto;}
 .zsep{flex:none;height:6px}
-@media (pointer:coarse){.zbar{gap:6px}.zbar button{width:32;height:32px;font-size:20px}.zbar button.txt{font-size:14px}.zbar svg{width:18px;height:18px}}   /* telas de toque: botões maiores */
+@media (pointer:coarse){.zbar{gap:3px}.zbar button{width:32;height:32px;font-size:20px}.zbar button.txt{font-size:14px}.zbar svg{width:18px;height:18px}}   /* telas de toque: botões maiores */
 
 .zbar:fullscreen {
   width: 100vw;

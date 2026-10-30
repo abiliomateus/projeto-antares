@@ -5,7 +5,7 @@ window.MathJax={
     Tex:{
         inlineMath:[['\\(','\\)']],
         displayMath:[['\\[','\\]']]},
-        svg:{fontCache:'global'},
+        svg:{fontCache:'local'},
         options:{enableMenu:false},
         extensions: ["AMSmath.js","AMSsymbols.js"],
         equationNumbers: {
