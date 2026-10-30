@@ -17,14 +17,11 @@
      <p>Dois blocos ligados por uma corda que passa por uma polia ideal. Varie as massas e compare os resultados.</p>
 </header>
 
-<!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, pl, c_atr, c_comp, c_res, p1/p2/p3 -->
-<main>
 <section class="card"><div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details></section>
-<aside class="card">
+
+<section id="opt">
 <div class="btns"><button class="p" id="bl">Soltar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
 <div id="ctl" style="margin-top:10px"></div>
-
-<strong>Opções</strong><br>
 <label for="pl" style="font-size:.92rem">Corpo celeste</label>
 <select id="pl"><option value="9.8">Terra (9,8 m/s²)</option><option value="1.62">Lua (1,62 m/s²)</option><option value="3.71">Marte (3,71 m/s²)</option><option value="24.8">Júpiter (24,8 m/s²)</option></select>
 <label class="chk"><input type="checkbox" id="c_f" checked>Diagrama de forças</label>
@@ -33,8 +30,7 @@
 <div class="chk"><span class="sw" style="border-color:var(--acc)"></span>Normal \(\vec N\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Tração \(\vec T\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--ink)"></span>Resultante \(\vec F\)</div>
-</aside>
-</main>
+</section>
 <!-- Título e legenda dos gráficos em HTML (para usar MathJax); as cores devem coincidir com as de blocos.js -->
 <section class="plots">
 <div class="card"><div class="pt"><b>Deslocamento</b> \(y\) em função de \(t\)<span style="color:var(--acc)">\(y\)</span></div><div><canvas id="p1"></canvas></div></div>

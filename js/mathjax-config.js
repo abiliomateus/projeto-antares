@@ -11,4 +11,5 @@ window.MathJax={
         equationNumbers: {
             autoNumber: "AMS", formatNumber: function (n) { return EqnumPrefix() + n }
         },
+        macros:{sen:'\\operatorname{sen}'},
 };

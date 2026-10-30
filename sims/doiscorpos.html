@@ -18,13 +18,13 @@
 </header>
 
 <!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, c_el, c_tr, c_mu, c_lin, c_f, c_v, p1..p4 -->
-<main>
 <section class="card"><div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details></section>
-<aside class="card">
+
+<section id="opt">
+
 <div class="btns"><button class="p" id="bl">Iniciar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
 <div id="ctl"></div>
 
-<strong>Opções</strong>
 
 <label class="chk"><input type="checkbox" id="c_el" checked>Órbitas elípticas dos corpos (tracejadas)</label>
 <label class="chk"><input type="checkbox" id="c_tr" checked>Rastro simulado</label>
@@ -36,9 +36,35 @@
 <div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Corpo 2 (massa \(m_2\))</div>
 <div class="chk"><span class="sw" style="border-color:var(--ink);border-top-style:dashed"></span>Órbita da massa reduzida \(\mu\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--a)"></span>Força gravitacional \(\vec F_g\)</div>
-</aside>
-</main>
+</section>
+</div>
 
+<div id="book" class="book">
+<span class="mathconfig">
+\( 
+\let\oldvec=\vec
+\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
+\let\oldhat=\hat
+\let\oldimath=\imath
+\let\oldjmath=\jmath
+\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
+\)
+</span>
+<p>Unidades: massas em \(M_\odot\), distâncias em UA e tempo em anos. Nelas, \(G = 4\pi^2\ \mathrm{UA^3/(M_\odot\,ano^2)}\), valor que decorre de a Terra completar sua órbita em 1 ano a 1 UA (desprezando a massa da Terra). Com \(\vec r = \vec r_2 - \vec r_1\), \(r = |\vec r|\) e \(\hat r = \vec r/r\), a força gravitacional sobre cada corpo é atrativa, e as duas são iguais e opostas (3ª lei de Newton):</p>
+\[ F_g = \frac{G\,m_1 m_2}{r^2}, \qquad m_1\ddot{\vec r}_1 = +F_g\,\hat r, \qquad m_2\ddot{\vec r}_2 = -F_g\,\hat r.\]
+<p>Não há forças externas, então o centro de massa \(\vec R = (m_1\vec r_1 + m_2\vec r_2)/M\), com \(M = m_1 + m_2\), se move em linha reta. Aqui ele fica em repouso na origem, e as posições dos corpos são frações da posição relativa:</p>
+\[ \vec r_1 = -\frac{m_2}{M}\,\vec r, \qquad \vec r_2 = +\frac{m_1}{M}\,\vec r.\]
+<p>Dividindo cada equação de movimento pela massa do corpo e subtraindo, resta um problema de um corpo só: a massa reduzida \(\mu\), na posição \(\vec r\), atraída por uma massa fixa \(M\) no CM:</p>
+\[ \mu\,\ddot{\vec r} = -F_g\,\hat r \quad\Longleftrightarrow\quad \ddot{\vec r} = -\frac{G M}{r^2}\,\hat r, \qquad \mu = \frac{m_1 m_2}{m_1 + m_2}.\]
+<p>Logo, a órbita relativa (tracejada em preto) é uma órbita de Kepler: uma elipse com o CM num foco, de semi-eixo maior \(a\) e excentricidade \(e\), com \(\theta\) o ângulo medido a partir do periastro. Os dois corpos descrevem elipses semelhantes a ela, com o CM no mesmo foco, mesma excentricidade e mesmo período:</p>
+\[ r = \frac{a\,(1 - e^2)}{1 + e\cos\theta}, \qquad T = 2\pi\sqrt{\frac{a^3}{G M}}, \qquad a_1 = \frac{m_2}{M}\,a, \qquad a_2 = \frac{m_1}{M}\,a.\]
+<p>O corpo mais leve descreve a órbita maior, e a razão das distâncias ao CM é sempre \(r_1/r_2 = m_2/m_1\). As velocidades e a energia cinética se dividem do mesmo modo:</p>
+\[ \vec v_1 = -\frac{m_2}{M}\,\vec v_{rel}, \qquad \vec v_2 = +\frac{m_1}{M}\,\vec v_{rel}, \qquad K = \tfrac12\,m_1 v_1^2 + \tfrac12\,m_2 v_2^2 = \tfrac12\,\mu\,v_{rel}^2.\]
+<p>A energia e o momento angular em torno do CM se conservam (linhas tracejadas nos gráficos):</p>
+\[ E = K - \frac{G m_1 m_2}{r} = -\frac{G m_1 m_2}{2a}, \qquad L = m_1 r_1^2\dot\theta + m_2 r_2^2\dot\theta = \mu\,r^2\dot\theta = \mu\sqrt{G M a\,(1 - e^2)}.\]
+<p>Como \(L\) é constante, a 2ª lei de Kepler vale para a posição relativa e para cada corpo (áreas iguais em tempos iguais, medidas a partir do CM). O movimento é mais rápido no periastro (\(r = a(1 - e)\)) e mais lento no apoastro (\(r = a(1 + e)\)).</p>
+<p>A simulação integra as equações dos dois corpos (8 variáveis) com Runge-Kutta de 4ª ordem e passo variável, mais curto perto do periastro. A condição inicial vem da solução de Kepler, a partir da anomalia média \(M_0\) (0° é o periastro). A curva tracejada do gráfico de distâncias é a solução de Kepler, com \(n = 2\pi/T\):</p>
+\[ r = a\,(1 - e\cos E), \qquad M = n\,t + M_0 = E - e\sin E.\]
 </div>
 
 <footer></footer>

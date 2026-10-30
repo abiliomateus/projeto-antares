@@ -17,12 +17,12 @@
 </header>
 
 <!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, pl, c_atr, c_f, c_hc, c_bar, c_tr, p1/p2/p3 -->
-<main>
 <section class="card"><div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details></section>
-<aside class="card">
+
+<section id="opt">
+
 <div class="btns"><button class="p" id="bl">Soltar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
 
-<strong>Opções</strong>
 
 <label class="chk" style="font-weight:600"><input type="checkbox" id="c_atr">Com atrito</label>
 <div id="ctl" style="margin-top:10px"></div>
@@ -35,15 +35,38 @@
 <div class="chk"><span class="sw" style="border-color:var(--a)"></span>Força gravitacional \(\vec F_g\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--acc)"></span>Normal \(\vec N\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Atrito \(\vec f\)</div>
-</aside>
-</main>
-<!-- Título e legenda dos gráficos em HTML (para usar MathJax); as cores devem coincidir com as de loop.js -->
+</section><!-- Título e legenda dos gráficos em HTML (para usar MathJax); as cores devem coincidir com as de loop.js -->
 <section class="plots">
 <div class="card"><div class="pt"><b>Energia</b> em função de \(t\)<span style="color:var(--vx)">\(K\)</span><span style="color:var(--vy)">\(U\)</span><span style="color:var(--acc)">\(E\)</span><span style="color:var(--a)">\(Q\)</span></div><div><canvas id="p1"></canvas></div></div>
 <div class="card"><div class="pt"><b>Velocidade</b> em função de \(t\)<span style="color:var(--acc)">\(v\)</span></div><div><canvas id="p2"></canvas></div></div>
 <div class="card"><div class="pt"><b>Normal</b> em função de \(t\)<span style="color:var(--a)">\(N/(mg)\)</span></div><div><canvas id="p3"></canvas></div></div>
 </section>
 
+</div>
+
+<div id="book" class="book">
+<span class="mathconfig">
+\( 
+\let\oldvec=\vec
+\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
+\let\oldhat=\hat
+\let\oldimath=\imath
+\let\oldjmath=\jmath
+\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
+\)
+</span>
+<p>Uma partícula de massa \(m\) é solta do repouso a uma altura \(h\) acima da base do loop, desce uma rampa de inclinação \(\alpha\), passa por um arco de raio \(R\) e percorre o loop de raio \(R\). Sem atrito, a energia mecânica se conserva. Com \(y\) a altura da partícula e \(F_g = mg\) a força gravitacional:</p>
+\[ E = \tfrac12\,m v^2 + m g y = m g h, \qquad v = \sqrt{2g\,(h - y)}.\]
+<p>Na pista, a normal \(N\) empurra a partícula para o lado de dentro da curva. Com \(\theta\) o ângulo da tangente com a horizontal e \(\kappa\) a curvatura (\(\kappa = 1/R\) no loop e no arco, e \(\kappa = 0\) nos trechos retos), a segunda lei na direção normal dá</p>
+\[ N = F_g\cos\theta + m\kappa v^2.\]
+<p>No topo do loop, \(\theta = 180^\circ\) e \(y = 2R\), logo \(N = mv^2/R - F_g\). A partícula só continua na pista se \(N \ge 0\), isto é, \(v^2 \ge gR\). Com a energia:</p>
+\[ m g h = \tfrac12\,m v_{\text{topo}}^2 + 2\,m g R \quad\Rightarrow\quad h \ge h_c = \tfrac52\,R.\]
+<p>Se \(R \lt h \lt h_c\), a partícula perde o contato antes do topo, no ângulo \(\varphi\) (medido a partir da base, ao longo do loop) em que \(N = 0\), e segue em voo livre até tocar a pista de novo:</p>
+\[ \cos\varphi = -\frac{2\,(h - R)}{3R}.\]
+<p>Se \(h \le R\), a partícula não passa da altura do centro do loop e volta pela mesma pista. Com atrito cinético, de coeficiente \(\mu\) e contra a velocidade:</p>
+\[ \frac{dv}{dt} = -g\sin\theta - \mu\,\frac{N}{m}\,\mathrm{sgn}(v), \qquad Q = \int \mu N\,|v|\,dt, \qquad E + Q = m g h.\]
+<p>Em repouso, o atrito estático (com o mesmo coeficiente \(\mu\)) segura a partícula se \(F_g\,|\sin\theta| \le \mu N\). Com atrito, a altura mínima para completar o loop passa a ser maior que \(h_c\).</p>
+<p>A pista é uma rampa reta de inclinação \(\alpha\) ligada por um arco de raio \(R\) ao loop e a um trecho plano de saída. A integração usa Runge-Kutta de 4ª ordem com passo fixo de \(1/480\) s.</p>
 </div>
 
 <footer></footer>

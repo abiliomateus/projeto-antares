@@ -16,37 +16,28 @@
     <p>Ajuste os parâmetros no botão de configuração, lance e compare a trajetória simulada (linha cheia) com a ideal (tracejada).</p>
 </header>
 
-<!-- Ids que o JS espera encontrar: cv (canvas), ro (leituras), cmp (nota de comparação), bl/bp/bc (botões),
-     ctl (sliders), pl (corpo celeste), cv_v/cv_a/cv_i/cv_t (caixas de seleção), p1/p2/p3 (gráficos).
-     Cada <canvas> fica dentro de um <div> SEM padding: é a largura desse div que define o tamanho do canvas. -->
-<main>
 <section class="card"><div id="cv0" style="position: relative"><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details>
 </section>
 
-<aside class="card">
+<section id="opt">
 <div class="btns"><button class="p" id="bl">Lançar</button><button id="bp">Pausar</button><button id="bc">Limpar</button></div>
 <div id="ctl"></div>
-
-<strong>Opções</strong><br>
-
 <label class="chk" style="font-weight:600"><input type="checkbox" id="c_ar" checked>Com arrasto (resistência do ar)</label>
 <label for="pl" style="font-size:.92rem">Corpo celeste</label>
-<!-- Corpos celestes: value = g em m/s². Para incluir outro, adicione uma <option>. -->
 <select id="pl"><option value="9.8">Terra (9,8 m/s²)</option><option value="1.62">Lua (1,62 m/s²)</option><option value="3.71">Marte (3,71 m/s²)</option><option value="24.8">Júpiter (24,8 m/s²)</option></select>
 <label class="chk"><input type="checkbox" id="cv_v" checked><span class="sw" style="border-color:var(--acc)"></span>Velocidade e componentes</label>
 <label class="chk"><input type="checkbox" id="cv_a"><span class="sw" style="border-color:var(--a)"></span>Aceleração</label>
 <label class="chk"><input type="checkbox" id="cv_i" checked><span class="sw" style="border-top-style:dashed;border-color:var(--ghost)"></span>Parábola ideal (sem arrasto)</label>
 <label class="chk"><input type="checkbox" id="cv_t" checked><span class="sw" style="border-color:var(--acc)"></span>Rastro</label>
-</aside>
-</main>
-<!-- Gráficos: um card por canvas; o número de colunas é definido em core.css (.plots) -->
+</section>
+
 <section class="plots">
 <div class="card"><div><canvas id="p1"></canvas></div></div>
 <div class="card"><div><canvas id="p2"></canvas></div></div>
 <div class="card"><div><canvas id="p3"></canvas></div></div>
 </section>
 </div>
-<!-- Ordem importa: o núcleo primeiro, depois a simulação -->
+
 <div id="book" class="book">
 <span class="mathconfig">
 \( 
@@ -58,14 +49,22 @@
 \renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
 \)
 </span>
-<p>O <em>movimento de um projétil</em> é um exemplo de movimento em duas dimensões. Na ausência da resistência do ar, a aceleração é \(\vec{a} = -g\hat{\jmath}\). As coordenadas da partícula são dadas por:
+<p>Uma partícula é lançada com velocidade inicial \(v_0\), ângulo \(\theta_0\) com a horizontal e altura inicial \(h_0\). Na ausência da resistência do ar, a única força que atua sobre ela é a gravitacional, \(F_g = mg\). A aceleração é 
+    \[\vec{a} = -g\hat{\jmath}.\] 
+O movimento horizontal é uniforme e o vertical é uniformemente variado. As coordenadas da partícula são dadas por:
     \[x(t)=v_0\cos\theta_0\,t\] 
-    \[y(t)=h_0+v_0\sin\theta_0\,t-\frac{1}{2}gt^2,\]
-onde \(h_0\) é a altura inicial, \(v_0\) é a magnitude da velocidade inicial e \(\theta_0\), o ângulo de lançamento.</p>
+    \[y(t)=h_0+v_0\sin\theta_0\,t-\frac{1}{2}gt^2.\]
+</p>
 <p>A componente horizontal da velocidade é constante e a vertical varia linearmente em função do tempo:
 \[v_x(t) = v_0 \cos\theta_0\]
 \[v_y(t)=v_0\sin\theta_0-gt.\]
 </p>
+
+<p>O tempo de voo (até \(y = 0\)), o alcance e a altura máxima são:</p>
+\[ t_v = \frac{v_0\sin\theta + \sqrt{v_0^2\sin^2\theta + 2gh_0}}{g}, \] 
+\[ R = v_0\cos\theta\;t_v,\]
+\[ y_{\max} = h_0 + \frac{v_0^2\sin^2\theta}{2g}.\]
+<p>Para \(h_0 = 0\), o alcance é \(R = v_0^2\sin(2\theta)/g\), máximo em \(\theta = 45^\circ\).</p>
 
 <p>Considerando uma força de arrasto proporcional a \(v^2\) (componente quadrática), a aceleração possui uma componente contrária à velocidade da partícula
     \[\vec{a}=-g\hat{\jmath}-\dfrac{b}{m}v^2\hat{v},\]

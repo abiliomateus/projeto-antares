@@ -17,14 +17,14 @@
 </header>
 
 <!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, c_v, c_ang, c_cm, c_tr, c_alt, p1/p2/p3 -->
-<main>
 <section class="card"><div><canvas id="cv" style="padding: 5%; padding-bottom: 1%;"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details></section>
 
-<aside class="card">
+
+<section id="opt">
+
 <div class="btns"><button class="p" id="bl">Lançar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
 <div id="ctl"></div>
 
-<strong>Opções</strong>
 
 <label class="chk"><input type="checkbox" id="c_alt">Outra solução do ângulo (quando existir)</label>
 <label class="chk"><input type="checkbox" id="c_v" checked>Vetores de velocidade (tracejados: após o choque)</label>
@@ -34,10 +34,33 @@
 <div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Partícula 1</div>
 <div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Partícula 2</div>
 <div class="chk"><span class="sw" style="border-color:var(--ink)"></span>Centro de massa</div>
-</aside>
+</section>
 
-</main>
+</div>
 
+<div id="book" class="book">
+<span class="mathconfig">
+\( 
+\let\oldvec=\vec
+\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
+\let\oldhat=\hat
+\let\oldimath=\imath
+\let\oldjmath=\jmath
+\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
+\)
+</span>
+<p>As duas partículas pontuais chegam à origem, o ponto da colisão, no mesmo instante (\(t = 2\) s). A colisão é determinada por três condições: a conservação do momento, a restituição \(e\) e o desvio \(\theta_1\) da partícula 1. O desvio é o ângulo entre as direções inicial e final de \(\vec v_{\mathrm{1}}\), no referencial do laboratório, positivo no sentido anti-horário. Com \(M = m_1 + m_2\), \(\vec v_{\mathrm{1i}}\) e \(\vec v_{\mathrm{\mathrm{2i}}}\) são as velocidades antes da colisão, enquanto \(\vec v_{\mathrm{1f}}\) e \(\vec v_{\mathrm{2f}}\) são os valores depois da colisão. A velocidade do centro de massa é \(\vec v_{\mathrm{cm}}\). Aplicando a conservação do momento linear, temos</p>
+\[ m_1\vec v_{\mathrm{1i}} + m_2\vec v_{\mathrm{\mathrm{2i}}} = m_1\vec v_{\mathrm{1f}} + m_2\vec v_{\mathrm{2f}} = M\,\vec v_{\mathrm{cm}}, \qquad e = \frac{|\vec v_{\mathrm{2f}} - \vec v_{\mathrm{1f}}|}{|\vec v_{\mathrm{\mathrm{2i}}} - \vec v_{\mathrm{1i}}|}. \]
+<p>Com \(e = 1\), a energia cinética se conserva; com \(e = 0\), as partículas saem juntas, com a velocidade \(\vec v_{\mathrm{cm}}\). Em relação ao CM, as velocidades finais são frações da velocidade relativa depois do choque:</p>
+\[ \vec v_{\mathrm{1f}} - \vec v_{\mathrm{cm}} = -\frac{m_2}{M}\,(\vec v_{\mathrm{2f}} - \vec v_{\mathrm{1f}}), \qquad \vec v_{\mathrm{2f}} - \vec v_{\mathrm{cm}} = +\frac{m_1}{M}\,(\vec v_{\mathrm{2f}} - \vec v_{\mathrm{1f}}) .\]
+<p>Como \(|\vec v_{\mathrm{2f}} - \vec v_{\mathrm{1f}}| = e\,|\vec v_{\mathrm{\mathrm{2i}}} - \vec v_{\mathrm{1i}}|\), a velocidade \(\vec v_{\mathrm{1f}}\) está numa circunferência de centro \(\vec v_{\mathrm{cm}}\) e raio</p>
+\[ \rho = \frac{m_2}{M}\,e\,|\vec v_{\mathrm{\mathrm{2i}}} - \vec v_{\mathrm{1i}}| .\]
+<p>A direção de \(\vec v_{\mathrm{1f}}\) é a de \(\vec v_{\mathrm{1i}}\) girada de \(\theta_1\). Sendo \(\hat u\) o vetor unitário dessa direção, o módulo \(s\) vem da interseção da semirreta com a circunferência, e \(\vec v_{\mathrm{2f}}\) sai da conservação do momento:</p>
+\[ s = \hat u\cdot\vec v_{\mathrm{cm}} \pm \sqrt{(\hat u\cdot\vec v_{\mathrm{cm}})^2 - |\vec v_{\mathrm{cm}}|^2 + \rho^2}, \qquad \vec v_{\mathrm{1f}} = s\,\hat u, \qquad \vec v_{\mathrm{2f}} = \vec v_{\mathrm{cm}} - \frac{m_1}{m_2}\,(\vec v_{\mathrm{1f}} - \vec v_{\mathrm{cm}}) .\]
+<p>Nem todo ângulo é possível. Se \(|\vec v_{\mathrm{cm}}| \gt \rho\), \(\theta_1\) fica restrito a um cone de meio-ângulo \(\arcsin(\rho/|\vec v_{\mathrm{cm}}|)\) em torno da direção de \(\vec v_{\mathrm{cm}}\). Com a partícula 2 inicialmente parada, isso ocorre quando \(m_1 \gt e\,m_2\): por exemplo, uma partícula mais pesada que incide numa mais leve com \(e = 1\), ou qualquer caso com \(e\) pequeno. O slider de \(\theta_1\) é limitado a esse intervalo. Dentro dele, a semirreta pode cortar a circunferência em dois pontos, o que dá duas soluções; a caixa "Outra solução" alterna entre elas. Se \(\vec v_{\mathrm{1i}} \approx \vec v_{\mathrm{\mathrm{2i}}}\), as partículas não se aproximam e não há colisão.</p>
+<p>Com massas iguais, uma delas parada e \(e = 1\), as partículas saem a \(90^\circ\) uma da outra. A energia cinética perdida é</p>
+\[ \Delta K = -\tfrac12\,\mu\,(1 - e^2)\,|\vec v_{\mathrm{\mathrm{2i}}} - \vec v_{\mathrm{1i}}|^2, \qquad \mu = \frac{m_1 m_2}{m_1 + m_2} .\]
+<p>Como o movimento é uniforme antes e depois do choque, não há integração numérica.</p>
 </div>
 
 <footer></footer>

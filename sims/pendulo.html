@@ -16,16 +16,11 @@
      <p>Um pino fixado abaixo do ponto de suspensão prende o fio quando a partícula passa pela vertical e reduz o raio. Mesmo assim, ela sobe de novo até a altura \(h\) de onde foi solta: a energia mecânica se conserva.</p>
 </header>
 
-<!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, pl, c_pino, c_ar, c_f, c_comp, c_h, c_g, c_bar, c_tr, p1/p2/p3 -->
-<main>
 <section class="card"><div id="cv0" style="position: relative"><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details>
 </section>
 
-<aside class="card">
-<div class="btns"><button class="p" id="bl">Soltar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
-
-<strong>Opções</strong>
-
+<section id="opt">
+<div class="btns" hidden><button class="p" id="bl">Soltar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
 <label class="chk" style="font-weight:600"><input type="checkbox" id="c_pino" checked>Com pino</label>
 <label class="chk" style="font-weight:600"><input type="checkbox" id="c_ar">Com resistência do ar</label>
 <div id="ctl" style="margin-top:10px"></div>
@@ -40,14 +35,37 @@
 <div class="chk"><span class="sw" style="border-color:var(--a)"></span>Força gravitacional \(\vec F_g\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--acc)"></span>Tração \(\vec T\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Resistência do ar \(\vec f\)</div>
-</aside>
-</main>
-<!-- Título e legenda dos gráficos em HTML (para usar MathJax); as cores devem coincidir com as de pendulo.js -->
+</section>
+
 <section class="plots">
 <div class="card"><div class="pt"><b>Energia</b> em função de \(t\)<span style="color:var(--vx)">\(K\)</span><span style="color:var(--vy)">\(U\)</span><span style="color:var(--acc)">\(E\)</span><span style="color:var(--a)">\(Q\)</span></div><div><canvas id="p1"></canvas></div></div>
 <div class="card"><div class="pt"><b>Altura</b> \(h\) em função de \(t\)<span style="color:var(--vy)">\(h\)</span><span>(tracejado: \(h_0\))</span></div><div><canvas id="p2"></canvas></div></div>
 <div class="card"><div class="pt"><b>Tração</b> em função de \(t\)<span style="color:var(--acc)">\(T/F_g\)</span></div><div><canvas id="p3"></canvas></div></div>
 </section>
+</div>
+
+<div id="book" class="book">
+<span class="mathconfig">
+\( 
+\let\oldvec=\vec
+\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
+\let\oldhat=\hat
+\let\oldimath=\imath
+\let\oldjmath=\jmath
+\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
+\)
+</span>
+<p>Uma partícula de massa \(m\) é solta do repouso, com o fio esticado a um ângulo \(\theta_0\) da vertical. Sem atrito, a energia mecânica se conserva. Com \(h\) a altura acima do ponto mais baixo e \(F_g = mg\) a força gravitacional:</p>
+\[ E = \tfrac12\,m v^2 + m g h = m g h_0, \qquad h_0 = L\,(1 - \cos\theta_0).\]
+<p>Um pino é fixado na vertical do ponto de suspensão, a uma distância \(d\) abaixo dele. À esquerda da vertical, o fio gira em torno do ponto de suspensão (raio \(L\)). Ao passar pela vertical, ele se apoia no pino e passa a girar em torno dele, com raio \(r = L - d\), até voltar. Seja \(\theta\) o ângulo do fio com a vertical para baixo (negativo à esquerda), \(\ell\) o raio em uso (\(L\) ou \(r\)) e \(\gamma\) um coeficiente de resistência do ar linear (opcional). Então:</p>
+\[ \ddot\theta = -\frac{g}{\ell}\sin\theta - \gamma\,\dot\theta, \qquad \omega_{\text{depois}} = \omega_{\text{antes}}\,\frac{\ell_{\text{antes}}}{\ell_{\text{depois}}}.\]
+<p>A segunda relação vem da continuidade da velocidade \(v = \ell\omega\) ao passar pela vertical. A tração \(T\) e as componentes da força gravitacional (a tangente \(F_{g\parallel}\), que restaura o movimento, e a radial \(F_{g\perp}\)) são:</p>
+\[ T = F_g\cos\theta + m\,\ell\,\omega^2, \qquad F_{g\parallel} = F_g\sin\theta, \qquad F_{g\perp} = F_g\cos\theta.\]
+<p>Se \(h_0 \le r\), isto é, se o pino não está alto demais (\(d \le L - h_0\)), o fio fica sempre esticado e a partícula sobe até a mesma altura \(h_0\) do outro lado. É o resultado de Galileu, que vale para qualquer posição do pino que satisfaça essa condição. Se \(r \lt h_0 \lt \tfrac52\,r\), a tração se anula antes do topo, no ângulo \(\varphi\) (medido a partir da vertical para baixo, em torno do pino):</p>
+\[ \cos\varphi = -\frac{2\,(h_0 - r)}{3r}.\]
+<p>Nesse caso o fio fica frouxo, e a partícula cai em voo livre até o fio esticar de novo, num puxão inelástico em que a componente radial da velocidade se perde (a energia \(\tfrac12 m v_r^2\) vai para \(Q\)). Se \(h_0 \ge \tfrac52\,r\), ela dá a volta no pino e o fio se enrola nele, o que encerra a simulação. Para pequenos ângulos, o período é a média dos períodos de um pêndulo de comprimento \(L\) e de outro de comprimento \(r\):</p>
+\[ T \approx \pi\sqrt{\frac{L}{g}} + \pi\sqrt{\frac{r}{g}}.\]
+<p>Com resistência do ar, \(Q = \int m\gamma v^2\,dt\) e \(E + Q = m g h_0\). A integração usa Runge-Kutta de 4ª ordem com passo fixo de \(1/600\) s.</p>
 </div>
 
 <footer></footer>
