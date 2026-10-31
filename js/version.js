@@ -1,2 +1,2 @@
 document.getElementById('versao').textContent =
-  'Versão 1.0.11-2-gcfc83b3 (cfc83b3)';
+  'Versão 1.0.11-3-g9f5ebb1 (9f5ebb1)';

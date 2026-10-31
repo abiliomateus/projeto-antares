@@ -54,7 +54,7 @@ body{margin:0;background:var(--bg); color:var(--ink); font:18px/1.4 var(--fonte)
 a, a:link, a:visited {color: var(--acc);text-decoration:none}
 header p{margin:0 0 14px;color:var(--mut)}
 main{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start}
-.plots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px;}
+.plots{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:14px;margin-top:14px; height:100%}
 @media (max-width:1120px){main,.plots{grid-template-columns:minmax(0,1fr)}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px; }
 canvas{display:block;width:100%;border-radius:6px;background:var(--sky);}
@@ -192,7 +192,7 @@ p.header {
 
 /* ---- Zoom do canvas (Sim.interactive): botões na lateral direita ---- */
 /* .zbar{position:absolute;right:6px;top:40%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px} */
-.zbar{position:absolute;top:2%;left:50%;transform:translateX(-50%);display:flex;flex-direction:row;gap:4px;flex-wrap: wrap; width:auto}
+.zbar{position:absolute;top:2%;left:5%;transform:translateX(0%);display:flex;flex-direction:row;gap:4px;flex-wrap: wrap; width:auto}
 .zbar button{flex:none;width:2em;height:1.5em;padding:0;font-size:1em;line-height:1;border-radius:6px;color: var(--acc);opacity: 0.6; }
 .zbar button:hover,.zbar button:focus-visible{opacity:1; background-color: var(--acc); color: var(--card); }
 .zbar button.txt{font-size:12px;font-weight:600;}
