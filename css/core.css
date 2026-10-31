@@ -128,7 +128,6 @@ hr {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* gap: 1rem; */
   padding-top: 20px;
   padding-bottom: 20px;
   padding-left: 5%;
@@ -136,7 +135,6 @@ hr {
   font-size: 0.85rem;
   background-color: var(--card);
   margin-top: 50px;
-  /* margin: 0 10%; */
 }
 
 .licenca p {
@@ -193,12 +191,18 @@ p.header {
 /* ---- Zoom do canvas (Sim.interactive): botões na lateral direita ---- */
 /* .zbar{position:absolute;right:6px;top:40%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px} */
 .zbar{position:absolute;top:2%;left:5%;transform:translateX(0%);display:flex;flex-direction:row;gap:4px;flex-wrap: wrap; width:auto}
-.zbar button{flex:none;width:2em;height:1.5em;padding:0;font-size:1em;line-height:1;border-radius:6px;color: var(--acc);opacity: 1; }
-.zbar button:hover,.zbar button:focus-visible{opacity:1; background-color: var(--acc); color: var(--card); }
+.zbar button{flex:none;width:2em;height:1.5em;padding:0;font-size:1em;line-height:1;border-radius:6px;color: var(--acc);opacity: 1;}
+.zbar button:hover,.zbar button:focus-visible{opacity:1; background-color: var(--acc); color: var(--card);  transition: 1s;}
 .zbar button.txt{font-size:12px;font-weight:600;}
 .zbar svg{width:1em;height:1em;display:block;margin:auto;}
 .zsep{flex:none;height:6px}
 @media (pointer:coarse){.zbar{gap:3px}.zbar button{width:32;height:32px;font-size:20px}.zbar button.txt{font-size:14px}.zbar svg{width:18px;height:18px}}   /* telas de toque: botões maiores */
+
+.icon-button:hover {
+  background: var(--acc);
+  color: var(--card);
+  transition: 1s;
+}
 
 .zbar:fullscreen {
   width: 100vw;
