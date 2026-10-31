@@ -11,26 +11,39 @@
 <header id="site-header"></header>
 <div class="wrap">
 <div class="button"><a class="chip" href="index.html">← Voltar</a></div>
-<header  id="sim-description">
+
+<span class="mathconfig">
+\( 
+\let\oldvec=\vec
+\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
+\let\oldhat=\hat
+\let\oldimath=\imath
+\let\oldjmath=\jmath
+\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
+\)
+</span>
+
+<header  id="sim-description" class="book">
      <h2>Colisão em 1D</h2>
      <p>Dois blocos num trilho, sem atrito. O momento linear total se conserva em qualquer colisão; a energia cinética só se conserva se o coeficiente de restituição \(e\) for 1. Compare o antes e o depois nas barras e troque para o referencial do centro de massa.</p>
 </header>
-<!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, c_cm, c_v, b1, b2, p1..p4 -->
+
 <section class="card"><div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details></section>
 
 <section id="opt">
-
 <div class="btns"><button class="p" id="bl">Iniciar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
 <div id="ctl"></div>
-
-
 <label class="chk"><input type="checkbox" id="c_cm">Referencial do centro de massa</label>
 <label class="chk"><input type="checkbox" id="c_v" checked>Vetores de velocidade</label>
+<p class="note" style="margin-top:8px">O bloco 1 está à esquerda: só há colisão se \(v_{1i} > v_{2i}\). Com \(e = 0\), os blocos seguem juntos depois do choque.</p>
+</section>
+
+<section id="lvet">
 <div class="chk"><span class="sw" style="border-color:var(--acc)"></span>Bloco 1 (massa \(m_1\))</div>
 <div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Bloco 2 (massa \(m_2\))</div>
 <div class="chk"><span class="sw" style="border-color:var(--ink);border-top-style:dashed"></span>Centro de massa (CM)</div>
-<p class="note" style="margin-top:8px">O bloco 1 está à esquerda: só há colisão se \(v_{1i} > v_{2i}\). Com \(e = 0\), os blocos seguem juntos depois do choque.</p>
-</section><!-- Barras de antes e depois: dois cartões (momento e energia); a grade (2 colunas) é definida aqui, no style da seção -->
+</section>
+
 <section class="plots" style="grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr))">
 <div class="card"><div class="pt"><b>Momento linear</b> (kg·m/s), antes e depois<span style="color:var(--acc)">\(p_1\)</span><span style="color:var(--vx)">\(p_2\)</span><span style="color:var(--ink)">\(p\)</span><span>(claro: antes; cheio: depois; tracejado: previsto)</span></div><div><canvas id="b1"></canvas></div></div>
 <div class="card"><div class="pt"><b>Energia cinética</b> (J), antes e depois<span style="color:var(--acc)">\(K_{1}\)</span><span style="color:var(--vx)">\(K_{2}\)</span><span style="color:var(--ink)">\(K\)</span><span>(rosa tracejado: energia perdida)</span></div><div><canvas id="b2"></canvas></div></div>
@@ -46,16 +59,6 @@
 </div>
 
 <div id="book" class="book">
-<span class="mathconfig">
-\( 
-\let\oldvec=\vec
-\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
-\let\oldhat=\hat
-\let\oldimath=\imath
-\let\oldjmath=\jmath
-\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
-\)
-</span>
 <p>Dois blocos andam sem atrito num trilho, com velocidades \(v_{1i}\) e \(v_{2i}\) antes do choque e \(v_{1f}\) e \(v_{2f}\) depois. O bloco 1 está à esquerda, então só há colisão se \(v_{1i} \gt v_{2i}\). Não há forças externas, de modo que o momento total se conserva em qualquer colisão, e o coeficiente de restituição \(e\) diz quanto da velocidade relativa se recupera:</p>
 \[ m_1 v_{1i} + m_2 v_{2i} = m_1 v_{1f} + m_2 v_{2f}, \qquad e = -\frac{v_{2f} - v_{1f}}{v_{2i} - v_{1i}}, \qquad 0 \le e \le 1 \]
 <p>Resolvendo as duas equações, com \(M = m_1 + m_2\):</p>

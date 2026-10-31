@@ -12,10 +12,21 @@
 <header id="site-header"></header>
 <div class="wrap">
 <div class="button"><a class="chip" href="index.html">← Voltar</a></div>
-<header  id="sim-description">
+<header  id="sim-description" class="book">
      <h2>Máquina de Atwood</h2>
      <p>Dois blocos ligados por uma corda que passa por uma polia ideal. Varie as massas e compare os resultados.</p>
 </header>
+
+<span class="mathconfig">
+\( 
+\let\oldvec=\vec
+\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
+\let\oldhat=\hat
+\let\oldimath=\imath
+\let\oldjmath=\jmath
+\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
+\)
+</span>
 
 <section class="card"><div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details></section>
 
@@ -26,12 +37,15 @@
 <select id="pl"><option value="9.8">Terra (9,8 m/s²)</option><option value="1.62">Lua (1,62 m/s²)</option><option value="3.71">Marte (3,71 m/s²)</option><option value="24.8">Júpiter (24,8 m/s²)</option></select>
 <label class="chk"><input type="checkbox" id="c_f" checked>Diagrama de forças</label>
 <label class="chk"><input type="checkbox" id="c_res">Força resultante em cada bloco</label>
+</section>
+
+<section id="lvet">
 <div class="chk"><span class="sw" style="border-color:var(--a)"></span>Força gravitacional \(\vec F_g\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--acc)"></span>Normal \(\vec N\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Tração \(\vec T\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--ink)"></span>Resultante \(\vec F\)</div>
 </section>
-<!-- Título e legenda dos gráficos em HTML (para usar MathJax); as cores devem coincidir com as de blocos.js -->
+
 <section class="plots">
 <div class="card"><div class="pt"><b>Deslocamento</b> \(y\) em função de \(t\)<span style="color:var(--acc)">\(y\)</span></div><div><canvas id="p1"></canvas></div></div>
 <div class="card"><div class="pt"><b>Velocidade</b> em função de \(t\)<span style="color:var(--vy)">\(v\)</span></div><div><canvas id="p2"></canvas></div></div>
@@ -42,7 +56,7 @@
 
 <footer></footer>
 
-<script src="../js/core.min.js"></script>
+<script src="/js/core.min.js"></script>
 <script src="js/atwood.min.js"></script>
 
 </body>

@@ -231,6 +231,7 @@ body.sim-fullscreen-active {
 }
 
 .book{font-size:1em; font-family: 'Libertine', serif;}
+.book h2{font-family: 'Linux Biolinum';}
 
 .book mjx-container[jax="SVG"] {
   font-size: 100%;

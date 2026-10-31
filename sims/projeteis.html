@@ -11,7 +11,19 @@
 <header id="site-header"></header>
 <div class="wrap">
 <div class="button"><a class="chip" href="index.html">← Voltar</a></div>
-<header  id="sim-description">
+
+<span class="mathconfig">
+\( 
+\let\oldvec=\vec
+\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
+\let\oldhat=\hat
+\let\oldimath=\imath
+\let\oldjmath=\jmath
+\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
+\)
+</span>
+
+<header  id="sim-description" class="book">
     <h2>Movimento de projéteis</h2>
     <p>Ajuste os parâmetros no botão de configuração, lance e compare a trajetória simulada (linha cheia) com a ideal (tracejada).</p>
 </header>
@@ -39,16 +51,6 @@
 </div>
 
 <div id="book" class="book">
-<span class="mathconfig">
-\( 
-\let\oldvec=\vec
-\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
-\let\oldhat=\hat
-\let\oldimath=\imath
-\let\oldjmath=\jmath
-\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
-\)
-</span>
 <p>Uma partícula é lançada com velocidade inicial \(v_0\), ângulo \(\theta_0\) com a horizontal e altura inicial \(h_0\). Na ausência da resistência do ar, a única força que atua sobre ela é a gravitacional, \(F_g = mg\). A aceleração é 
     \[\vec{a} = -g\hat{\jmath}.\] 
 O movimento horizontal é uniforme e o vertical é uniformemente variado. As coordenadas da partícula são dadas por:

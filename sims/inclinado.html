@@ -11,37 +11,7 @@
 <header id="site-header"></header>
 <div class="wrap">
 <div class="button"><a class="chip" href="index.html">← Voltar</a></div>
-<header  id="sim-description">
-     <h2>Plano inclinado</h2>
-     <p>Solte o bloco e compare o movimento com e sem atrito. Os gráficos tracejados mostram o caso sem atrito.</p>
-</header>
 
-<!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, pl, c_atr, c_comp, c_res, p1/p2/p3 -->
-<section class="card"><div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details></section>
-
-<section id="opt">
-
-<div class="btns"><button class="p" id="bl">Soltar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
-
-<label class="chk" style="font-weight:600"><input type="checkbox" id="c_atr" checked>Com atrito</label>
-<div id="ctl" style="margin-top:10px"></div>
-<label for="pl" style="font-size:.92rem">Corpo celeste</label>
-<select id="pl"><option value="9.8">Terra (9,8 m/s²)</option><option value="1.62">Lua (1,62 m/s²)</option><option value="3.71">Marte (3,71 m/s²)</option><option value="24.8">Júpiter (24,8 m/s²)</option></select>
-<label class="chk"><input type="checkbox" id="c_f" checked>Diagrama de forças</label>
-<label class="chk"><input type="checkbox" id="c_comp">Componentes da força gravitacional</label>
-<label class="chk"><input type="checkbox" id="c_res">Força resultante</label>
-<div class="chk"><span class="sw" style="border-color:var(--a)"></span>Força gravitacional \(\vec F_g\)</div>
-<div class="chk"><span class="sw" style="border-color:var(--acc)"></span>Normal \(\vec N\)</div>
-<div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Atrito \(\vec f\)</div>
-<div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Resultante \(\vec F\)</div>
-</section><section class="plots">
-<div class="card"><div><canvas id="p1"></canvas></div></div>
-<div class="card"><div><canvas id="p2"></canvas></div></div>
-<div class="card"><div><canvas id="p3"></canvas></div></div>
-</section>
-</div>
-
-<div id="book" class="book">
 <span class="mathconfig">
 \( 
 \let\oldvec=\vec
@@ -52,6 +22,43 @@
 \renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
 \)
 </span>
+
+<header  id="sim-description" class="book">
+     <h2>Plano inclinado</h2>
+     <p>Solte o bloco e compare o movimento com e sem atrito. Os gráficos tracejados mostram o caso sem atrito.</p>
+</header>
+
+<section class="card">
+     <div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details>
+</section>
+
+<section id="opt">
+     <div class="btns"><button class="p" id="bl">Soltar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
+     <label class="chk" style="font-weight:600"><input type="checkbox" id="c_atr" checked>Com atrito</label>
+     <div id="ctl" style="margin-top:10px"></div>
+     <label for="pl" style="font-size:.92rem">Corpo celeste</label>
+     <select id="pl"><option value="9.8">Terra (9,8 m/s²)</option><option value="1.62">Lua (1,62 m/s²)</option><option value="3.71">Marte (3,71 m/s²)</option><option value="24.8">Júpiter (24,8 m/s²)</option></select>
+     <label class="chk"><input type="checkbox" id="c_f" checked>Diagrama de forças</label>
+     <label class="chk"><input type="checkbox" id="c_comp">Componentes da força gravitacional</label>
+     <label class="chk"><input type="checkbox" id="c_res">Força resultante</label>
+</section>
+
+<section id="lvet">
+     <div class="chk"><span class="sw" style="border-color:var(--a)"></span>Força gravitacional \(\vec F_g\)</div>
+     <div class="chk"><span class="sw" style="border-color:var(--acc)"></span>Normal \(\vec N\)</div>
+     <div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Atrito \(\vec f\)</div>
+     <div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Resultante \(\vec F\)</div>
+</section>
+
+<section class="plots">
+     <div class="card"><div><canvas id="p1"></canvas></div></div>
+     <div class="card"><div><canvas id="p2"></canvas></div></div>
+     <div class="card"><div><canvas id="p3"></canvas></div></div>
+</section>
+
+</div>
+
+<div id="book" class="book">
 <p>Um bloco de massa \(m\) é solto do repouso no topo de um plano inclinado de ângulo \(\theta\) e comprimento \(L\). A força gravitacional \(\vec F_g\), de módulo \(F_g = mg\), tem uma componente ao longo do plano e outra perpendicular a ele, e a normal equilibra a perpendicular:</p>
 \[ F_{g\parallel} = mg\sin\theta, \qquad F_{g\perp} = mg\cos\theta, \qquad N = F_{g\perp} = mg\cos\theta \]
 <p>Sem atrito, a força resultante ao longo do plano é \(F_{g\parallel}\), e a aceleração é \(a = g\sin\theta\).</p>

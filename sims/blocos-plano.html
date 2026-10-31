@@ -11,18 +11,27 @@
 <header id="site-header"></header>
 <div class="wrap">
 <div class="button"><a class="chip" href="index.html">← Voltar</a></div>
-<header  id="sim-description">
+
+<span class="mathconfig">
+\( 
+\let\oldvec=\vec
+\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
+\let\oldhat=\hat
+\let\oldimath=\imath
+\let\oldjmath=\jmath
+\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
+\)
+</span>
+
+<header  id="sim-description" class="book">
      <h2>Blocos conectados por uma polia</h2>
      <p>Um bloco em um plano horizontal está conectado a outro sobre um plano inclinado. A corda ideal que os conecta passa por uma polia também ideal. Varie massas e o ângulo \(\theta\) e compare o comportamento do sistema com e sem atrito (curvas tracejadas: sem atrito).</p>
 </header>
 
-<!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, pl, c_atr, c_comp, c_res, p1/p2/p3 -->
 <section class="card"><div><canvas id="cv"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details></section>
 
 <section id="opt">
-
 <div class="btns"><button class="p" id="bl">Soltar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
-
 <label class="chk" style="font-weight:600"><input type="checkbox" id="c_atr" checked>Com atrito</label>
 <div id="ctl" style="margin-top:10px"></div>
 <label for="pl" style="font-size:.92rem">Corpo celeste</label>
@@ -30,12 +39,17 @@
 <label class="chk"><input type="checkbox" id="c_f" checked>Diagrama de forças</label>
 <label class="chk"><input type="checkbox" id="c_comp">Componentes da força gravitacional</label>
 <label class="chk"><input type="checkbox" id="c_res">Força resultante em cada bloco</label>
+</section>
+
+<section id="lvet">
 <div class="chk"><span class="sw" style="border-color:var(--a)"></span>Força gravitacional \(\vec F_g\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--acc)"></span>Normal \(\vec N\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Atrito \(\vec f\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Tração \(\vec T\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--ink)"></span>Resultante \(\vec F\)</div>
-</section><section class="plots">
+</section>
+
+<section class="plots">
 <div class="card"><div><canvas id="p1"></canvas></div></div>
 <div class="card"><div><canvas id="p2"></canvas></div></div>
 <div class="card"><div><canvas id="p3"></canvas></div></div>

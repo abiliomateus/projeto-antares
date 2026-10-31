@@ -11,7 +11,19 @@
 <header id="site-header"></header>
 <div class="wrap">
 <div class="button"><a class="chip" href="index.html">← Voltar</a></div>
-<header  id="sim-description">
+
+<span class="mathconfig">
+\( 
+\let\oldvec=\vec
+\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
+\let\oldhat=\hat
+\let\oldimath=\imath
+\let\oldjmath=\jmath
+\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
+\)
+</span>
+
+<header  id="sim-description" class="book">
      <h2>Pêndulo de Galileu</h2>
      <p>Um pino fixado abaixo do ponto de suspensão prende o fio quando a partícula passa pela vertical e reduz o raio. Mesmo assim, ela sobe de novo até a altura \(h\) de onde foi solta: a energia mecânica se conserva.</p>
 </header>
@@ -34,11 +46,11 @@
 <label class="chk"><input type="checkbox" id="c_tr" checked>Rastro</label>
 </section>
 
-<div id="lvet">
+<section id="lvet">
 <div class="chk"><span class="sw" style="border-color:var(--a)"></span>Força gravitacional \(\vec F_g\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--acc)"></span>Tração \(\vec T\)</div>
 <div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Resistência do ar \(\vec f\)</div>
-</div>
+</section>
 
 <section class="plots">
 <div class="card"><div class="pt"><b>Energia</b> em função de \(t\)<span style="color:var(--vx)">\(K\)</span><span style="color:var(--vy)">\(U\)</span><span style="color:var(--acc)">\(E\)</span><span style="color:var(--a)">\(Q\)</span></div><div><canvas id="p1"></canvas></div></div>
@@ -48,16 +60,6 @@
 </div>
 
 <div id="book" class="book">
-<span class="mathconfig">
-\( 
-\let\oldvec=\vec
-\renewcommand{\vec}[1]{\oldvec{\boldsymbol{\mathrm{#1}}}}
-\let\oldhat=\hat
-\let\oldimath=\imath
-\let\oldjmath=\jmath
-\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
-\)
-</span>
 <p>Uma partícula de massa \(m\) é solta do repouso, com o fio esticado a um ângulo \(\theta_0\) da vertical. Sem atrito, a energia mecânica se conserva. Com \(h\) a altura acima do ponto mais baixo e \(F_g = mg\) a força gravitacional:</p>
 \[ E = \tfrac12\,m v^2 + m g h = m g h_0, \qquad h_0 = L\,(1 - \cos\theta_0).\]
 <p>Um pino é fixado na vertical do ponto de suspensão, a uma distância \(d\) abaixo dele. À esquerda da vertical, o fio gira em torno do ponto de suspensão (raio \(L\)). Ao passar pela vertical, ele se apoia no pino e passa a girar em torno dele, com raio \(r = L - d\), até voltar. Seja \(\theta\) o ângulo do fio com a vertical para baixo (negativo à esquerda), \(\ell\) o raio em uso (\(L\) ou \(r\)) e \(\gamma\) um coeficiente de resistência do ar linear (opcional). Então:</p>

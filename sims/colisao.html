@@ -11,34 +11,7 @@
 <header id="site-header"></header>
 <div class="wrap">
 <div class="button"><a class="chip" href="index.html">← Voltar</a></div>
-<header id="sim-description">
-     <h2>Colisão de partículas pontuais em 2D</h2>
-     <p>Os eixos \(x\)–\(y\) têm origem no ponto da colisão. Escolha massas, velocidades, o coeficiente de restituição \(e\) e o ângulo de desvio \(\theta_1\) da partícula 1, e veja o momento linear se conservar.</p>
-</header>
 
-<!-- Ids usados pelo JS: cv, ro, cmp, bl/bp/bc, ctl, c_v, c_ang, c_cm, c_tr, c_alt, p1/p2/p3 -->
-<section class="card"><div><canvas id="cv" style="padding: 5%; padding-bottom: 1%;"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details></section>
-
-
-<section id="opt">
-
-<div class="btns"><button class="p" id="bl">Lançar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
-<div id="ctl"></div>
-
-
-<label class="chk"><input type="checkbox" id="c_alt">Outra solução do ângulo (quando existir)</label>
-<label class="chk"><input type="checkbox" id="c_v" checked>Vetores de velocidade (tracejados: após o choque)</label>
-<label class="chk"><input type="checkbox" id="c_ang" checked>Ângulos de desvio (\(\theta_1\), \(\theta_2\))</label>
-<label class="chk"><input type="checkbox" id="c_cm" checked>Centro de massa (CM)</label>
-<label class="chk"><input type="checkbox" id="c_tr" checked>Rastro</label>
-<div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Partícula 1</div>
-<div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Partícula 2</div>
-<div class="chk"><span class="sw" style="border-color:var(--ink)"></span>Centro de massa</div>
-</section>
-
-</div>
-
-<div id="book" class="book">
 <span class="mathconfig">
 \( 
 \let\oldvec=\vec
@@ -49,6 +22,33 @@
 \renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathrm{#1}}}}
 \)
 </span>
+
+<header id="sim-description">
+     <h2>Colisão de partículas pontuais em 2D</h2>
+     <p>Os eixos \(x\)–\(y\) têm origem no ponto da colisão. Escolha massas, velocidades, o coeficiente de restituição \(e\) e o ângulo de desvio \(\theta_1\) da partícula 1, e veja o momento linear se conservar.</p>
+</header>
+
+<section class="card"><div><canvas id="cv" style="padding: 5%; padding-bottom: 1%;"></canvas></div><div class="ro" id="ro"></div><p class="note" id="cmp"></p><hr style="height: 1px;"><details class="legenda" open><summary>Legenda</summary><div id="legenda"></div></details></section>
+
+<section id="opt">
+<div class="btns"><button class="p" id="bl">Lançar</button><button id="bp">Pausar</button><button id="bc">Reiniciar</button></div>
+<div id="ctl"></div>
+<label class="chk"><input type="checkbox" id="c_alt">Outra solução do ângulo (quando existir)</label>
+<label class="chk"><input type="checkbox" id="c_v" checked>Vetores de velocidade (tracejados: após o choque)</label>
+<label class="chk"><input type="checkbox" id="c_ang" checked>Ângulos de desvio (\(\theta_1\), \(\theta_2\))</label>
+<label class="chk"><input type="checkbox" id="c_cm" checked>Centro de massa (CM)</label>
+<label class="chk"><input type="checkbox" id="c_tr" checked>Rastro</label>
+</section>
+
+<section id="lvet">
+<div class="chk"><span class="sw" style="border-color:var(--vy)"></span>Partícula 1</div>
+<div class="chk"><span class="sw" style="border-color:var(--vx)"></span>Partícula 2</div>
+<div class="chk"><span class="sw" style="border-color:var(--ink)"></span>Centro de massa</div>
+</section>
+
+</div>
+
+<div id="book" class="book">
 <p>As duas partículas pontuais chegam à origem, o ponto da colisão, no mesmo instante (\(t = 2\) s). A colisão é determinada por três condições: a conservação do momento, a restituição \(e\) e o desvio \(\theta_1\) da partícula 1. O desvio é o ângulo entre as direções inicial e final de \(\vec v_{\mathrm{1}}\), no referencial do laboratório, positivo no sentido anti-horário. Com \(M = m_1 + m_2\), \(\vec v_{\mathrm{1i}}\) e \(\vec v_{\mathrm{\mathrm{2i}}}\) são as velocidades antes da colisão, enquanto \(\vec v_{\mathrm{1f}}\) e \(\vec v_{\mathrm{2f}}\) são os valores depois da colisão. A velocidade do centro de massa é \(\vec v_{\mathrm{cm}}\). Aplicando a conservação do momento linear, temos</p>
 \[ m_1\vec v_{\mathrm{1i}} + m_2\vec v_{\mathrm{\mathrm{2i}}} = m_1\vec v_{\mathrm{1f}} + m_2\vec v_{\mathrm{2f}} = M\,\vec v_{\mathrm{cm}}, \qquad e = \frac{|\vec v_{\mathrm{2f}} - \vec v_{\mathrm{1f}}|}{|\vec v_{\mathrm{\mathrm{2i}}} - \vec v_{\mathrm{1i}}|}. \]
 <p>Com \(e = 1\), a energia cinética se conserva; com \(e = 0\), as partículas saem juntas, com a velocidade \(\vec v_{\mathrm{cm}}\). Em relação ao CM, as velocidades finais são frações da velocidade relativa depois do choque:</p>
